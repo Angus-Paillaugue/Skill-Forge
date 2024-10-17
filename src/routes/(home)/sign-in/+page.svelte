@@ -25,19 +25,19 @@
 		<h1 class="text-3xl font-bold text-inherit">Sign-in</h1>
 		<input
 			type="text"
-			class="h-12 text-base font-medium md:font-semibold w-full rounded-xl bg-neutral-800 px-4 py-2 text-text-heading-dark outline-0 placeholder:text-text-body focus:outline-0"
+			class="h-12 text-base font-medium md:font-semibold w-full rounded-xl bg-neutral-800 px-4 py-2 text-neutral-100 outline-0 placeholder:text-neutral-400 focus:outline-0"
 			name="username"
 			placeholder="Username"
 		/>
 		<input
 			type="password"
-			class="h-12 text-base font-medium md:font-semibold w-full rounded-xl bg-neutral-800 px-4 py-2 text-text-heading-dark outline-0 placeholder:text-text-body focus:outline-0"
+			class="h-12 text-base font-medium md:font-semibold w-full rounded-xl bg-neutral-800 px-4 py-2 text-neutral-100 outline-0 placeholder:text-neutral-400 focus:outline-0"
 			name="password"
 			placeholder="Password"
 		/>
 
 		{#if form?.error}
-			<div class="rounded-full bg-red-600 px-6 py-2 text-base font-semibold text-text-heading-dark">
+			<div class="rounded-full bg-red-600 px-6 py-2 text-base font-semibold text-neutral-100">
 				{form?.error}
 			</div>
 		{/if}

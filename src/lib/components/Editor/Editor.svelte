@@ -74,7 +74,7 @@
 	onMount(async () => {
 		monaco = (await import('./monaco')).default;
 
-		const backgroundColor = getCSSVariableValue('--tw-neutral-900');
+		const backgroundColor = getCSSVariableValue('--tw-neutral-800');
 
 		// Create theme with custom background color
 		monaco.editor.defineTheme('customTheme', {
@@ -151,7 +151,7 @@
 
 <div class="flex flex-col h-full grow overflow-hidden">
 	<div
-		class="flex flex-row gap-2 p-2 items-center h-10 shrink-0 border-b border-neutral-800 text-neutral-400 bg-neutral-900"
+		class="flex flex-row gap-2 p-2 items-center h-10 shrink-0 border-b border-neutral-700 text-neutral-400 bg-neutral-800"
 	>
 		<!-- Format code button -->
 		<Tooltip
@@ -217,7 +217,7 @@
 			</Tooltip>
 		{/if}
 	</div>
-	<div class="pt-2 grow h-full bg-neutral-900 rounded-b-xl overflow-hidden">
+	<div class="pt-2 grow h-full bg-neutral-800 rounded-b-xl overflow-hidden">
 		<div class="h-full" bind:this={editorElement}></div>
 	</div>
 </div>

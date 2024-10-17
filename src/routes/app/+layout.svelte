@@ -3,11 +3,11 @@
 </script>
 
 <div class="h-screen flex flex-col p-2 gap-2">
-	<nav class="flex shrink-0 justify-between items-center h-10 relative">
+	<nav class="flex shrink-0 justify-between items-center h-10">
 		<!-- Left part : home and problem list links -->
 		<div class="flex flex-row items-center gap-4">
 			<!-- Website logo placeholder -->
-			<a href="/app" aria-label="Go home ">
+			<a href="/app" aria-label="Go home">
 				<div class="size-8 rounded-full bg-blue-600"></div>
 			</a>
 			<!-- Vertical separator -->
@@ -19,7 +19,7 @@
 			>
 				<a
 					href="/app/exercises"
-					class="flex flex-row gap-2 items-center text-base transition-colors group-hover:bg-neutral-900 hover:!bg-neutral-800 h-full px-2"
+					class="flex flex-row gap-2 items-center text-base transition-colors group-hover:bg-neutral-700/30 hover:!bg-neutral-700/70 h-full px-2"
 				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -38,7 +38,7 @@
 				</a>
 				<a
 					href="/app/exercises/random"
-					class="flex flex-row gap-2 items-center text-base transition-colors group-hover:bg-neutral-900 hover:!bg-neutral-800 h-full px-2"
+					class="flex flex-row gap-2 items-center text-base transition-colors group-hover:bg-neutral-700/30 hover:!bg-neutral-700/70 h-full px-2"
 					aria-label="Go to a random exercise"
 				>
 					<svg

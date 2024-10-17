@@ -22,7 +22,7 @@ export async function POST({ request, locals }) {
 	);
 
 	if (solutionExists.length > 0)
-		return json({ error: 'You already submitted this solution!' }, { status: 400 });
+		return json({ error: 'You already submitted this solution!', results }, { status: 400 });
 
 	const [insertedRow] = await db.query(
 		`

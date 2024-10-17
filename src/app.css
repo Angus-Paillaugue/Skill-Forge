@@ -3,15 +3,30 @@
 @tailwind utilities;
 
 :root {
-	--tw-neutral-900: theme(colors.neutral.900);
+	--tw-neutral-800: theme(colors.neutral.800);
+}
+
+@layer utilities {
+	/* Hide scrollbar for Chrome, Safari and Opera */
+	.no-scrollbar::-webkit-scrollbar {
+		display: none;
+	}
+
+	/* Hide scrollbar for IE, Edge and Firefox */
+	.no-scrollbar {
+		-ms-overflow-style: none;
+		/* IE and Edge */
+		scrollbar-width: none;
+		/* Firefox */
+	}
 }
 
 body {
-	@apply bg-neutral-950 text-neutral-200;
+	@apply bg-neutral-900 text-neutral-200;
 }
 
 hr {
-	@apply mx-4 my-8 h-[2px] rounded-full border-none bg-neutral-800;
+	@apply mx-2 my-4 h-[2px] rounded-full border-none bg-neutral-700;
 }
 
 /* Others */

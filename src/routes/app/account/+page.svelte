@@ -6,9 +6,9 @@
 	const { user, rank, recentActivity } = data;
 </script>
 
-<div class="grow flex flex-row gap-8 max-w-screen-lg mx-auto w-full">
+<div class="grow flex flex-col lg:flex-row gap-8 max-w-screen-lg mx-auto w-full">
 	<!-- Left column -->
-	<div class="flex flex-col p-4 rounded-xl bg-neutral-900">
+	<div class="flex flex-col p-4 rounded-xl bg-neutral-800">
 		<!-- Profile -->
 		<div class="flex flex-row gap-4">
 			<img src="/default_avatar.jpg" class="rounded-lg object-cover size-24" alt="" />
@@ -27,7 +27,9 @@
 	</div>
 
 	<!-- Recent activity -->
-	<div class="flex flex-col grow p-4 rounded-xl bg-neutral-900">
+	<div class="flex flex-col grow p-4 rounded-xl bg-neutral-800">
+		<h2 class="text-2xl font-semibold">Recent activity</h2>
+		<hr />
 		{#each recentActivity as activity}
 			<a
 				href="/app/exercises/{activity.exercise_id}"

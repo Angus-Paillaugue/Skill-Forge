@@ -10,7 +10,7 @@
 		danger: ' bg-red-600 text-neutral-100 rounded-xl',
 		secondary: 'bg-white text-neutral-100 rounded-full',
 		ghost: 'bg-transparent text-neutral-100 rounded-xl border border-neutral-300/50',
-		link: 'p-0 text-base font-semibold text-neutral-400 hover:text-neutral-100 underline w-auto'
+		link: 'p-0 text-base font-semibold text-neutral-400 hover:text-neutral-100 underline'
 	};
 </script>
 

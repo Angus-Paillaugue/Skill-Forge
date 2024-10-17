@@ -18,11 +18,13 @@
 	let tooltip = $state();
 	let tooltipContent = $state();
 	let delayTimeout = $state();
+	let hideTimeout = $state();
 
 	/**
 	 * Show the tooltip.
 	 */
 	const showTooltip = () => {
+		clearTimeout(hideTimeout);
 		if (!isHovered) {
 			clearTimeout(delayTimeout);
 			delayTimeout = setTimeout(() => {
@@ -30,6 +32,7 @@
 			}, delay);
 		}
 		const rect = tooltip.getBoundingClientRect();
+
 		tooltipCoords = {
 			x: rect.left + window.scrollX,
 			y: rect.top + window.scrollY,
@@ -42,7 +45,10 @@
 	 * Hides the tooltip.
 	 */
 	const hideTooltip = () => {
-		isHovered = false;
+		clearTimeout(delayTimeout);
+		hideTimeout = setTimeout(() => {
+			isHovered = false;
+		}, 100); // Small delay to handle quick mouse movements
 	};
 
 	onMount(() => {
@@ -54,7 +60,7 @@
 		window.addEventListener('scroll', hideTooltip);
 		window.addEventListener('resize', hideTooltip);
 		window.onmousemove = (e) => {
-			if (isHovered && !tooltip.contains(e.target)) {
+			if (isHovered && !tooltip.contains(e.target) && !tooltipContent.contains(e.target)) {
 				hideTooltip();
 			}
 		};
@@ -73,14 +79,21 @@
 	 * @returns {Object} The styles object.
 	 */
 	const getStyles = () => {
+		if (!tooltip) return;
+		const parentRect = (tooltip?.offsetParent || document.body).getBoundingClientRect();
+		const tooltipRect = tooltip.getBoundingClientRect();
+
+		const top = tooltipRect.top - parentRect.top;
+		const left = tooltipRect.left - parentRect.left;
+
 		if (position === 'top') {
-			return `top: ${tooltipCoords.y}px; left: ${tooltipCoords.x + tooltipCoords.width / 2}px;`;
+			return `top: ${top}px; left: ${left + tooltipCoords.width / 2}px;`;
 		} else if (position === 'bottom') {
-			return `top: ${tooltipCoords.y + tooltipCoords.height}px; left: ${tooltipCoords.x + tooltipCoords.width / 2}px;`;
+			return `top: ${top + tooltipCoords.height}px; left: ${left + tooltipCoords.width / 2}px;`;
 		} else if (position === 'left') {
-			return `top: ${tooltipCoords.y + tooltipCoords.height / 2}px; left: ${tooltipCoords.x}px;`;
+			return `top: ${top + tooltipCoords.height / 2}px; left: ${left}px;`;
 		} else if (position === 'right') {
-			return `top: ${tooltipCoords.y + tooltipCoords.height / 2}px; left: ${tooltipCoords.x + tooltipCoords.width}px;`;
+			return `top: ${top + tooltipCoords.height / 2}px; left: ${left + tooltipCoords.width}px;`;
 		}
 	};
 	const positionClasses = {
@@ -112,14 +125,15 @@
 
 {#if isHovered}
 	<div
-		class={cn('absolute z-40 max-w-[250px] w-max p-2', positionClasses[position])}
+		class={cn('fixed z-40 max-w-[250px] w-max p-2', positionClasses[position])}
 		style={getStyles()}
 		transition:fly={flyOptions}
 		role="tooltip"
 		bind:this={tooltipContent}
+		onmouseleave={hideTooltip}
 	>
 		<div
-			class="relative pointer-events-none rounded-lg gap-2 p-2 text-sm border border-neutral-700 bg-neutral-800 text-text-body-dark"
+			class="relative pointer-events-none rounded-lg gap-2 p-2 text-sm border border-neutral-700 bg-neutral-800 text-neutral-400"
 		>
 			{@html content}
 		</div>

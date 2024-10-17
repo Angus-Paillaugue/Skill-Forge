@@ -25,7 +25,7 @@ export async function POST({ request, locals }) {
 				[newExerciseId, test.input, test.expected_output]
 			);
 		}
-		return json({ message: 'Exercise created successfully' });
+		return json({ message: 'Exercise created successfully', id: newExerciseId });
 	} catch (error) {
 		console.error(error);
 		return json({ message: 'Error creating exercise' }, { status: 500 });

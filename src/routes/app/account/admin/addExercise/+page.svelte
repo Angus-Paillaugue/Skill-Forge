@@ -1,8 +1,9 @@
 <script>
 	import { cn } from '$lib/utils';
-	import { Spinner, Editor } from '$lib/components';
+	import { Spinner, Editor, Button } from '$lib/components';
 	import { fade, fly, scale } from 'svelte/transition';
 	import { PaneGroup, Pane, PaneResizer } from 'paneforge';
+	import { newToast } from '$lib/stores';
 
 	const { data } = $props();
 	const DIFFICULTIES = ['easy', 'medium', 'hard'];
@@ -12,16 +13,15 @@
 	// svelte-ignore state_referenced_locally
 	let category = $state(categories[0].id);
 	let isSaving = $state(false);
-	let error = $state(null);
 	let tests = $state([{ input: '', expected_output: '' }]);
 	let selectedTestIndex = $state(0);
 	let difficulty = $state(DIFFICULTIES[0]);
 	let startValue = $state('');
 	let editor = $state();
 	let createCategoryModalVisible = $state(false);
-	let createCategoryModalError = $state(null);
 	let isCreatingCategory = $state(false);
 	let isPreviewingDescription = $state(false);
+	let success = $state(null);
 
 	/**
 	 * Asynchronously saves the current exercise data.
@@ -46,11 +46,11 @@
 		});
 		const data = await res.json();
 		if (!res.ok) {
-			error = data.message;
+			newToast({ type: 'red', message: data.message });
 			isSaving = false;
 			return;
 		}
-		console.log(data);
+		success = data;
 		isSaving = false;
 	}
 
@@ -76,7 +76,7 @@
 		const categoryName = new FormData(e.target).get('name');
 
 		if (!categoryName) {
-			createCategoryModalError = 'Category name is required';
+			newToast({ type: 'red', message: 'Category name is required' });
 			isCreatingCategory = false;
 			return;
 		}
@@ -90,16 +90,15 @@
 				body: JSON.stringify({ name: categoryName })
 			});
 			const data = await res.json();
-			console.log(data);
 			if (!res.ok) {
-				createCategoryModalError = data.message;
+				newToast({ type: 'red', message: data.message });
 				return;
 			}
 			categories = [...categories, { id: data.id, name: data.name }];
 			category = data.id;
 			createCategoryModalVisible = false;
 		} catch (error) {
-			createCategoryModalError = error.message;
+			newToast({ type: 'red', message: error.message });
 			isCreatingCategory = false;
 		} finally {
 			isCreatingCategory = false;
@@ -113,15 +112,19 @@
 	 * @returns {Promise<string>} - The compiled HTML output.
 	 */
 	async function compileMarkdown() {
-		const res = await fetch('/api/compileMarkdown', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({ text: description })
-		});
-		const data = await res.text();
-		return data;
+		try {
+			const res = await fetch('/api/compileMarkdown', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ text: description })
+			});
+			const data = await res.text();
+			return data;
+		} catch (error) {
+			newToast({ type: 'red', message: error.message });
+		}
 	}
 </script>
 
@@ -137,34 +140,26 @@
 	>
 		<form
 			onsubmit={createCategory}
-			class="p-4 rounded-xl bg-neutral-950 max-w-md w-full flex flex-col gap-4"
+			class="p-4 rounded-xl bg---tw-neutral-900 max-w-md w-full flex flex-col gap-4"
 		>
 			<h2 class="text-2xl font-semibold">Create category</h2>
 			<input
 				type="text"
-				class="text-base font-medium md:font-semibold w-full rounded-xl bg-neutral-800 px-4 py-2 text-text-heading-dark outline-0 placeholder:text-text-body focus:outline-0"
+				class="text-base font-medium md:font-semibold w-full rounded-xl bg-neutral-800 px-4 py-2 text-neutral-100 outline-0 placeholder:text-neutral-400 focus:outline-0"
 				name="name"
 				placeholder="Category name"
 			/>
-			{#if createCategoryModalError}
-				<div
-					transition:scale
-					class="flex flex-col flex-shrink-0 p-4 border-red-600 border bg-neutral-900 rounded-xl"
-				>
-					<p>{createCategoryModalError}</p>
-				</div>
-			{/if}
 			<div class="grid grid-cols-2 gap-4">
 				<button
 					type="button"
-					class="text-base font-medium md:font-semibold w-full rounded-xl bg-neutral-900 px-4 py-2 text-text-heading-dark outline-0 placeholder:text-text-body focus:outline-0"
+					class="text-base font-medium md:font-semibold w-full rounded-xl bg-neutral-900 px-4 py-2 text-neutral-100 outline-0 placeholder:text-neutral-400 focus:outline-0"
 					onclick={() => (createCategoryModalVisible = false)}
 				>
 					Cancel
 				</button>
 				<button
 					type="submit"
-					class="text-base font-medium md:font-semibold w-full rounded-xl bg-neutral-800 px-4 py-2 text-text-heading-dark outline-0 placeholder:text-text-body focus:outline-0 flex flex-row items-center justify-center gap-2"
+					class="text-base font-medium md:font-semibold w-full rounded-xl bg-neutral-800 px-4 py-2 text-neutral-100 outline-0 placeholder:text-neutral-400 focus:outline-0 flex flex-row items-center justify-center gap-2"
 				>
 					{#if isCreatingCategory}
 						<Spinner class="size-5" />
@@ -220,15 +215,17 @@
 	autoSaveId="adminAddExercisePage"
 >
 	<!-- Left part -->
-	<Pane defaultSize={50} class="flex flex-col gap-4">
-		<!-- Error -->
-		{#if error}
+	<Pane defaultSize={50} class="flex flex-col gap-2">
+		{#if success}
 			<div
 				transition:scale
-				class="flex flex-col flex-shrink-0 p-4 border-red-600 border bg-neutral-900 rounded-xl"
+				class="flex flex-col flex-shrink-0 p-4 border-green-600 border bg-neutral-900 rounded-xl"
 			>
-				<h1 class="text-2xl font-bold text-red-600">Error</h1>
-				<p>{error}</p>
+				<h1 class="text-2xl font-bold text-green-600">Success</h1>
+				<p>{success.message}</p>
+				<Button variant="link" href="/app/exercises/{success.id}" class="link"
+					>Go to exercise</Button
+				>
 			</div>
 		{/if}
 
@@ -245,7 +242,7 @@
 							<option value={_category.id}>{_category.name}</option>
 						{/each}
 					</select>
-					<div class="h-full w-px bg-neutral-950"></div>
+					<div class="h-full w-px bg---tw-neutral-900"></div>
 					<!-- Add new category -->
 					<button
 						class="size-9 flex flex-col items-center justify-center rounded-r-lg bg-neutral-800 text-base font-semibold"
@@ -281,7 +278,7 @@
 				<!-- Exercise title -->
 				<input
 					type="text"
-					class="mb-2 mt-4 text-3xl font-medium leading-[3.5rem] md:font-semibold md:leading-[4rem] w-full rounded-xl bg-neutral-800 px-4 py-2 text-text-heading-dark outline-0 placeholder:text-text-body focus:outline-0"
+					class="mb-2 mt-4 text-3xl font-medium leading-[3.5rem] md:font-semibold md:leading-[4rem] w-full rounded-xl bg-neutral-800 px-4 py-2 text-neutral-100 outline-0 placeholder:text-neutral-400 focus:outline-0"
 					bind:value={title}
 				/>
 				<!-- Exercise description -->
@@ -339,14 +336,12 @@
 								Loading...
 							{:then md}
 								{@html md}
-							{:catch error}
-								<p>{error.message}</p>
 							{/await}
 						{:else}
 							<textarea
 								type="text"
 								bind:value={description}
-								class="grow w-full rounded-xl bg-neutral-800 px-6 py-3 text-base resize-none font-medium text-text-heading-dark outline-0 placeholder:text-text-body focus:outline-0"
+								class="grow w-full rounded-xl bg-neutral-800 px-6 py-3 text-base resize-none font-medium text-neutral-100 outline-0 placeholder:text-neutral-400 focus:outline-0"
 							></textarea>
 						{/if}
 					</div>
@@ -393,7 +388,7 @@
 						tabindex="0"
 						class={cn(
 							'px-3 shrink-0  py-1 rounded-xl flex flex-row items-center gap-2',
-							index === selectedTestIndex && 'bg-neutral-950'
+							index === selectedTestIndex && 'bg---tw-neutral-900'
 						)}
 						onclick={() => (selectedTestIndex = index)}
 					>
