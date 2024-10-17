@@ -6,11 +6,11 @@
 		'flex flex-row items-center justify-center text-lg font-medium gap-2 w-fit px-4 py-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all';
 
 	const variantClasses = {
-		default: 'bg-blue-600 text-text-heading-dark rounded-lg',
-		danger: ' bg-red-600 text-text-heading-dark rounded-xl',
-		secondary: 'bg-white text-text-heading rounded-full',
-		ghost: 'bg-transparent text-text-heading-dark rounded-xl border border-neutral-300/50',
-		link: 'p-0 text-base font-semibold text-text-heading underline w-auto'
+		default: 'bg-blue-600 text-neutral-100 rounded-xl',
+		danger: ' bg-red-600 text-neutral-100 rounded-xl',
+		secondary: 'bg-white text-neutral-100 rounded-full',
+		ghost: 'bg-transparent text-neutral-100 rounded-xl border border-neutral-300/50',
+		link: 'p-0 text-base font-semibold text-neutral-400 hover:text-neutral-100 underline w-auto'
 	};
 </script>
 

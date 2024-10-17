@@ -37,6 +37,7 @@
 		"mdsvex": "^0.12.3",
 		"monaco-editor": "^0.52.0",
 		"mysql2": "^3.11.3",
+		"paneforge": "^0.0.6",
 		"shiki": "^1.22.0",
 		"tailwind-merge": "^2.5.4"
 	}

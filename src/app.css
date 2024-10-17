@@ -9,3 +9,12 @@
 body {
 	@apply bg-neutral-950 text-neutral-200;
 }
+
+hr {
+	@apply mx-4 my-8 h-[2px] rounded-full border-none bg-neutral-800;
+}
+
+/* Others */
+kbd {
+	@apply rounded px-2 py-1 font-mono text-sm font-normal bg-neutral-800 border border-neutral-700 text-neutral-200;
+}

@@ -26,9 +26,17 @@
 				>
 					<th scope="row" class="px-6 py-4 font-medium whitespace-nowrap text-white">
 						{#if exercise.solved}
-							<span class="px-2 py-1 rounded-full text-sm w-fit font-semibold bg-green-600">
-								Completed
-							</span>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								class="size-5 text-green-600"
+								><path d="M21.801 10A10 10 0 1 1 17 3.335" /><path d="m9 11 3 3L22 4" /></svg
+							>
 						{/if}
 					</th>
 					<td>

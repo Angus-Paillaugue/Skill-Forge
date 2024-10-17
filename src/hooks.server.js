@@ -23,8 +23,8 @@ export const handle = async ({ event, resolve }) => {
 	if (!url.pathname.startsWith('/app') && !url.pathname.startsWith('/api') && locals.user) {
 		throw redirect(307, '/app');
 	}
-	if (url.pathname.startsWith('/app/admin') && !locals.user.admin) {
-		throw redirect(307, '/app');
+	if (url.pathname.startsWith('/app/account/admin') && !locals.user.admin) {
+		throw redirect(307, '/app/account');
 	}
 	return resolve(event);
 };
