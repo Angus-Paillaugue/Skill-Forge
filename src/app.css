@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+	--tw-neutral-900: theme(colors.neutral.900);
+}
+
+body {
+	@apply bg-neutral-950 text-neutral-200;
+}

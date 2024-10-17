@@ -1,0 +1,150 @@
+/* Text */
+#pageContainer h1,
+#pageContainer h2,
+#pageContainer h3,
+#pageContainer h4,
+#pageContainer h5,
+#pageContainer h6 {
+	@apply font-body text-white;
+}
+
+#pageContainer h1 {
+	@apply mb-2 mt-4 text-3xl font-medium leading-[3.5rem] md:font-semibold md:leading-[4rem];
+}
+
+#pageContainer h2 {
+	@apply mb-4 mt-12 text-2xl font-bold leading-6;
+}
+
+#pageContainer h3 {
+	@apply mb-2 mt-9 text-xl font-semibold leading-6;
+}
+
+#pageContainer h4 {
+	@apply mb-2 mt-4 text-xl font-semibold;
+}
+
+#pageContainer h5 {
+	@apply mb-2 mt-4 text-lg font-semibold;
+}
+
+#pageContainer h6 {
+	@apply mb-2 mt-4 text-base font-semibold;
+}
+
+#pageContainer p,
+#pageContainer li {
+	@apply mb-4 font-body text-base font-medium leading-6 text-text-body-dark;
+}
+
+#pageContainer span,
+#pageContainer small {
+	@apply text-text-body-dark;
+}
+hr {
+	@apply mx-4 my-8 h-[2px] rounded-full border-none bg-neutral-300/50 dark:bg-neutral-800;
+}
+/* Others */
+kbd {
+	@apply rounded px-2 py-1 font-mono text-sm font-normal bg-neutral-700 text-neutral-200;
+}
+
+/* Base styles for all code blocks thruout the app */
+code {
+	counter-reset: codeStep;
+	counter-increment: codeStep 0;
+	direction: ltr;
+	-moz-tab-size: 2;
+	-o-tab-size: 2;
+	tab-size: 2;
+	@apply hyphens-none whitespace-pre-wrap ligatures-normal;
+}
+
+/* Highlighted code blocks */
+.shiki {
+	@apply relative overflow-auto whitespace-pre rounded border py-6 focus:-outline-offset-1 border-neutral-700 bg-neutral-900;
+}
+
+.line-numbers .line::before {
+	content: counter(codeStep);
+	counter-increment: codeStep;
+	font-variant-numeric: tabular-nums;
+	@apply inline-block w-6 text-left text-text-body-dark;
+}
+
+/* For regular code blocks */
+pre > code .line {
+	@apply relative inline-block w-full px-6;
+}
+
+pre > code {
+	@apply block w-full;
+}
+
+/* For highlighted lines */
+.diff.remove {
+	@apply bg-red-600/20 after:absolute after:left-2 after:top-1/2 after:-translate-y-1/2 after:text-red-600 after:content-['-'];
+}
+
+.diff.add {
+	@apply bg-green-600/20 after:absolute after:left-2 after:top-1/2 after:-translate-y-1/2 after:text-green-600 after:content-['+'];
+}
+
+.highlighted {
+	@apply bg-blue-600/20 after:absolute after:left-0 after:h-full after:w-[2px] after:bg-blue-600;
+}
+
+/* Inline code */
+code:not(pre code) {
+	@apply rounded px-1 py-0.5 text-neutral-100 bg-neutral-800;
+}
+
+.commands > pre,
+.commandsCode pre {
+	@apply m-0 rounded-none border-none py-4;
+}
+
+/* Styling page components */
+
+/* Table */
+#pageContainer table thead {
+	@apply bg-neutral-800/50;
+}
+
+#pageContainer table th {
+	@apply border-b p-4 pb-3 pl-8 text-left font-medium border-neutral-700/50 text-neutral-200;
+}
+
+#pageContainer table td {
+	@apply border-b border-neutral-700 p-4 pl-8 text-neutral-400;
+}
+
+/* Lists */
+#pageContainer ul,
+#pageContainer ol {
+	@apply my-5 list-outside list-none pl-0 ps-6;
+}
+
+#pageContainer ul li {
+	@apply relative list-none ps-1;
+}
+#pageContainer ul li p {
+	@apply m-0;
+}
+
+#pageContainer ul > li::before {
+	@apply absolute -left-[1.25rem] top-[12px] h-0.5 w-3 rounded-full content-[''] bg-neutral-700;
+}
+
+#pageContainer ol > li {
+	@apply list-decimal;
+}
+
+/* TaskList */
+#pageContainer .task-list-item p {
+	@apply flex flex-row items-center gap-2;
+}
+
+#pageContainer .task-list-item p input[type='checkbox'] {
+	@apply relative size-[1.15rem] appearance-none rounded border after:absolute after:left-1/2 after:top-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:text-sm after:font-bold after:text-green-800 checked:after:content-["✓"] border-neutral-700 checked:bg-green-400;
+}
