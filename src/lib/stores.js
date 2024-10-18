@@ -32,7 +32,7 @@ export function newToast(obj) {
 	};
 	// Add the new toast to the beginning of toasts the array.
 	toasts.update((oldToast) => {
-		oldToast = [newToast, ...oldToast];
+		oldToast.push(newToast);
 		return oldToast;
 	});
 

@@ -33,7 +33,8 @@ export async function load({ locals, params }) {
                         JSON_OBJECT(
                             'submission_id', uep.id,
                             'submission', uep.submission,
-                            'completed_at', uep.completed_at
+                            'completed_at', uep.completed_at,
+                            'ram_usage', uep.ram_usage
                         )
                     ),
                     JSON_ARRAY()
@@ -48,7 +49,6 @@ export async function load({ locals, params }) {
                 e.id = ?
             GROUP BY
                 e.id, e.title, e.description, e.content, e.difficulty, e.created_at, cat.name;
-
         `,
 			[user.id, exerciseId]
 		);

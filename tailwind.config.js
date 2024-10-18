@@ -7,7 +7,7 @@ export default {
 		extend: {
 			fontFamily: {
 				body: ['Poppins'],
-				heading: ['Ubuntu']
+				heading: ['JetBrains Mono']
 			},
 			colors: {
 				'text-body': {

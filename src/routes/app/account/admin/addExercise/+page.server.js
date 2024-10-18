@@ -4,5 +4,6 @@ import { createConnection } from '$lib/server/db';
 export async function load() {
 	const db = await createConnection();
 	const [categories] = await db.query('SELECT * FROM categories');
+	db.end();
 	return { categories };
 }

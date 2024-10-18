@@ -2,6 +2,7 @@
 	import { onDestroy, onMount } from 'svelte';
 	import { Tooltip } from '$lib/components';
 	import { scale } from 'svelte/transition';
+	import { Check, AlignLeft, RotateCcw, Plus, Minus, WrapText } from 'lucide-svelte';
 
 	let {
 		value = $bindable(''),
@@ -14,6 +15,8 @@
 	let editor = $state();
 	let monaco = $state();
 	let formatted = $state(false);
+	let fontSize = $state(16);
+	let wordWrap = $state(true);
 
 	/**
 	 * Retrieves the value of a specified CSS variable.
@@ -74,6 +77,9 @@
 	onMount(async () => {
 		monaco = (await import('./monaco')).default;
 
+		const localStorageFontSize = localStorage.getItem('font-size');
+		if (localStorageFontSize) fontSize = parseInt(localStorageFontSize);
+
 		const backgroundColor = getCSSVariableValue('--tw-neutral-800');
 
 		// Create theme with custom background color
@@ -109,6 +115,18 @@
 				run: () => {
 					formatCode();
 				}
+			},
+			{
+				id: 'toggleWordWrap',
+				label: 'Toggle word wrap',
+				keybindings: [monaco.KeyMod.Alt | monaco.KeyCode.KeyZ],
+				precondition: null,
+				keybindingContext: null,
+				contextMenuGroupId: 'navigation',
+				contextMenuOrder: 1.5,
+				run: () => {
+					wordWrap = !wordWrap;
+				}
 			}
 		];
 		// Create the editor
@@ -125,6 +143,10 @@
 			autoIndent: true,
 			formatOnPaste: true,
 			formatOnType: true,
+			fontSize,
+			fontFamily: 'JetBrains Mono',
+			fontLigatures: true,
+			wordWrap,
 			minimap: { enabled: false }
 		});
 
@@ -147,6 +169,27 @@
 		monaco?.editor.getModels().forEach((model) => model.dispose());
 		editor?.dispose();
 	});
+
+	const reduceFontSize = () => {
+		fontSize = Math.max(8, fontSize - 1);
+		localStorage.setItem('font-size', fontSize);
+	};
+	const increaseFontSize = () => {
+		fontSize = Math.min(25, fontSize + 1);
+		localStorage.setItem('font-size', fontSize);
+	};
+
+	// Update the font size
+	$effect(() => {
+		if (!editor) return;
+		editor.updateOptions({ fontSize });
+	});
+
+	// Update the word wrap setting
+	$effect(() => {
+		if (!editor) return;
+		editor.updateOptions({ wordWrap });
+	});
 </script>
 
 <div class="flex flex-col h-full grow overflow-hidden">
@@ -166,30 +209,24 @@
 				disabled={formatted}
 			>
 				{#if formatted}
-					<svg
-						in:scale
-						xmlns="http://www.w3.org/2000/svg"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						class="size-5"><path d="M20 6 9 17l-5-5" /></svg
-					>
+					<span in:scale>
+						<Check class="size-5" />
+					</span>
 				{:else}
-					<svg
-						in:scale
-						xmlns="http://www.w3.org/2000/svg"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						class="size-5"><path d="M15 12H3" /><path d="M17 18H3" /><path d="M21 6H3" /></svg
-					>
+					<span in:scale>
+						<AlignLeft class="size-5" />
+					</span>
 				{/if}
+			</button>
+		</Tooltip>
+		<!-- Word wrap button -->
+		<Tooltip content="Toggle word wrap <kbd>Alt</kbd> <kbd>Z</kbd>" position="bottom" delay={100}>
+			<button
+				onclick={() => (wordWrap = !wordWrap)}
+				class="flex flex-roe gap-2 items-center"
+				aria-label="Toggle word wrap"
+			>
+				<WrapText class="size-5" />
 			</button>
 		</Tooltip>
 		{#if defaultValue}
@@ -200,22 +237,32 @@
 					class="flex flex-roe gap-2 items-center"
 					aria-label="Reset to default configuration"
 				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						class="size-5"
-						><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" /><path
-							d="M3 3v5h5"
-						/></svg
-					>
+					<RotateCcw class="size-5" />
 				</button>
 			</Tooltip>
 		{/if}
+
+		<div class="ml-auto flex flex-row gap-px rounded overflow-hidden h-full">
+			<button
+				class="h-full aspect-square flex flex-col items-center justify-center bg-neutral-700 shrink-0 text-neutral-400"
+				onclick={reduceFontSize}
+				aria-label="Decrease editor font size"
+			>
+				<Minus class="size-4" />
+			</button>
+			<div
+				class="h-full flex flex-col items-center justify-center bg-neutral-700 text-sm px-2 shrink-0 font-medium"
+			>
+				{fontSize}
+			</div>
+			<button
+				class="h-full aspect-square flex flex-col items-center justify-center bg-neutral-700 shrink-0 text-neutral-400"
+				onclick={increaseFontSize}
+				aria-label="Increase editor font size"
+			>
+				<Plus class="size-4" />
+			</button>
+		</div>
 	</div>
 	<div class="pt-2 grow h-full bg-neutral-800 rounded-b-xl overflow-hidden">
 		<div class="h-full" bind:this={editorElement}></div>

@@ -1,31 +1,37 @@
 <script>
-	import { cn } from '$lib/utils';
+	import { cn, formatBytes } from '$lib/utils';
 	import { scale } from 'svelte/transition';
+	import { TestTubeDiagonal, MemoryStick } from 'lucide-svelte';
+	import { Tooltip } from '$lib/components';
 
 	let { exercise, latestRunnedTestsResults = $bindable() } = $props();
 
 	let selectedTestIndex = $state(0);
+	let isSolutionAccepted = $state(false);
+
+	$effect(() => {
+		if (!isSolutionAccepted) return;
+		isSolutionAccepted = latestRunnedTestsResults.results.every((test) => test.passed);
+	});
 </script>
 
 <!-- Tests cases -->
-<div class="flex flex-col rounded-xl overflow-hidden max-lg:grow shrink-0 mt-2">
-	<div class="flex flex-row flex-nowrap overflow-x-auto h-10 shrink-0 bg-neutral-700 p-1">
-		<div class="flex flex-row items-center px-2 gap-2">
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				viewBox="0 0 24 24"
-				fill="none"
-				stroke="currentColor"
-				stroke-width="2"
-				stroke-linecap="round"
-				stroke-linejoin="round"
-				class="size-5"
-				><path d="M21 7 6.82 21.18a2.83 2.83 0 0 1-3.99-.01a2.83 2.83 0 0 1 0-4L17 3" /><path
-					d="m16 2 6 6"
-				/><path d="M12 16H4" /></svg
-			>
+<div class="flex flex-col rounded-xl overflow-hidden max-lg:grow shrink-0 lg:mt-2">
+	<div
+		class="flex flex-row items-center px-2 justify-between flex-nowrap overflow-x-auto h-10 shrink-0 bg-neutral-700 p-1"
+	>
+		<div class="flex flex-row items-center gap-2">
+			<TestTubeDiagonal class="size-5" />
 			Testcase
 		</div>
+		{#if latestRunnedTestsResults}
+			<div class="flex flex-row gap-2">
+				<Tooltip class="flex flex-row gap-2 items-center" content="RAM Usage">
+					<MemoryStick class="size-5" />
+					{formatBytes(latestRunnedTestsResults.averageRamUsage)}
+				</Tooltip>
+			</div>
+		{/if}
 	</div>
 
 	<div class="flex flex-col p-4 bg-neutral-800 max-lg:grow">
@@ -43,7 +49,7 @@
 							transition:scale
 							class={cn(
 								'size-2 rounded-full',
-								latestRunnedTestsResults[index].passed ? 'bg-green-600' : 'bg-red-600'
+								latestRunnedTestsResults.results[index].passed ? 'bg-green-600' : 'bg-red-600'
 							)}
 						></div>
 					{/if}
@@ -56,14 +62,16 @@
 				transition:scale
 				class={cn(
 					'text-lg w-fit font-semibold mt-2',
-					latestRunnedTestsResults[selectedTestIndex].passed ? 'text-green-600' : 'text-red-600'
+					latestRunnedTestsResults.results[selectedTestIndex].passed
+						? 'text-green-600'
+						: 'text-red-600'
 				)}
 			>
-				{latestRunnedTestsResults[selectedTestIndex].passed ? 'Accepted' : 'Wrong Answer'}
+				{latestRunnedTestsResults.results[selectedTestIndex].passed ? 'Accepted' : 'Wrong Answer'}
 			</h2>
-			{#if latestRunnedTestsResults[selectedTestIndex]?.error}
+			{#if latestRunnedTestsResults.results[selectedTestIndex]?.error}
 				<div transition:scale class="mt-2 p-2 bg-red-600 text-white rounded-xl">
-					{latestRunnedTestsResults[selectedTestIndex].error}
+					{latestRunnedTestsResults.results[selectedTestIndex].error}
 				</div>
 			{/if}
 		{/if}

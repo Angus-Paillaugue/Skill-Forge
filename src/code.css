@@ -5,7 +5,7 @@
 #pageContainer h4,
 #pageContainer h5,
 #pageContainer h6 {
-	@apply font-body text-white;
+	@apply font-body text-neutral-100;
 }
 #pageContainer h1 {
 	@apply mb-2 mt-4 text-3xl font-medium leading-[3.5rem] md:font-semibold md:leading-[4rem];
@@ -27,7 +27,7 @@
 }
 #pageContainer p,
 #pageContainer li {
-	@apply mb-4 font-body text-base font-medium leading-6 text-neutral-400;
+	@apply mb-4 font-body text-base font-normal leading-6 text-neutral-100;
 }
 #pageContainer span,
 #pageContainer small {
@@ -81,7 +81,7 @@ pre > code {
 }
 /* Inline code */
 code:not(pre code) {
-	@apply rounded px-1 py-0.5 text-neutral-100 bg-neutral-900;
+	@apply rounded px-1 py-0.5 text-neutral-400 text-sm bg-neutral-700/50 border border-neutral-600;
 }
 
 /* Styling page components */
@@ -99,9 +99,13 @@ code:not(pre code) {
 }
 
 /* Lists */
+#pageContainer p + ul,
+#pageContainer p + ol {
+	@apply mb-2 mt-4;
+}
 #pageContainer ul,
 #pageContainer ol {
-	@apply my-5 list-outside list-none pl-0 ps-6;
+	@apply mb-5 list-outside list-none pl-0 ps-6;
 }
 #pageContainer ul li {
 	@apply relative list-none ps-1;

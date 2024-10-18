@@ -80,11 +80,9 @@
 	 */
 	const getStyles = () => {
 		if (!tooltip) return;
-		const parentRect = (tooltip?.offsetParent || document.body).getBoundingClientRect();
 		const tooltipRect = tooltip.getBoundingClientRect();
-
-		const top = tooltipRect.top - parentRect.top;
-		const left = tooltipRect.left - parentRect.left;
+		const top = tooltipRect.y;
+		const left = tooltipRect.x;
 
 		if (position === 'top') {
 			return `top: ${top}px; left: ${left + tooltipCoords.width / 2}px;`;

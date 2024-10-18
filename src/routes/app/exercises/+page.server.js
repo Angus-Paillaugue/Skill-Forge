@@ -26,6 +26,9 @@ export async function load({ locals }) {
       `,
 			[user.id]
 		);
+		latestExercises.map((exercise) => {
+			exercise.created_at = exercise.created_at.toISOString();
+		});
 		return { latestExercises };
 	} finally {
 		db.end();

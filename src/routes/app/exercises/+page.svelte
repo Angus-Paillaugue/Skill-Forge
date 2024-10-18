@@ -1,52 +1,165 @@
 <script>
-	import { Difficulty } from '$lib/components';
+	import { Difficulty, Input } from '$lib/components';
+	import { CircleCheckBig, ChevronDown } from 'lucide-svelte';
+	import { formatDate, cn } from '$lib/utils';
+	import { flip } from 'svelte/animate';
+	import { slide } from 'svelte/transition';
+	import Fuse from 'fuse.js';
+
 	const { data } = $props();
 	const { latestExercises } = data;
+
+	let sortedExercises = $state(latestExercises);
+	let filteredExercises = $state(latestExercises);
+	let orderBy = $state('created_at');
+	let orderWay = $state('DESC');
+	let searchValue = $state('');
+
+	const fuseList = new Fuse(latestExercises, {
+		threshold: 0.4,
+		ignoreLocation: true,
+		keys: ['title']
+	});
+
+	/**
+	 * Filters the list of exercises based on the provided search value.
+	 *
+	 * @param {Array} exercises - The array of exercise objects to search through.
+	 * @param {string} val - The search string used to filter the exercises.
+	 * @returns {Array} - A filtered array of exercises that match the search criteria.
+	 */
+	function search(val) {
+		if (val.length === 0) {
+			filteredExercises = latestExercises;
+			return;
+		}
+
+		filteredExercises = fuseList.search(val).map((result) => result.item);
+	}
+
+	/**
+	 * Sorts the items based on the specified order and direction.
+	 *
+	 * @param {string} order - The order in which to sort the items (e.g., 'asc' for ascending, 'desc' for descending).
+	 * @param {string} way - The way to sort the items (e.g., 'alphabetical', 'numerical').
+	 */
+	function sort(order, way) {
+		let exercises = filteredExercises.sort((a, b) =>
+			typeof a[order] === 'string' ? a[order].localeCompare(b[order]) : a[order] - b[order]
+		);
+		if (way === 'DESC') exercises = exercises.reverse();
+
+		sortedExercises = exercises;
+	}
+
+	/**
+	 * Sorts the items based on the specified order.
+	 *
+	 * @param {string} order - The order in which to sort the items.
+	 *                         It can be 'asc' for ascending or 'desc' for descending.
+	 */
+	function sortBy(order) {
+		// If the order is the same as the current order, reverse the order
+		if (orderBy === order) orderWay = orderWay === 'ASC' ? 'DESC' : 'ASC';
+
+		orderBy = order;
+		sort(orderBy, orderWay);
+	}
+
+	/**
+	 * Handles the input event for the search functionality.
+	 * This function is triggered whenever the user types in the search input field.
+	 */
+	function onSearchInput() {
+		search(searchValue);
+		sort(orderBy, orderWay);
+	}
 </script>
 
 <svelte:head>
 	<title>All exercises</title>
 </svelte:head>
 
-<div
-	class="relative overflow-x-auto overflow-y-hidden w-full shadow-md rounded-lg max-w-screen-lg mx-auto mt-10"
->
-	<table class="w-full text-sm text-left rtl:text-right text-neutral-400 table-auto">
-		<thead class="text-xs uppercase bg-neutral-800/50 text-neutral-400">
-			<tr>
-				<th scope="col" class="px-3 md:px-6 py-3"> Status </th>
-				<th scope="col" class="px-3 md:px-6 py-3"> Title </th>
-				<th scope="col" class="px-3 md:px-6 py-3"> Difficulty </th>
-			</tr>
-		</thead>
-		<tbody>
-			{#each latestExercises as exercise}
-				<tr class="even:bg-neutral-800/50 border-b border-neutral-700">
-					<td class="px-3 md:px-6 py-2 md:py-4 font-medium whitespace-nowrap text-white">
-						{#if exercise.solved}
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-								stroke-width="2"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								class="size-5 text-green-600"
-								><path d="M21.801 10A10 10 0 1 1 17 3.335" /><path d="m9 11 3 3L22 4" /></svg
-							>
-						{/if}
-					</td>
-					<td>
-						<a href="/app/exercises/{exercise.exercise_id}" class="px-3 md:px-6 py-2 md:py-4">
-							<h1 class="text-lg md:text-2xl font-bold">{exercise.title}</h1>
-						</a>
-					</td>
-					<td class="px-3 md:px-6 py-2 md:py-4">
-						<Difficulty difficulty={exercise.difficulty} />
-					</td>
+<div class="max-w-screen-lg w-full mx-auto mt-10 flex flex-col gap-2">
+	<Input
+		id="search"
+		placeholder="Search for an exercise"
+		class="bg-neutral-800"
+		bind:value={searchValue}
+		oninput={onSearchInput}
+	/>
+	<div class="relative overflow-x-auto overflow-y-hidden w-full shadow-md rounded-lg">
+		<table class="w-full text-sm text-left rtl:text-right text-neutral-400 table-auto">
+			<thead class="text-xs uppercase bg-neutral-800/50 text-neutral-400">
+				<tr>
+					<th scope="col" class="px-3 md:px-6 py-3">
+						<button class="flex flex-row items-center gap-4" onclick={() => sortBy('solved')}>
+							Status
+							{#if orderBy === 'solved'}
+								<ChevronDown
+									class={cn('size-4 transition-transform', orderWay === 'DESC' && 'rotate-180')}
+								/>
+							{/if}
+						</button>
+					</th>
+					<th scope="col" class="px-3 md:px-6 py-3">
+						<button class="flex flex-row items-center gap-4" onclick={() => sortBy('title')}>
+							Title
+							{#if orderBy === 'title'}
+								<ChevronDown
+									class={cn('size-4 transition-transform', orderWay === 'DESC' && 'rotate-180')}
+								/>
+							{/if}
+						</button>
+					</th>
+					<th scope="col" class="px-3 md:px-6 py-3">
+						<button class="flex flex-row items-center gap-4" onclick={() => sortBy('difficulty')}>
+							Difficulty
+							{#if orderBy === 'difficulty'}
+								<ChevronDown
+									class={cn('size-4 transition-transform', orderWay === 'DESC' && 'rotate-180')}
+								/>
+							{/if}
+						</button>
+					</th>
+					<th scope="col" class="px-3 md:px-6 py-3">
+						<button class="flex flex-row items-center gap-4" onclick={() => sortBy('created_at')}>
+							Added
+							{#if orderBy === 'created_at'}
+								<ChevronDown
+									class={cn('size-4 transition-transform', orderWay === 'DESC' && 'rotate-180')}
+								/>
+							{/if}
+						</button>
+					</th>
 				</tr>
-			{/each}
-		</tbody>
-	</table>
+			</thead>
+			<tbody>
+				{#each sortedExercises as exercise (exercise.exercise_id)}
+					<tr
+						class="even:bg-neutral-800/50 border-b border-neutral-700"
+						transition:slide={{ axis: 'y' }}
+						animate:flip={{ duration: 300 }}
+					>
+						<td class="px-3 md:px-6 py-2 md:py-4 font-medium whitespace-nowrap w-1/6 text-white">
+							{#if exercise.solved}
+								<CircleCheckBig class="size-5 text-green-600" />
+							{/if}
+						</td>
+						<td class="w-1/2 px-3 md:px-6 py-2">
+							<a href="/app/exercises/{exercise.exercise_id}" class="text-lg md:text-2xl font-bold">
+								{exercise.title}
+							</a>
+						</td>
+						<td class="px-3 md:px-6 py-2 md:py-4 w-1/6">
+							<Difficulty difficulty={exercise.difficulty} />
+						</td>
+						<td class="px-3 md:px-6 py-2 md:py-4 w-2/5">
+							{formatDate(exercise.created_at)}
+						</td>
+					</tr>
+				{/each}
+			</tbody>
+		</table>
+	</div>
 </div>

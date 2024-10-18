@@ -24,17 +24,23 @@ export async function runTests(exercise_id, user_input) {
 			const { input, expected_output } = test;
 
 			try {
-				// Ensure input is passed as a JSON-safe string
-				const result = await context.eval(
-					input,
-					{ timeout: 1000 } // 1-second timeout
-				);
+				// Measure memory usage before the test
+				const memStart = process.memoryUsage().heapUsed;
+
+				// Run the test in the isolate
+				const result = await context.eval(input, { timeout: 1000 });
+
+				// Measure memory usage after the test
+				const memEnd = process.memoryUsage().heapUsed;
+
+				const memUsage = memEnd - memStart; // Memory usage in B
 
 				results.push({
 					input,
 					expected_output,
 					actual_output: result,
-					passed: result == expected_output
+					passed: result == expected_output,
+					memUsage // Memory usage for this test
 				});
 			} catch (error) {
 				results.push({
@@ -42,15 +48,18 @@ export async function runTests(exercise_id, user_input) {
 					expected_output,
 					actual_output: null,
 					error: error.message,
-					passed: false
+					passed: false,
+					memUsage: null
 				});
 			}
 		}
+		const averageRamUsage =
+			results.map((r) => r.memUsage).reduce((a, b) => a + b, 0) / results.length;
 
-		return results;
+		return { results, averageRamUsage };
 	} catch (error) {
 		console.error(error);
-		return [];
+		return { message: 'Failed to run tests' };
 	} finally {
 		// Clean up
 		isolate.dispose();

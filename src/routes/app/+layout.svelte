@@ -1,4 +1,5 @@
 <script>
+	import { Shuffle, List } from 'lucide-svelte';
 	const { children } = $props();
 </script>
 
@@ -21,19 +22,7 @@
 					href="/app/exercises"
 					class="flex flex-row gap-2 items-center text-base transition-colors group-hover:bg-neutral-700/30 hover:!bg-neutral-700/70 h-full px-2"
 				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						class="size-5"
-						><path d="M3 12h.01" /><path d="M3 18h.01" /><path d="M3 6h.01" /><path
-							d="M8 12h13"
-						/><path d="M8 18h13" /><path d="M8 6h13" /></svg
-					>
+					<List class="size-5" />
 					Problem list
 				</a>
 				<a
@@ -41,21 +30,7 @@
 					class="flex flex-row gap-2 items-center text-base transition-colors group-hover:bg-neutral-700/30 hover:!bg-neutral-700/70 h-full px-2"
 					aria-label="Go to a random exercise"
 				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						class="size-4"
-						><path d="M2 18h1.4c1.3 0 2.5-.6 3.3-1.7l6.1-8.6c.7-1.1 2-1.7 3.3-1.7H22" /><path
-							d="m18 2 4 4-4 4"
-						/><path d="M2 6h1.9c1.5 0 2.9.9 3.6 2.2" /><path
-							d="M22 18h-5.9c-1.3 0-2.6-.7-3.3-1.8l-.5-.8"
-						/><path d="m18 14 4 4-4 4" /></svg
-					>
+					<Shuffle class="size-4" />
 				</a>
 			</div>
 		</div>

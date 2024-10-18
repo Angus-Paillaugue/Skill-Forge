@@ -23,8 +23,9 @@ export async function load({ locals }) {
     SELECT
       user_rankings.user_id,
       user_rankings.username,
+      user_rankings.user_rank,
       user_rankings.distinct_exercise_count,
-      user_rankings.user_rank
+       (SELECT COUNT(*) FROM exercises) AS no_exercises
     FROM
       user_rankings
     WHERE
@@ -37,6 +38,7 @@ export async function load({ locals }) {
       SELECT
         s.completed_at,
         e.id AS exercise_id,
+        e.difficulty AS exercise_difficulty,
         e.title
       FROM
         submissions s
@@ -50,7 +52,24 @@ export async function load({ locals }) {
     `,
 			[user.id]
 		);
-		return { rank: rank[0], user, recentActivity };
+		const [contributions] = await db.query(
+			`
+      SELECT
+          DATE(s.completed_at) AS submission_date,
+          COUNT(s.id) AS submission_count
+      FROM
+          submissions s
+      WHERE
+          s.user_id = ?
+          AND s.completed_at >= CURDATE() - INTERVAL 1 YEAR
+      GROUP BY
+          DATE(s.completed_at)
+      ORDER BY
+          submission_date ASC;
+    `,
+			[user.id]
+		);
+		return { rank: rank[0], user, recentActivity, contributions };
 	} finally {
 		db.end();
 	}

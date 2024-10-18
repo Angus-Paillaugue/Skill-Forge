@@ -1,11 +1,12 @@
 <script>
 	import { removeToast } from '$lib/stores';
-	import { fly } from 'svelte/transition';
+	import { scale } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
 	import { toasts } from '$lib/stores';
 	import { cn } from '$lib/utils';
+	import { CircleCheckBig, CircleX, TriangleAlert, X } from 'lucide-svelte';
 
-	const baseToastClasses = 'rounded-xl border bg-neutral-900 border-neutral-700 p-4 relative';
+	const baseToastClasses = 'rounded-xl bg-neutral-800 ring-2 ring-neutral-600/50 p-4 relative';
 
 	const svgColors = {
 		red: 'text-red-600',
@@ -15,62 +16,28 @@
 </script>
 
 <div
-	class="fixed bottom-0 right-0 z-[51] flex max-h-[100vh-5rem] w-full max-w-[500px] flex-col-reverse gap-2 p-2 lg:p-4"
+	class="fixed top-16 left-1/2 -translate-x-1/2 z-[51] flex w-full max-w-[300px] flex-col-reverse gap-2"
 >
 	{#each $toasts.slice(0, 4) as toast (toast.id)}
 		<div
 			role="alert"
 			class={baseToastClasses}
 			animate:flip={{ duration: 500 }}
-			transition:fly={{ duration: 250, x: '100%' }}
+			transition:scale={{ duration: 300 }}
 		>
 			<div class="flex items-center gap-2">
 				{#if toast.type === 'red'}
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						class={cn('h-5 w-5', svgColors[toast.type])}
-						><path d="M12 16h.01" /><path d="M12 8v4" /><path
-							d="M15.312 2a2 2 0 0 1 1.414.586l4.688 4.688A2 2 0 0 1 22 8.688v6.624a2 2 0 0 1-.586 1.414l-4.688 4.688a2 2 0 0 1-1.414.586H8.688a2 2 0 0 1-1.414-.586l-4.688-4.688A2 2 0 0 1 2 15.312V8.688a2 2 0 0 1 .586-1.414l4.688-4.688A2 2 0 0 1 8.688 2z"
-						/></svg
-					>
+					<CircleX class={cn('h-5 w-5', svgColors[toast.type])} />
 				{:else if toast.type === 'green'}
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						class={cn('h-5 w-5', svgColors[toast.type])}
-						><circle cx="12" cy="12" r="10" /><path d="m9 12 2 2 4-4" /></svg
-					>
+					<CircleCheckBig class={cn('h-5 w-5', svgColors[toast.type])} />
 				{:else}
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						class={cn('h-5 w-5', svgColors[toast.type])}
-						><path
-							d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"
-						/><path d="M12 9v4" /><path d="M12 17h.01" /></svg
-					>
+					<TriangleAlert class={cn('h-5 w-5', svgColors[toast.type])} />
 				{/if}
 
-				<strong class="block font-medium">{toast.title}</strong>
+				<strong class="block font-bold text-lg">{toast.title}</strong>
 			</div>
 
-			<p class="mb-0 mt-2 text-sm">
+			<p class="mb-0 mt-2 text-sm font-medium">
 				{@html toast.message}
 			</p>
 			<button
@@ -79,16 +46,7 @@
 				aria-label="Remove toast"
 				on:click={() => removeToast(toast.id)}
 			>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					viewBox="0 0 24 24"
-					fill="none"
-					stroke="currentColor"
-					stroke-width="2"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					class="size-5"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg
-				>
+				<X class="size-6" />
 			</button>
 		</div>
 	{/each}

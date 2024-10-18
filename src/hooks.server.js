@@ -16,15 +16,19 @@ export const handle = async ({ event, resolve }) => {
 			throw redirect(307, '/log-in');
 		}
 	}
-	if (url.pathname.startsWith('/app') && !locals.user) {
-		locals.user = undefined;
+	// User is not logged in and trying to access a protected route
+	if ((url.pathname.startsWith('/app') || url.pathname.startsWith('/api')) && !locals.user) {
+		cookies.delete('token', { path: '/' });
 		throw redirect(307, '/log-in');
 	}
+	// User is logged in and trying to access a public route
 	if (!url.pathname.startsWith('/app') && !url.pathname.startsWith('/api') && locals.user) {
 		throw redirect(307, '/app');
 	}
+	// User is logged in and trying to access an admin route without admin privileges
 	if (url.pathname.startsWith('/app/account/admin') && !locals.user.admin) {
 		throw redirect(307, '/app/account');
 	}
+
 	return resolve(event);
 };

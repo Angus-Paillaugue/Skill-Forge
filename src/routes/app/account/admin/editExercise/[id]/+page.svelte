@@ -4,20 +4,21 @@
 	import { fade, fly, scale } from 'svelte/transition';
 	import { PaneGroup, Pane, PaneResizer } from 'paneforge';
 	import { newToast } from '$lib/stores';
-	import { Pickaxe, Plus, Text, ScanEye, Code, X } from 'lucide-svelte';
+	import { Save, Plus, Text, ScanEye, Code, X } from 'lucide-svelte';
 
 	const { data } = $props();
+	const { exercise } = data;
 	const DIFFICULTIES = ['easy', 'medium', 'hard'];
 	let categories = $state(data.categories);
-	let title = $state('Title');
-	let description = $state('# Description\n');
+	let title = $state(exercise.title);
+	let description = $state(exercise.description);
 	// svelte-ignore state_referenced_locally
 	let category = $state(categories[0].id);
 	let isSaving = $state(false);
-	let tests = $state([{ input: '', expected_output: '' }]);
+	let tests = $state(exercise.tests);
 	let selectedTestIndex = $state(0);
-	let difficulty = $state(DIFFICULTIES[0]);
-	let startValue = $state('');
+	let difficulty = $state(exercise.difficulty);
+	let startValue = $state(exercise.content);
 	let editor = $state();
 	let createCategoryModalVisible = $state(false);
 	let isCreatingCategory = $state(false);
@@ -31,12 +32,13 @@
 	 */
 	async function save() {
 		isSaving = true;
-		const res = await fetch('/api/createExercise', {
+		const res = await fetch('/api/saveExercise', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
+				id: exercise.exercise_id,
 				title,
 				description,
 				category_id: category,
@@ -130,7 +132,7 @@
 </script>
 
 <svelte:head>
-	<title>Add exercise</title>
+	<title>Edit exercise</title>
 </svelte:head>
 
 {#if createCategoryModalVisible}
@@ -173,7 +175,7 @@
 	onclick={save}
 >
 	<div class="block relative size-5 text-green-600">
-		<Pickaxe
+		<Save
 			class={cn(
 				'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 duration-300 transition-all',
 				isSaving ? 'size-0' : 'size-5'
@@ -187,7 +189,7 @@
 			<Spinner class={cn('transition-all', isSaving ? 'size-5' : 'size-0')} />
 		</div>
 	</div>
-	Create
+	Save
 </button>
 
 <PaneGroup
@@ -205,7 +207,7 @@
 			>
 				<h1 class="text-2xl font-bold text-green-600">Success</h1>
 				<p>{success.message}</p>
-				<Button variant="link" href="/app/exercises/{success.id}" class="link"
+				<Button variant="link" href="/app/exercises/{exercise.exercise_id}" class="link"
 					>Go to exercise</Button
 				>
 			</div>

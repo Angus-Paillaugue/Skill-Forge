@@ -8,21 +8,37 @@
 	import { newToast } from '$lib/stores';
 	import { PaneGroup, Pane, PaneResizer } from 'paneforge';
 	import JSConfetti from 'js-confetti';
+	import { Play, CloudDownload, AlarmClock, AlarmClockOff, Pause } from 'lucide-svelte';
+	import { scale, slide } from 'svelte/transition';
 
 	const { data } = $props();
 	const { exercise } = data;
+	const RATE_LIMITING_TIMEOUT = 2000;
 
-	const jsConfetti = new JSConfetti();
-	let value = $state(exercise?.submission || exercise.content);
+	let jsConfetti = $state();
 	let isRunning = $state(false);
 	let latestRunnedTestsResults = $state(null);
 	let isSubmitting = $state(false);
 	let editor = $state();
 	let submissions = $state(exercise.submissions);
+	let value = $state(exercise.content);
 	let mobileActiveTabIndex = $state(0);
+	let leftPaneActiveIndex = $state(0);
+	let timer = $state(null);
+	let timerInterval = $state();
+	let rateLimiting = $state(false);
+	let hasBeenWarnedRateLimiting = $state(false);
 
 	onMount(async () => {
 		window.addEventListener('keydown', handleShortcut);
+		jsConfetti = new JSConfetti();
+		if (exercise.submissions.length > 0) {
+			value = exercise.submissions[0].submission;
+		}
+
+		return () => {
+			window.removeEventListener('keydown', handleShortcut);
+		};
 	});
 
 	/**
@@ -32,6 +48,7 @@
 	 */
 	function handleShortcut(event) {
 		if (event.ctrlKey && event.key === 'Enter') {
+			console.log('Shortcut triggered');
 			runCode();
 		}
 	}
@@ -41,7 +58,14 @@
 	 * It handles the process of sending the solution to the server for validation or storage.
 	 */
 	async function submitSolution() {
+		if (hasBeenWarnedRateLimiting || isSubmitting) return;
+		if (rateLimiting) {
+			hasBeenWarnedRateLimiting = true;
+			newToast({ type: 'red', message: 'Please wait a moment before submitting again.' });
+			return;
+		}
 		isSubmitting = true;
+		rateLimiting = true;
 		try {
 			const res = await fetch('/api/submitSolution', {
 				method: 'POST',
@@ -71,12 +95,17 @@
 				exercise.submissions = [data.submission, ...exercise.submissions];
 				submissions = exercise.submissions;
 				jsConfetti.addConfetti();
+				leftPaneActiveIndex = 1;
 			}
 		} catch (error) {
 			newToast({ type: 'red', message: error.message });
 		} finally {
 			editor.resetEditorLayout();
 			isSubmitting = false;
+			setTimeout(() => {
+				rateLimiting = false;
+				hasBeenWarnedRateLimiting = false;
+			}, RATE_LIMITING_TIMEOUT);
 		}
 	}
 
@@ -87,7 +116,15 @@
 	 * @function runCode
 	 */
 	async function runCode() {
+		if (hasBeenWarnedRateLimiting || isRunning) return;
+		if (rateLimiting) {
+			hasBeenWarnedRateLimiting = true;
+			newToast({ type: 'red', message: 'Please wait a moment before submitting again.' });
+			return;
+		}
+		rateLimiting = true;
 		isRunning = true;
+
 		const res = await fetch('/api/runTests', {
 			method: 'POST',
 			headers: {
@@ -101,9 +138,11 @@
 		const data = await res.json();
 
 		latestRunnedTestsResults = data;
-		editor.resetEditorLayout();
 		mobileActiveTabIndex = 2;
-		const isSolutionAccepted = data.every((test) => test.passed);
+		if (editor) editor.resetEditorLayout();
+
+		// Check if all tests passed
+		const isSolutionAccepted = data.results.every((test) => test.passed);
 		if (isSolutionAccepted) {
 			newToast({ type: 'green', message: 'All tests passed!', timeout: 1500 });
 		} else {
@@ -111,7 +150,42 @@
 		}
 
 		isRunning = false;
+
+		setTimeout(() => {
+			rateLimiting = false;
+			hasBeenWarnedRateLimiting = false;
+		}, RATE_LIMITING_TIMEOUT);
 	}
+
+	function formatTime(secs) {
+		const pad = (n) => (n < 10 ? `0${n}` : n);
+		const h = Math.floor(secs / 3600);
+		const m = Math.floor(secs / 60) - h * 60;
+		const s = Math.floor(secs - h * 3600 - m * 60);
+
+		return `${pad(h)}:${pad(m)}:${pad(s)}`;
+	}
+
+	const startTimer = () => {
+		timer = 0;
+		timerInterval = setInterval(() => {
+			timer++;
+		}, 1000);
+	};
+	const pauseTimer = () => {
+		clearInterval(timerInterval);
+		timerInterval = null;
+	};
+	const playTimer = () => {
+		timerInterval = setInterval(() => {
+			timer++;
+		}, 1000);
+	};
+	const clearTimer = () => {
+		clearInterval(timerInterval);
+		timerInterval = null;
+		timer = null;
+	};
 </script>
 
 <svelte:head>
@@ -119,83 +193,122 @@
 </svelte:head>
 
 <!-- Code action buttons -->
-<div
-	class="grid grid-cols-2 z-20 items-center gap-px absolute max-lg:bottom-4 lg:top-2 left-1/2 -translate-x-1/2"
->
-	<!-- Run button -->
-	<Tooltip
-		content="Run <kbd>CTRL</kbd> <kbd>Enter</kbd>"
-		delay={100}
-		class="w-fit ml-auto"
-		position="bottom"
-	>
+<div class="z-20 absolute max-lg:bottom-4 lg:top-2 w-52 left-1/2 -ml-[6.5rem]">
+	<div class="grid grid-cols-2 items-center gap-px relative">
+		<!-- Run button -->
+		<Tooltip content="Run <kbd>CTRL</kbd> <kbd>Enter</kbd>" delay={100} position="bottom">
+			<button
+				class="px-2 py-2 w-full text-center justify-center text-base rounded-l-lg font-medium text-neutral-300 bg-neutral-900 lg:bg-neutral-800 flex flex-row items-center gap-2"
+				onclick={() => {
+					runCode();
+				}}
+			>
+				<div class="block relative size-5">
+					<Play
+						class={cn(
+							'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 fill-neutral-300 duration-300 transition-all',
+							isRunning ? 'size-0' : 'size-5'
+						)}
+					/>
+					<div
+						class={cn(
+							'duration-300 transition-all absolute size-5 flex flex-col items-center justify-center top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'
+						)}
+					>
+						<Spinner class={cn('transition-all', isRunning ? 'size-5' : 'size-0')} />
+					</div>
+				</div>
+				Run
+			</button>
+		</Tooltip>
+		<!-- Submit button -->
 		<button
-			class="px-2 py-2 text-base rounded-l-lg font-medium text-neutral-300 bg-neutral-900 lg:bg-neutral-800 flex flex-row items-center gap-2"
-			onclick={() => {
-				runCode();
-			}}
+			class="px-2 py-2 text-base rounded-r-lg font-medium text-green-600 bg-neutral-900 lg:bg-neutral-800 flex flex-row items-center gap-2"
+			onclick={submitSolution}
 		>
 			<div class="block relative size-5">
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					viewBox="0 0 24 24"
-					fill="currentColor"
-					stroke="currentColor"
-					stroke-width="2"
-					stroke-linecap="round"
-					stroke-linejoin="round"
+				<CloudDownload
 					class={cn(
 						'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 duration-300 transition-all',
-						isRunning ? 'size-0' : 'size-5'
-					)}><polygon points="6 3 20 12 6 21 6 3" /></svg
-				>
+						isSubmitting ? 'size-0' : 'size-5'
+					)}
+				/>
 				<div
 					class={cn(
 						'duration-300 transition-all absolute size-5 flex flex-col items-center justify-center top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'
 					)}
 				>
-					<Spinner class={cn('transition-all', isRunning ? 'size-5' : 'size-0')} />
+					<Spinner class={cn('transition-all', isSubmitting ? 'size-5' : 'size-0')} />
 				</div>
 			</div>
-			Run
+			Submit
 		</button>
-	</Tooltip>
-	<!-- Submit button -->
-	<button
-		class="px-2 py-2 text-base rounded-r-lg font-medium text-green-600 bg-neutral-900 lg:bg-neutral-800 flex flex-row items-center gap-2"
-		onclick={submitSolution}
-	>
-		<div class="block relative size-5">
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				viewBox="0 0 24 24"
-				fill="none"
-				stroke="currentColor"
-				stroke-width="2"
-				stroke-linecap="round"
-				stroke-linejoin="round"
-				class={cn(
-					'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 duration-300 transition-all',
-					isSubmitting ? 'size-0' : 'size-5'
-				)}
-				><path d="M12 13v8l-4-4" /><path d="m12 21 4-4" /><path
-					d="M4.393 15.269A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.436 8.284"
-				/></svg
-			>
-			<div
-				class={cn(
-					'duration-300 transition-all absolute size-5 flex flex-col items-center justify-center top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'
-				)}
-			>
-				<Spinner class={cn('transition-all', isSubmitting ? 'size-5' : 'size-0')} />
+
+		<div
+			class="absolute -top-full max-lg:-translate-x-1/2 max-lg:-mt-2 max-lg:left-1/2 lg:left-full lg:ml-2 lg:top-0 rounded-lg overflow-hidden"
+		>
+			<div class="flex flex-row gap-px">
+				<Tooltip
+					content={timerInterval ? 'Reset timer' : 'Start timer'}
+					delay={100}
+					class="size-10 bg-neutral-800"
+					position="bottom"
+				>
+					<button
+						aria-label="Start timer"
+						class="flex flex-col items-center justify-center size-10 text-neutral-300 bg-neutral-900 lg:bg-neutral-800"
+						onclick={() => {
+							if (timerInterval) clearTimer();
+							else startTimer();
+						}}
+					>
+						{#if timer == null}
+							<span in:scale>
+								<AlarmClock class="size-5" />
+							</span>
+						{:else}
+							<span in:scale>
+								<AlarmClockOff class="size-5" />
+							</span>
+						{/if}
+					</button>
+				</Tooltip>
+				{#if timer !== null}
+					<div class="flex flex-row gap-px w-fit" transition:slide={{ axis: 'x', duration: 700 }}>
+						<!-- Time display -->
+						<div
+							class="flex flex-col items-center px-2 justify-center text-center text-neutral-400 h-10 bg-neutral-900 lg:bg-neutral-800"
+						>
+							{formatTime(timer)}
+						</div>
+						<!-- Play/Pause button -->
+						<button
+							class="flex size-10 shrink-0 bg-neutral-900 text-neutral-300 lg:bg-neutral-800 flex-col items-center justify-center"
+							aria-label="Reset timer"
+							onclick={() => {
+								if (timerInterval) pauseTimer();
+								else playTimer();
+							}}
+						>
+							{#if timerInterval}
+								<span in:scale>
+									<Pause class="size-5" />
+								</span>
+							{:else}
+								<span in:scale>
+									<Play class="size-5 fill-neutral-300" />
+								</span>
+							{/if}
+						</button>
+					</div>
+				{/if}
 			</div>
 		</div>
-		Submit
-	</button>
+	</div>
 </div>
 
 <!-- Main content on < lg screen size -->
-<div class="max-lg:flex hidden flex-col grow overflow-hidden">
+<div class="max-lg:flex hidden flex-col grow !h-[calc(100vh-4rem)] overflow-hidden">
 	<div
 		class="grid mb-2 grid-cols-3 shrink-0 rounded-full flex-nowrap overflow-x-auto bg-neutral-800"
 	>
@@ -225,8 +338,8 @@
 		class="grid grid-cols-3 grow no-scrollbar w-[calc(300%+2rem)] gap-4 transition-transform overflow-hidden"
 		style="transform: translateX(-{(mobileActiveTabIndex * 100) / 2.974}%);"
 	>
-		<div class="flex flex-col grow">
-			<LeftPane {exercise} bind:value bind:editor bind:submissions />
+		<div class="flex flex-col overflow-y-auto">
+			<LeftPane {exercise} bind:leftPaneActiveIndex bind:value bind:editor bind:submissions />
 		</div>
 		<div class="flex flex-col grow">
 			<Editor {exercise} bind:editor bind:value {runCode} />
@@ -245,13 +358,13 @@
 	autoSaveId="exercisePage"
 >
 	<!-- Left part -->
-	<Pane defaultSize={50} class="flex flex-col gap-2">
-		<LeftPane {exercise} bind:value bind:editor bind:submissions />
+	<Pane defaultSize={50} class="flex flex-col">
+		<LeftPane {exercise} bind:leftPaneActiveIndex bind:value bind:editor bind:submissions />
 	</Pane>
 	<PaneResizer class="relative flex w-2 items-center justify-center group">
 		<div class="flex h-7 w-[2px] items-center justify-center rounded-sm bg-neutral-700"></div>
 		<div
-			class="absolute top-0 rounded-full transition-colors bottom-0 w-[2px] left-1/2 -translate-x-1/2 group-hover:bg-blue-600"
+			class="absolute top-0 rounded-full transition-colors bottom-0 w-[2px] left-1/2 -translate-x-1/2 group-hover:bg-neutral-500"
 		></div>
 	</PaneResizer>
 
