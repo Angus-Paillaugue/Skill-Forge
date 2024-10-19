@@ -61,7 +61,7 @@
 		if (hasBeenWarnedRateLimiting || isSubmitting) return;
 		if (rateLimiting) {
 			hasBeenWarnedRateLimiting = true;
-			newToast({ type: 'red', message: 'Please wait a moment before submitting again.' });
+			newToast({ type: 'red', message: 'Please wait a moment before submitting again.', timeout: RATE_LIMITING_TIMEOUT });
 			return;
 		}
 		isSubmitting = true;
@@ -119,7 +119,7 @@
 		if (hasBeenWarnedRateLimiting || isRunning) return;
 		if (rateLimiting) {
 			hasBeenWarnedRateLimiting = true;
-			newToast({ type: 'red', message: 'Please wait a moment before submitting again.' });
+			newToast({ type: 'red', message: 'Please wait a moment before submitting again.', timeout: RATE_LIMITING_TIMEOUT });
 			return;
 		}
 		rateLimiting = true;

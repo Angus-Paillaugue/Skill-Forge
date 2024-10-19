@@ -6,7 +6,39 @@ import jwt from 'jsonwebtoken';
 import { AUTH_TOKEN_SECRET } from '$env/static/private';
 
 export const actions = {
-	default: async ({ cookies, request }) => {
+	logIn: async ({ cookies, request }) => {
+		const formData = Object.fromEntries(await request.formData());
+		const { username, password } = formData;
+		const db = await createConnection();
+
+		// Check if username is provided
+		if (!username) return fail(400, { error: 'Please provide a username!' });
+
+		// Check if password is provided and is at least 6 characters long
+		if (!password || password.length < 6) return fail(400, { error: 'Incorrect password!' });
+
+		// Check if user exists
+		const [userExistsUsername] = await db.query('SELECT * FROM users WHERE BINARY username = ?', [
+			username
+		]);
+
+		// If user does not exist, return error
+		if (userExistsUsername.length === 0)
+			return fail(400, { error: 'No account with this username!' });
+
+		const user = userExistsUsername[0];
+		const compare = await bcrypt.compare(password, user.password_hash);
+		if (compare) {
+			cookies.set('token', generateAccessToken(username), {
+				path: '/',
+				maxAge: 60 * 60 * 24,
+				secure: false
+			});
+			throw redirect(307, '/app');
+		}
+		return fail(400, { error: 'Incorrect password!' });
+	},
+	signUp: async ({ cookies, request }) => {
 		const formData = Object.fromEntries(await request.formData());
 		const { username, password } = formData;
 		const db = await createConnection();
@@ -23,6 +55,12 @@ export const actions = {
 		if (!/^[a-zA-Z0-9]+$/.test(username))
 			return fail(400, {
 				error: 'Usernames can only be composed of letters and numbers !'
+			});
+
+		// Validate username (at least 3 characters long)
+		if (username.length < 3)
+			return fail(400, {
+				error: 'Usernames must be at least 3 characters long !'
 			});
 
 		// Validate password (at least 6 characters long)

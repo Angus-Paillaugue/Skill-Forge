@@ -1,5 +1,7 @@
 # TODO
 
+- [x] (WIP : only hero) Make a homepage
+- [x] Add search for problems
 - [x] Add word wrap toggle to editor
 - [x] Add rate limiting to test running and submitting solutions
 - [x] Make toasts prettier
@@ -18,6 +20,5 @@
 - [x] Make the website ~~somewhat~~ responsive
 - [x] Add a user dashboard
 - [ ] Fix random exercise page not reloading current exercise if already on the exercise page
-- [ ] Make a homepage
 - [ ] Make a logo
-- [ ] Add search for problems
+- [ ] Add other supported languages

@@ -8,6 +8,12 @@
 
 	const { data } = $props();
 	const { latestExercises } = data;
+	const DIFFICULTY_MAP = new Map([
+		['easy', 1],
+		['medium', 2],
+		['hard', 3]
+	]);
+
 
 	let sortedExercises = $state(latestExercises);
 	let filteredExercises = $state(latestExercises);
@@ -44,8 +50,12 @@
 	 * @param {string} way - The way to sort the items (e.g., 'alphabetical', 'numerical').
 	 */
 	function sort(order, way) {
+		// Sort the exercises based on the specified order
+		// If the order is 'solved' or 'title', use the localeCompare method to sort the items alphabetically
+		// If the order is 'created_at', sort the items based on the date
+		// If the order is 'difficulty', sort the items based on the difficulty level (easy, medium, hard) using the DIFFICULTY_MAP to get their weight
 		let exercises = filteredExercises.sort((a, b) =>
-			typeof a[order] === 'string' ? a[order].localeCompare(b[order]) : a[order] - b[order]
+			order==='solved'||order==='title' ? a[order].localeCompare(b[order]) : order==='created_at' ? a[order] - b[order] : DIFFICULTY_MAP.get(a[order]) - DIFFICULTY_MAP.get(b[order])
 		);
 		if (way === 'DESC') exercises = exercises.reverse();
 

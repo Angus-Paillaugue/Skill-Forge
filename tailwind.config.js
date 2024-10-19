@@ -35,6 +35,16 @@ export default {
 					fontVariantLigatures: 'none'
 				}
 			});
+		}),
+		plugin(({ addUtilities }) => {
+			addUtilities({
+				'.text-wrap-none': {
+					textWrap: 'none'
+				},
+				'.text-wrap-balance': {
+					textWrap: 'balance'
+				}
+			});
 		})
 	]
 };
