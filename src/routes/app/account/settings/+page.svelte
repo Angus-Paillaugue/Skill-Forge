@@ -9,6 +9,12 @@
 
 	let isSavingInfos = $state(false);
 	let isChangingPassword = $state(false);
+	let updatedUser = $state(user);
+	let hasChangedInfos = $state(false);
+
+	$effect(() => {
+		hasChangedInfos = Object.entries(updatedUser).some(([k, v]) => v !== user[k]);
+	});
 
 	$effect(() => {
 		if (form?.error) {
@@ -18,6 +24,10 @@
 		}
 	});
 </script>
+
+<svelte:head>
+	<title>Settings</title>
+</svelte:head>
 
 <main
 	class="flex-1 flex flex-col gap-10 p-4 sm:px-6 sm:py-0 md:gap-8 max-w-screen-lg w-full mx-auto"
@@ -47,13 +57,14 @@
 			<Input
 				id="username"
 				label="Username"
-				value={user.username}
+				bind:value={updatedUser.username}
 				placeholder="Username"
 				class="h-12"
 			/>
 
 			<button
-				class="bg-neutral-700 p-2 w-full mt-4 rounded-xl text-base font-semibold flex items-center justify-center flex-row gap-2"
+				class="bg-neutral-700 p-2 w-full mt-4 rounded-xl text-base font-semibold flex items-center justify-center flex-row gap-2 transition-all disabled:cursor-not-allowed disabled:opacity-50"
+				disabled={!hasChangedInfos}
 			>
 				{#if isSavingInfos}
 					<Spinner class="size-5" />

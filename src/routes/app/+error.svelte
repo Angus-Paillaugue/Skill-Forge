@@ -2,6 +2,10 @@
 	import { page } from '$app/stores';
 </script>
 
+<svelte:head>
+	<title>Error {$page.status}</title>
+</svelte:head>
+
 {#if $page.status === 404}
 	<div class="mx-auto w-full grow p-4 md:max-w-[888px] md:p-6 lg:max-w-screen-xl">
 		<div

@@ -2,21 +2,21 @@ import { json } from '@sveltejs/kit';
 import { createConnection } from '$lib/server/db';
 
 export async function POST({ request, locals }) {
-	const { title, description, difficulty, tests, content, category_id } = await request.json();
+	const { title, description, difficulty, tests, content, learning_path_id } = await request.json();
 	const { user } = locals;
 	if (!user.admin) {
 		return json({ message: 'Unauthorized' }, { status: 401 });
 	}
 
-	if (!title || !description || !difficulty || !tests || !content || !category_id) {
+	if (!title || !description || !difficulty || !tests || !content || !learning_path_id) {
 		return json({ message: 'Missing required fields' }, { status: 400 });
 	}
 
 	const db = await createConnection();
 	try {
 		const [newExercise] = await db.query(
-			'INSERT INTO exercises (title, description, content, difficulty, category_id) VALUES (?, ?, ?, ?, ?)',
-			[title, description, content, difficulty, category_id]
+			'INSERT INTO exercises (title, description, content, difficulty, learning_path_id) VALUES (?, ?, ?, ?, ?)',
+			[title, description, content, difficulty, learning_path_id]
 		);
 		const newExerciseId = newExercise.insertId;
 		for (const test of tests) {

@@ -25,7 +25,7 @@
 	let mobileActiveTabIndex = $state(0);
 	let leftPaneActiveIndex = $state(0);
 	let timer = $state(null);
-	let timerInterval = $state();
+	let timerInterval = $state(null);
 	let rateLimiting = $state(false);
 	let hasBeenWarnedRateLimiting = $state(false);
 
@@ -48,7 +48,6 @@
 	 */
 	function handleShortcut(event) {
 		if (event.ctrlKey && event.key === 'Enter') {
-			console.log('Shortcut triggered');
 			runCode();
 		}
 	}
@@ -157,6 +156,12 @@
 		}, RATE_LIMITING_TIMEOUT);
 	}
 
+	/**
+	 * Formats a given time in seconds into a human-readable string.
+	 *
+	 * @param {number} secs - The time in seconds to be formatted.
+	 * @returns {string} The formatted time string.
+	 */
 	function formatTime(secs) {
 		const pad = (n) => (n < 10 ? `0${n}` : n);
 		const h = Math.floor(secs / 3600);
@@ -244,6 +249,7 @@
 			Submit
 		</button>
 
+		<!-- Timer -->
 		<div
 			class="absolute -top-full max-lg:-translate-x-1/2 max-lg:-mt-2 max-lg:left-1/2 lg:left-full lg:ml-2 lg:top-0 rounded-lg overflow-hidden"
 		>
@@ -258,22 +264,22 @@
 						aria-label="Start timer"
 						class="flex flex-col items-center justify-center size-10 text-neutral-300 bg-neutral-900 lg:bg-neutral-800"
 						onclick={() => {
-							if (timerInterval) clearTimer();
+							if (timer || timerInterval) clearTimer();
 							else startTimer();
 						}}
 					>
-						{#if timer == null}
+						{#if timer || timerInterval}
 							<span in:scale>
-								<AlarmClock class="size-5" />
+								<AlarmClockOff class="size-5" />
 							</span>
 						{:else}
 							<span in:scale>
-								<AlarmClockOff class="size-5" />
+								<AlarmClock class="size-5" />
 							</span>
 						{/if}
 					</button>
 				</Tooltip>
-				{#if timer !== null}
+				{#if timer || timerInterval}
 					<div class="flex flex-row gap-px w-fit" transition:slide={{ axis: 'x', duration: 700 }}>
 						<!-- Time display -->
 						<div
@@ -286,11 +292,11 @@
 							class="flex size-10 shrink-0 bg-neutral-900 text-neutral-300 lg:bg-neutral-800 flex-col items-center justify-center"
 							aria-label="Reset timer"
 							onclick={() => {
-								if (timerInterval) pauseTimer();
+								if (timerInterval !== null) pauseTimer();
 								else playTimer();
 							}}
 						>
-							{#if timerInterval}
+							{#if timerInterval !== null}
 								<span in:scale>
 									<Pause class="size-5" />
 								</span>

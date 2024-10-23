@@ -13,17 +13,18 @@ export async function POST({ request, locals }) {
 
 	const db = await createConnection();
 	try {
-		// Check if category already exists
-		const [categoryExists] = await db.query(
+		// Check if learning path already exists
+		const [learningPathExists] = await db.query(
 			`
 			SELECT id FROM categories WHERE name = ?`,
 			[name]
 		);
-		if (categoryExists.length) return json({ message: 'Category already exists' }, { status: 400 });
+		if (learningPathExists.length)
+			return json({ message: 'Learning path already exists' }, { status: 400 });
 
 		// Create category
-		const [newCategory] = await db.query('INSERT INTO categories (name) VALUES (?)', [name]);
-		return json({ id: newCategory.insertId, name });
+		const [newPath] = await db.query('INSERT INTO categories (name) VALUES (?)', [name]);
+		return json({ id: newPath.insertId, name });
 	} catch (error) {
 		return json({ message: 'Error creating exercise : ' + error }, { status: 500 });
 	} finally {

@@ -13,13 +13,13 @@ export const handle = async ({ event, resolve }) => {
 		} else {
 			cookies.delete('token', { path: '/' });
 			locals.user = undefined;
-			throw redirect(307, '/log-in');
+			throw redirect(307, '/');
 		}
 	}
 	// User is not logged in and trying to access a protected route
 	if ((url.pathname.startsWith('/app') || url.pathname.startsWith('/api')) && !locals.user) {
 		cookies.delete('token', { path: '/' });
-		throw redirect(307, '/log-in');
+		throw redirect(307, '/');
 	}
 	// User is logged in and trying to access a public route
 	if (!url.pathname.startsWith('/app') && !url.pathname.startsWith('/api') && locals.user) {

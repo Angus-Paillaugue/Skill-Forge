@@ -56,6 +56,13 @@
 		tooltip.addEventListener('mouseleave', hideTooltip);
 		tooltip.addEventListener('focus', showTooltip);
 		tooltip.addEventListener('blur', hideTooltip);
+		tooltip.addEventListener('click', showTooltip);
+
+		// Hide tooltip when clicking outside of it
+		document.addEventListener('click', (e) => {
+			if (isHovered && !tooltip.contains(e.target) && !tooltipContent.contains(e.target))
+				hideTooltip();
+		});
 
 		window.addEventListener('scroll', hideTooltip);
 		window.addEventListener('resize', hideTooltip);

@@ -1,5 +1,6 @@
 # TODO
 
+- [x] Add learning paths instead of categories
 - [x] (WIP : only hero) Make a homepage
 - [x] Add search for problems
 - [x] Add word wrap toggle to editor

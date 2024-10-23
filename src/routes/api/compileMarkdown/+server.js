@@ -1,4 +1,4 @@
-import compileMarkdown from '$lib/server/compileMarkdown';
+import { compileMarkdown } from '$lib/server/markdown';
 
 export async function POST({ request }) {
 	const { text } = await request.json();

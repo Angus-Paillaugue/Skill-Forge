@@ -55,7 +55,7 @@
 		// If the order is 'created_at', sort the items based on the date
 		// If the order is 'difficulty', sort the items based on the difficulty level (easy, medium, hard) using the DIFFICULTY_MAP to get their weight
 		let exercises = filteredExercises.sort((a, b) =>
-			order==='solved'||order==='title' ? a[order].localeCompare(b[order]) : order==='created_at' ? a[order] - b[order] : DIFFICULTY_MAP.get(a[order]) - DIFFICULTY_MAP.get(b[order])
+			order==='title' ? a[order].localeCompare(b[order]) : order==='created_at' ? new Date(a[order]) - new Date(b[order]) : order==='solved' ? a[order]-b[order] : DIFFICULTY_MAP.get(a[order]) - DIFFICULTY_MAP.get(b[order])
 		);
 		if (way === 'DESC') exercises = exercises.reverse();
 

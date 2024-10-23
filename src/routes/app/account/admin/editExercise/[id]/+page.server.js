@@ -16,7 +16,6 @@ export async function load({ params }) {
 					e.content,
 					e.difficulty,
 					e.created_at,
-					cat.name AS category_name,
 					-- Subquery to get tests without duplication
 					(
 						SELECT
@@ -28,8 +27,6 @@ export async function load({ params }) {
 					) AS tests
 			FROM
 					exercises e
-			LEFT JOIN
-					categories cat ON e.category_id = cat.id
 			WHERE
 					e.id = ?
 			GROUP BY

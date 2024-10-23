@@ -6,6 +6,11 @@
 	--tw-neutral-800: theme(colors.neutral.800);
 }
 
+::selection,
+::-moz-selection {
+	@apply text-neutral-900 bg-neutral-100;
+}
+
 @layer utilities {
 	/* Hide scrollbar for Chrome, Safari and Opera */
 	.no-scrollbar::-webkit-scrollbar {

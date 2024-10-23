@@ -65,10 +65,75 @@ export function cn(...inputs) {
 	return twMerge(clsx(inputs));
 }
 
+/**
+ * Converts a number of bytes into a human-readable string with the appropriate unit.
+ *
+ * @param {number} bytes - The number of bytes to be converted.
+ * @param {number} [decimals=2] - The number of decimal places to include in the formatted string.
+ * @returns {string} The formatted string representing the bytes in a human-readable format.
+ */
 export function formatBytes(bytes, decimals = 2) {
 	if (bytes == 0) return '0 Bytes';
 	const k = 1024,
 		sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
 		i = Math.floor(Math.log(bytes) / Math.log(k));
 	return parseFloat((bytes / Math.pow(k, i)).toFixed(decimals)) + ' ' + sizes[i];
+}
+
+/**
+ * Strips various Markdown elements from a given string.
+ *
+ * @param {string} markdown - The Markdown string to be stripped.
+ * @returns {string} - The cleaned text with Markdown elements removed.
+ *
+ * The function performs the following operations:
+ * - Strips headers
+ * - Strips emphasis (bold, italic, etc.)
+ * - Strips strikethrough
+ * - Strips inline code
+ * - Strips blockquotes
+ * - Strips links (keeps the link text)
+ * - Strips images (keeps the alt text)
+ * - Strips unordered lists
+ * - Strips ordered lists
+ * - Strips horizontal rules
+ * - Strips code blocks
+ */
+export function stripMD(markdown) {
+    // Strip headers
+    let text = markdown.replace(/^#{1,6}\s+/gm, '');
+
+    // Strip emphasis (bold, italic, etc.)
+    text = text.replace(/(\*\*|__)(.*?)\1/g, '$2')   // bold
+               .replace(/(\*|_)(.*?)\1/g, '$2');     // italic
+
+    // Strip strikethrough
+    text = text.replace(/~~(.*?)~~/g, '$1');
+
+    // Strip inline code
+    text = text.replace(/`([^`]+)`/g, '$1');
+
+    // Strip blockquotes
+    text = text.replace(/^\s*>+/gm, '');
+
+    // Strip links (keep the link text)
+    text = text.replace(/\[([^\]]+)]\([^)]+\)/g, '$1');
+
+    // Strip images (keep the alt text)
+    text = text.replace(/!\[([^\]]*)]\([^)]+\)/g, '$1');
+
+    // Strip unordered lists
+    text = text.replace(/^\s*[*+-]\s+/gm, '');
+
+    // Strip ordered lists
+    text = text.replace(/^\d+\.\s+/gm, '');
+
+    // Strip horizontal rules
+    text = text.replace(/^-{3,}$/gm, '');
+
+    // Strip code blocks
+    text = text.replace(/```[\s\S]*?```/g, '');
+
+    // Return the cleaned text
+    return text.trim();
 }

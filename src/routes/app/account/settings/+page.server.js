@@ -1,8 +1,7 @@
 import { fail } from '@sveltejs/kit';
 import { createConnection } from '$lib/server/db';
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-import { AUTH_TOKEN_SECRET } from '$env/static/private';
+import { generateAccessToken } from '$lib/server/auth';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ locals }) {
@@ -44,6 +43,9 @@ export const actions = {
 		const { username } = formData;
 		const db = await createConnection();
 		try {
+			const [usernameIsTaken] = await db.query('SELECT * FROM users WHERE username = ?', [username]);
+			if (usernameIsTaken.length > 0)
+				return fail(400, { error: 'Username is already taken!' });
 			await db.query('UPDATE users SET username = ? WHERE id = ?', [username, user.id]);
 			// Update user in locals
 			locals.user.username = username;
@@ -62,7 +64,3 @@ export const actions = {
 		}
 	}
 };
-
-function generateAccessToken(username) {
-	return jwt.sign(username, AUTH_TOKEN_SECRET);
-}

@@ -42,9 +42,6 @@
 		<!-- Exercise description -->
 		{#if leftPaneActiveIndex === 0}
 			<div class="flex flex-row items-center justify-between">
-				<div class="block px-2 py-2 rounded-lg bg-neutral-700 text-base font-semibold w-fit">
-					{exercise.category_name}
-				</div>
 				{#if exercise?.submissions?.length > 0}
 					<div class="flex flex-row items-center gap-2">
 						Solved

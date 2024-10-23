@@ -30,4 +30,8 @@ async function auth(token) {
 	}
 }
 
-export { auth };
+function generateAccessToken(username) {
+	return jwt.sign(username, AUTH_TOKEN_SECRET);
+}
+
+export { auth, generateAccessToken };

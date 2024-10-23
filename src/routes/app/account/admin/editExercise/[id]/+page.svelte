@@ -41,7 +41,7 @@
 				id: exercise.exercise_id,
 				title,
 				description,
-				category_id: category,
+				learning_path_id: category,
 				difficulty,
 				tests,
 				content: startValue
@@ -132,7 +132,7 @@
 </script>
 
 <svelte:head>
-	<title>Edit exercise</title>
+	<title>Edit an exercise</title>
 </svelte:head>
 
 {#if createCategoryModalVisible}

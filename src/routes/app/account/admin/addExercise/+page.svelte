@@ -39,7 +39,7 @@
 			body: JSON.stringify({
 				title,
 				description,
-				category_id: category,
+				learning_path_id: category,
 				difficulty,
 				tests,
 				content: startValue
@@ -130,7 +130,7 @@
 </script>
 
 <svelte:head>
-	<title>Add exercise</title>
+	<title>Add an exercise</title>
 </svelte:head>
 
 {#if createCategoryModalVisible}

@@ -1,6 +1,6 @@
 import { createConnection } from '$lib/server/db';
 import { error } from '@sveltejs/kit';
-import compileMarkdown from '$lib/server/compileMarkdown';
+import { compileMarkdown } from '$lib/server/markdown';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ locals, params }) {
@@ -17,7 +17,6 @@ export async function load({ locals, params }) {
                 e.content,
                 e.difficulty,
                 e.created_at,
-                cat.name AS category_name,
                 -- Subquery to get tests without duplication
                 (SELECT
                     JSON_ARRAYAGG(
@@ -43,12 +42,10 @@ export async function load({ locals, params }) {
                 exercises e
             LEFT JOIN
                 submissions uep ON e.id = uep.exercise_id AND uep.user_id = ?
-            LEFT JOIN
-                categories cat ON e.category_id = cat.id
             WHERE
                 e.id = ?
             GROUP BY
-                e.id, e.title, e.description, e.content, e.difficulty, e.created_at, cat.name;
+                e.id, e.title, e.description, e.content, e.difficulty, e.created_at;
         `,
 			[user.id, exerciseId]
 		);
