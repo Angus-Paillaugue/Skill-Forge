@@ -17,6 +17,6 @@
 	</a>
 {:else}
 	<button class={cn(baseClasses, variantClasses[variant], className)} {...props}>
-		{@render children()}
+		{#if children} {@render children()} {/if}
 	</button>
 {/if}
