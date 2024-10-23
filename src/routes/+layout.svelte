@@ -1,12 +1,10 @@
 <script>
 	import '../app.css';
 	import '../code.css';
-	import { Toasts, Analytics } from '$lib/components';
+	import { Toasts } from '$lib/components';
 
 	const { children } = $props();
 </script>
-
-<Analytics />
 
 <Toasts />
 
