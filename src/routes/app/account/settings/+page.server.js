@@ -43,9 +43,10 @@ export const actions = {
 		const { username } = formData;
 		const db = await createConnection();
 		try {
-			const [usernameIsTaken] = await db.query('SELECT * FROM users WHERE username = ?', [username]);
-			if (usernameIsTaken.length > 0)
-				return fail(400, { error: 'Username is already taken!' });
+			const [usernameIsTaken] = await db.query('SELECT * FROM users WHERE username = ?', [
+				username
+			]);
+			if (usernameIsTaken.length > 0) return fail(400, { error: 'Username is already taken!' });
 			await db.query('UPDATE users SET username = ? WHERE id = ?', [username, user.id]);
 			// Update user in locals
 			locals.user.username = username;

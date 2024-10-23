@@ -100,40 +100,41 @@ export function formatBytes(bytes, decimals = 2) {
  * - Strips code blocks
  */
 export function stripMD(markdown) {
-    // Strip headers
-    let text = markdown.replace(/^#{1,6}\s+/gm, '');
+	// Strip headers
+	let text = markdown.replace(/^#{1,6}\s+/gm, '');
 
-    // Strip emphasis (bold, italic, etc.)
-    text = text.replace(/(\*\*|__)(.*?)\1/g, '$2')   // bold
-               .replace(/(\*|_)(.*?)\1/g, '$2');     // italic
+	// Strip emphasis (bold, italic, etc.)
+	text = text
+		.replace(/(\*\*|__)(.*?)\1/g, '$2') // bold
+		.replace(/(\*|_)(.*?)\1/g, '$2'); // italic
 
-    // Strip strikethrough
-    text = text.replace(/~~(.*?)~~/g, '$1');
+	// Strip strikethrough
+	text = text.replace(/~~(.*?)~~/g, '$1');
 
-    // Strip inline code
-    text = text.replace(/`([^`]+)`/g, '$1');
+	// Strip inline code
+	text = text.replace(/`([^`]+)`/g, '$1');
 
-    // Strip blockquotes
-    text = text.replace(/^\s*>+/gm, '');
+	// Strip blockquotes
+	text = text.replace(/^\s*>+/gm, '');
 
-    // Strip links (keep the link text)
-    text = text.replace(/\[([^\]]+)]\([^)]+\)/g, '$1');
+	// Strip links (keep the link text)
+	text = text.replace(/\[([^\]]+)]\([^)]+\)/g, '$1');
 
-    // Strip images (keep the alt text)
-    text = text.replace(/!\[([^\]]*)]\([^)]+\)/g, '$1');
+	// Strip images (keep the alt text)
+	text = text.replace(/!\[([^\]]*)]\([^)]+\)/g, '$1');
 
-    // Strip unordered lists
-    text = text.replace(/^\s*[*+-]\s+/gm, '');
+	// Strip unordered lists
+	text = text.replace(/^\s*[*+-]\s+/gm, '');
 
-    // Strip ordered lists
-    text = text.replace(/^\d+\.\s+/gm, '');
+	// Strip ordered lists
+	text = text.replace(/^\d+\.\s+/gm, '');
 
-    // Strip horizontal rules
-    text = text.replace(/^-{3,}$/gm, '');
+	// Strip horizontal rules
+	text = text.replace(/^-{3,}$/gm, '');
 
-    // Strip code blocks
-    text = text.replace(/```[\s\S]*?```/g, '');
+	// Strip code blocks
+	text = text.replace(/```[\s\S]*?```/g, '');
 
-    // Return the cleaned text
-    return text.trim();
+	// Return the cleaned text
+	return text.trim();
 }

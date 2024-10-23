@@ -48,8 +48,7 @@ export const actions = {
 			[username]
 		);
 
-		if (usernameIsAlreadyUsed.length > 0)
-			return fail(400, { error: 'Username is taken!' });
+		if (usernameIsAlreadyUsed.length > 0) return fail(400, { error: 'Username is taken!' });
 
 		// Validate username (only letters and numbers)
 		if (!/^[a-zA-Z0-9]+$/.test(username))

@@ -10,7 +10,9 @@
 	let noExercisesCompleted = $state(0);
 
 	onMount(() => {
-		noExercisesCompleted = path.exercises.map(e => e.is_completed).reduce((acc, cur) => acc + cur, 0);
+		noExercisesCompleted = path.exercises
+			.map((e) => e.is_completed)
+			.reduce((acc, cur) => acc + cur, 0);
 	});
 </script>
 
@@ -39,7 +41,7 @@
 					bind:value={noExercisesCompleted}
 					gaugePrimaryColor="rgb(22 163 74)"
 					gaugeSecondaryColor="rgb(64 64 64 / 0.2)"
-  			/>
+				/>
 			</div>
 		</div>
 
@@ -53,15 +55,13 @@
 					<table class="w-full caption-bottom text-sm">
 						<thead class="border-b border-neutral-700 sticky top-0 bg-neutral-800"
 							><tr
-								><th class="text-neutral-400 h-12 px-4 text-left align-middle font-medium"
-									>Name</th
-								>
+								><th class="text-neutral-400 h-12 px-4 text-left align-middle font-medium">Name</th>
 								<th class="text-neutral-400 h-12 px-4 text-left align-middle font-medium"
 									>Description</th
 								>
-								<th class="text-neutral-400 h-12 px-4 text-left align-middle font-medium"
-									>Solved</th
-								></thead
+								<th class="text-neutral-400 h-12 px-4 text-left align-middle font-medium">Solved</th
+								></tr
+							></thead
 						>
 						<tbody class="[&amp;_tr:last-child]:border-0">
 							{#each path.exercises as exercise}

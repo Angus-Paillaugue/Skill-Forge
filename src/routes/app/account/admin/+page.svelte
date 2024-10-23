@@ -52,13 +52,13 @@
 			<h1 class="text-3xl font-bold">Admin dashboard</h1>
 		</div>
 	</div>
-	<div
-		class="grid items-start gap-4 md:gap-8 lg:grid-cols-2"
-	>
+	<div class="grid items-start gap-4 md:gap-8 lg:grid-cols-2">
 		<div class="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
 			<!-- Hero -->
 			<div class="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
-				<div class="bg-neutral-800 flex flex-col gap-4 text-neutral-100 rounded-lg p-6 sm:col-span-2">
+				<div
+					class="bg-neutral-800 flex flex-col gap-4 text-neutral-100 rounded-lg p-6 sm:col-span-2"
+				>
 					<h1 class="text-3xl font-semibold">Welcome, Angus</h1>
 					<div class="flex flex-row gap-4 flex-wrap">
 						<a
@@ -79,7 +79,9 @@
 				</div>
 
 				<!-- User count -->
-				<div class="bg-neutral-800 flex flex-row gap-4 p-6 items-center text-neutral-100 rounded-lg">
+				<div
+					class="bg-neutral-800 flex flex-row gap-4 p-6 items-center text-neutral-100 rounded-lg"
+				>
 					<User class="size-20" />
 					<div class="flex flex-col space-y-1.5">
 						<p class="text-sm text-neutral-400">Users</p>
@@ -91,7 +93,9 @@
 				</div>
 
 				<!-- Exercises count -->
-				<div class="bg-neutral-800 flex flex-row gap-4 p-6 items-center text-neutral-100 rounded-lg">
+				<div
+					class="bg-neutral-800 flex flex-row gap-4 p-6 items-center text-neutral-100 rounded-lg"
+				>
 					<TestTubeDiagonal class="size-20" />
 					<div class="flex flex-col space-y-1.5">
 						<p class="text-sm text-neutral-400">Exercises</p>

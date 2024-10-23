@@ -15,7 +15,10 @@
 </script>
 
 {#if mobileMenuOpened}
-	<div transition:fly={{ x:"-100%", opacity:1 }} class="fixed block md:hidden top-12 bottom-0 left-0 right-0 z-40 bg-neutral-900/50 backdrop-blur py-8 px-4">
+	<div
+		transition:fly={{ x: '-100%', opacity: 1 }}
+		class="fixed block md:hidden top-12 bottom-0 left-0 right-0 z-40 bg-neutral-900/50 backdrop-blur py-8 px-4"
+	>
 		<div class="flex flex-col items-center w-fit mx-auto gap-4">
 			<a
 				href="/app/exercises"
@@ -60,7 +63,11 @@
 		<!-- Left part : home and problem list links -->
 		<div class="hidden md:flex flex-row items-center gap-4">
 			<!-- Website logo placeholder -->
-			<a href="/app" aria-label="Go home" class="size-10 group rounded-full bg-neutral-700/50 hidden md:flex flex-col items-center justify-center">
+			<a
+				href="/app"
+				aria-label="Go home"
+				class="size-10 group rounded-full bg-neutral-700/50 hidden md:flex flex-col items-center justify-center"
+			>
 				<Home class="size-6 text-neutral-400 group-hover:text-neutral-100 transition-colors" />
 			</a>
 			<!-- Vertical separator -->
@@ -86,13 +93,11 @@
 				</a>
 			</div>
 
-			<Button variant="link" class="hidden md:flex" href="/app/learning-paths">Leaning paths</Button>
+			<Button variant="link" class="hidden md:flex" href="/app/learning-paths">Leaning paths</Button
+			>
 		</div>
 
-		<a href="/" class="text-lg font-semibold block md:hidden">
-			Skill Forge
-		</a>
-
+		<a href="/" class="text-lg font-semibold block md:hidden"> Skill Forge </a>
 
 		<!-- Account button -->
 		<a href="/app/account" aria-label="Got to account dashboard">

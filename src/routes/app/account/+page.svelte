@@ -67,9 +67,7 @@
 								style="animation: text 5s ease infinite;">{rank.user_rank}</span
 							>
 						{:else}
-							<span class="font-black inline-block text-xl text-neutral-100"
-								>{rank.user_rank}</span
-							>
+							<span class="font-black inline-block text-xl text-neutral-100">{rank.user_rank}</span>
 						{/if}
 					</p>
 				</div>
@@ -127,14 +125,14 @@
 	<div class="bg-neutral-800 rounded-xl flex flex-col p-6 gap-4 w-full">
 		<h3 class="text-lg font-semibold leading-none tracking-tight">Contributions</h3>
 		<div class="w-full overflow-x-auto h-full">
-			<div
-				class="flex flex-row flex-nowrap gap-1 w-full"
-			>
+			<div class="flex flex-row flex-nowrap gap-1 w-full">
 				{#each { length: 53 } as _, weekNo}
 					<div class="flex shrink-0 flex-col gap-1">
 						{#each { length: 7 } as _, dayNo}
 							{@const today = new Date()}
-							{@const thisDay = new Date(new Date().setDate(today.getDate() - 366 + (weekNo * 7) + dayNo))}
+							{@const thisDay = new Date(
+								new Date().setDate(today.getDate() - 366 + weekNo * 7 + dayNo)
+							)}
 							{#if thisDay <= today}
 								{@const formattedDate = formatDate(thisDay)}
 								{@const contrib = contributions.find((s) =>
@@ -147,11 +145,15 @@
 										.sort((a, b) => b - a)[0] || Object.keys(activityThresholds)[0]}
 								<Tooltip
 									class="size-[0.85rem] shrink-0"
-									content="{contrib?.submission_count ?? 'No'} contribution{contrib?.submission_count > 1
+									content="{contrib?.submission_count ??
+										'No'} contribution{contrib?.submission_count > 1
 										? 's'
 										: ''} the {formattedDate}"
 								>
-									<button aria-label="Activity for {formattedDate}" class={cn('size-full aspect-square block rounded', activityThresholds[bg])}></button>
+									<button
+										aria-label="Activity for {formattedDate}"
+										class={cn('size-full aspect-square block rounded', activityThresholds[bg])}
+									></button>
 								</Tooltip>
 							{/if}
 						{/each}
@@ -186,11 +188,8 @@
 					<table class="w-full caption-bottom text-sm">
 						<thead class="border-b border-neutral-700 sticky top-0 bg-neutral-800"
 							><tr
-								><th class="text-neutral-400 h-12 px-4 text-left align-middle font-medium"
-									>Name</th
-								>
-								<th class="text-neutral-400 h-12 px-4 align-middle font-medium text-right"
-									>Date</th
+								><th class="text-neutral-400 h-12 px-4 text-left align-middle font-medium">Name</th>
+								<th class="text-neutral-400 h-12 px-4 align-middle font-medium text-right">Date</th
 								></tr
 							></thead
 						>
