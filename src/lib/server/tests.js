@@ -1,6 +1,15 @@
 import { createConnection } from '$lib/server/db';
 import ivm from 'isolated-vm';
 
+/**
+ * Compares two values for equality. If both values are objects, they are
+ * compared by their JSON string representations. Otherwise, they are
+ * compared using strict equality.
+ *
+ * @param {*} result - The first value to compare.
+ * @param {*} expected - The second value to compare.
+ * @returns {boolean} - Returns `true` if the values are equal, otherwise `false`.
+ */
 function isEquals(result, expected) {
 	if (typeof result === 'object' && typeof expected === 'object') {
 		return JSON.stringify(result) === JSON.stringify(expected);
@@ -8,6 +17,15 @@ function isEquals(result, expected) {
 	return result === expected;
 }
 
+/**
+ * Runs tests for a given exercise by evaluating user input in an isolated environment.
+ *
+ * @param {number} exercise_id - The ID of the exercise to run tests for.
+ * @param {string} user_input - The user-provided code to be tested.
+ * @returns {Promise<Object>} - An object containing the results of the tests, average RAM usage, and console output.
+ *
+ * @throws {Error} - Throws an error if the tests cannot be run.
+ */
 export async function runTests(exercise_id, user_input) {
 	const db = await createConnection();
 	const [tests] = await db.query(
@@ -16,26 +34,35 @@ export async function runTests(exercise_id, user_input) {
 	);
 	db.end();
 
-	const isolate = new ivm.Isolate({ memoryLimit: 128 }); // 128MB memory limit
+	const isolate = new ivm.Isolate({ memoryLimit: 20 }); // 20MB memory limit
 	const context = await isolate.createContext();
 	const jail = context.global;
 	await jail.setSync('global', jail.derefInto());
 	let consoleOutput = [];
-	jail.setSync('log_user_log', function (...args) {
-		if(args.length > 1) {
-			consoleOutput.push(JSON.stringify(args));
-		}else {
-			if(typeof args[0] === 'object') {
-				consoleOutput.push(JSON.stringify(args[0]));
-			}else {
-				consoleOutput.push(args[0].toString());
+	context.evalClosureSync(
+		`
+			globalThis.console = {
+				log: $0
 			}
-		}
-	});
+		`,
+		[
+			(...args) => {
+				if (args.length > 1) {
+					consoleOutput.push(JSON.stringify(args));
+				} else {
+					if (typeof args[0] === 'object') {
+						consoleOutput.push(JSON.stringify(args[0]));
+					} else {
+						consoleOutput.push(args[0].toString());
+					}
+				}
+			}
+		]
+	);
 
 	try {
 		// Define the user function in the isolated environment
-		await context.eval(user_input.replaceAll('console.log(', 'log_user_log('));
+		await context.eval(user_input);
 
 		const results = [];
 
@@ -67,7 +94,6 @@ export async function runTests(exercise_id, user_input) {
 
 				// Measure memory usage after the test
 				const memEnd = process.memoryUsage().heapUsed;
-
 				const memUsage = memEnd - memStart; // Memory usage in B
 
 				results.push({
@@ -75,11 +101,8 @@ export async function runTests(exercise_id, user_input) {
 					expected_output,
 					actual_output: JSON.stringify(result),
 					passed: isEquals(result, expected_output),
-					consoleOutput: consoleOutput.length > 0 ? consoleOutput : null,
 					memUsage // Memory usage for this test
 				});
-
-				consoleOutput = [];
 			} catch (error) {
 				results.push({
 					input,
@@ -94,7 +117,11 @@ export async function runTests(exercise_id, user_input) {
 		const averageRamUsage =
 			results.map((r) => r.memUsage).reduce((a, b) => a + b, 0) / results.length;
 
-		return { results, averageRamUsage };
+		return {
+			results,
+			averageRamUsage,
+			consoleOutput: consoleOutput.length > 0 ? consoleOutput : null
+		};
 	} catch (error) {
 		console.error(error);
 		return { message: 'Failed to run tests' };

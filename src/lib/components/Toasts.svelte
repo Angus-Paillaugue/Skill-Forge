@@ -16,7 +16,7 @@
 </script>
 
 <div
-	class="fixed top-16 left-1/2 -translate-x-1/2 z-[51] flex w-full max-w-[300px] flex-col-reverse gap-2"
+	class="fixed left-1/2 top-16 z-[51] flex w-full max-w-[300px] -translate-x-1/2 flex-col-reverse gap-2"
 >
 	{#each $toasts.slice(0, 4) as toast (toast.id)}
 		<div
@@ -34,7 +34,7 @@
 					<TriangleAlert class={cn('h-5 w-5', svgColors[toast.type])} />
 				{/if}
 
-				<strong class="block font-bold text-lg">{toast.title}</strong>
+				<strong class="block text-lg font-bold">{toast.title}</strong>
 			</div>
 
 			<p class="mb-0 mt-2 text-sm font-medium">

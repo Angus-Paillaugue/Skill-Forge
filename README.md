@@ -50,7 +50,7 @@ Skill Forge is more than just a coding platform. It’s a learning tool that ada
 - [x] (Kind of WIP) Add an admin dashboard
 - [x] Add an admin page to edit already existing exercises
 - [x] Add a settings page
-- [x] Load latest submission ad default code if one exists
+- [x] Load latest submission as default code if one exists
 - [x] Add sorting to problems list
 - [x] Add RAM usage to tests
 - [x] Add timer functionality

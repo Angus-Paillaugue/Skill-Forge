@@ -192,19 +192,15 @@
 	});
 </script>
 
-<div class="flex flex-col h-full grow overflow-hidden">
+<div class="flex h-full grow flex-col overflow-hidden">
 	<div
-		class="flex flex-row gap-2 p-2 items-center h-10 shrink-0 border-b border-neutral-700 text-neutral-400 bg-neutral-800"
+		class="flex h-10 shrink-0 flex-row items-center gap-2 border-b border-neutral-700 bg-neutral-800 p-2 text-neutral-400"
 	>
 		<!-- Format code button -->
-		<Tooltip
-			content="Format <kbd>Alt</kbd> <kbd>Shift</kbd> <kbd>F</kbd>"
-			position="bottom"
-			delay={100}
-		>
+		<Tooltip content="Format <kbd>Alt</kbd> <kbd>Shift</kbd> <kbd>F</kbd>" position="bottom">
 			<button
 				onclick={formatCode}
-				class="flex flex-roe gap-2 items-center"
+				class="flex flex-row items-center gap-2"
 				aria-label="Format code"
 				disabled={formatted}
 			>
@@ -220,10 +216,10 @@
 			</button>
 		</Tooltip>
 		<!-- Word wrap button -->
-		<Tooltip content="Toggle word wrap <kbd>Alt</kbd> <kbd>Z</kbd>" position="bottom" delay={100}>
+		<Tooltip content="Toggle word wrap <kbd>Alt</kbd> <kbd>Z</kbd>" position="bottom">
 			<button
 				onclick={() => (wordWrap = !wordWrap)}
-				class="flex flex-roe gap-2 items-center"
+				class="flex flex-row items-center gap-2"
 				aria-label="Toggle word wrap"
 			>
 				<WrapText class="size-5" />
@@ -231,10 +227,10 @@
 		</Tooltip>
 		{#if defaultValue}
 			<!-- Reset to default configuration button -->
-			<Tooltip content="Reset to default configuration" position="bottom" delay={100}>
+			<Tooltip content="Reset to default configuration" position="bottom">
 				<button
 					onclick={resetEditor}
-					class="flex flex-roe gap-2 items-center"
+					class="flex flex-row items-center gap-2"
 					aria-label="Reset to default configuration"
 				>
 					<RotateCcw class="size-5" />
@@ -242,21 +238,21 @@
 			</Tooltip>
 		{/if}
 
-		<div class="ml-auto flex flex-row gap-px rounded overflow-hidden h-full">
+		<div class="ml-auto flex h-full flex-row gap-px overflow-hidden rounded">
 			<button
-				class="h-full aspect-square flex flex-col items-center justify-center bg-neutral-700 shrink-0 text-neutral-400"
+				class="flex aspect-square h-full shrink-0 flex-col items-center justify-center bg-neutral-700 text-neutral-400"
 				onclick={reduceFontSize}
 				aria-label="Decrease editor font size"
 			>
 				<Minus class="size-4" />
 			</button>
 			<div
-				class="h-full flex flex-col items-center justify-center bg-neutral-700 text-sm px-2 shrink-0 font-medium"
+				class="flex h-full shrink-0 flex-col items-center justify-center bg-neutral-700 px-2 text-sm font-medium"
 			>
 				{fontSize}
 			</div>
 			<button
-				class="h-full aspect-square flex flex-col items-center justify-center bg-neutral-700 shrink-0 text-neutral-400"
+				class="flex aspect-square h-full shrink-0 flex-col items-center justify-center bg-neutral-700 text-neutral-400"
 				onclick={increaseFontSize}
 				aria-label="Increase editor font size"
 			>
@@ -264,7 +260,7 @@
 			</button>
 		</div>
 	</div>
-	<div class="pt-2 grow h-full bg-neutral-800 rounded-b-xl overflow-hidden">
+	<div class="h-full grow overflow-hidden rounded-b-xl bg-neutral-800 pt-2">
 		<div class="h-full" bind:this={editorElement}></div>
 	</div>
 </div>

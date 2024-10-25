@@ -12,7 +12,7 @@
 <span
 	class={cn(
 		difficultyClasses[difficulty],
-		'block px-2 py-1 rounded-full text-sm w-fit font-semibold',
+		'block w-fit rounded-full px-2 py-1 text-sm font-semibold',
 		className
 	)}
 >

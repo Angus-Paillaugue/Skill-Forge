@@ -95,19 +95,23 @@
 	<title>All exercises</title>
 </svelte:head>
 
-<div class="max-w-screen-lg w-full mx-auto mt-10 flex flex-col gap-2">
-	<Input
-		id="search"
-		placeholder="Search for an exercise"
-		class="bg-neutral-800"
-		bind:value={searchValue}
-		oninput={onSearchInput}
-	/>
-	<div class="relative overflow-x-auto overflow-y-hidden w-full shadow-md rounded-lg">
-		<table class="w-full text-sm text-left rtl:text-right text-neutral-400 table-auto">
-			<thead class="text-xs uppercase bg-neutral-800/50 text-neutral-400">
+<div class="mx-auto w-full max-w-screen-lg md:mt-10">
+	<div class="sticky top-14 z-10 w-full py-2">
+		<Input
+			id="search"
+			placeholder="Search for an exercise"
+			class="bg-neutral-800 max-md:shadow-xl"
+			bind:value={searchValue}
+			oninput={onSearchInput}
+		/>
+	</div>
+	<div class="relative w-full overflow-x-auto overflow-y-hidden rounded-lg shadow-md">
+		<table
+			class="w-full min-w-[500px] table-auto text-left text-sm text-neutral-400 rtl:text-right"
+		>
+			<thead class="bg-neutral-800/50 text-xs uppercase text-neutral-400">
 				<tr>
-					<th scope="col" class="px-3 md:px-6 py-3">
+					<th scope="col" class="px-3 py-3 md:px-6">
 						<button class="flex flex-row items-center gap-4" onclick={() => sortBy('solved')}>
 							Status
 							{#if orderBy === 'solved'}
@@ -117,7 +121,7 @@
 							{/if}
 						</button>
 					</th>
-					<th scope="col" class="px-3 md:px-6 py-3">
+					<th scope="col" class="px-3 py-3 md:px-6">
 						<button class="flex flex-row items-center gap-4" onclick={() => sortBy('title')}>
 							Title
 							{#if orderBy === 'title'}
@@ -127,7 +131,7 @@
 							{/if}
 						</button>
 					</th>
-					<th scope="col" class="px-3 md:px-6 py-3">
+					<th scope="col" class="px-3 py-3 md:px-6">
 						<button class="flex flex-row items-center gap-4" onclick={() => sortBy('difficulty')}>
 							Difficulty
 							{#if orderBy === 'difficulty'}
@@ -137,7 +141,7 @@
 							{/if}
 						</button>
 					</th>
-					<th scope="col" class="px-3 md:px-6 py-3">
+					<th scope="col" class="px-3 py-3 md:px-6">
 						<button class="flex flex-row items-center gap-4" onclick={() => sortBy('created_at')}>
 							Added
 							{#if orderBy === 'created_at'}
@@ -152,30 +156,30 @@
 			<tbody>
 				{#each sortedExercises as exercise (exercise.exercise_id)}
 					<tr
-						class="even:bg-neutral-800/50 border-b border-neutral-700"
+						class="border-b border-neutral-700 even:bg-neutral-800/50"
 						transition:slide={{ axis: 'y' }}
 						animate:flip={{ duration: 300 }}
 					>
-						<td class="px-3 md:px-6 py-2 md:py-4 font-medium whitespace-nowrap w-1/6 text-white">
+						<td class="w-1/6 whitespace-nowrap px-3 py-2 font-medium text-white md:px-6 md:py-4">
 							{#if exercise.solved}
 								<CircleCheckBig class="size-5 text-green-600" />
 							{/if}
 						</td>
-						<td class="w-1/2 px-3 md:px-6 py-2">
+						<td class="w-1/2 px-3 py-2 md:px-6">
 							<a
 								href="/app/exercises/{urlHealer.identifier.join(
 									exercise.slug,
 									exercise.exercise_id
 								)}"
-								class="text-lg md:text-2xl font-bold"
+								class="text-lg font-bold md:text-2xl"
 							>
 								{exercise.title}
 							</a>
 						</td>
-						<td class="px-3 md:px-6 py-2 md:py-4 w-1/6">
+						<td class="w-1/6 px-3 py-2 md:px-6 md:py-4">
 							<Difficulty difficulty={exercise.difficulty} />
 						</td>
-						<td class="px-3 md:px-6 py-2 md:py-4 w-2/5">
+						<td class="w-2/5 px-3 py-2 md:px-6 md:py-4">
 							{formatDate(exercise.created_at)}
 						</td>
 					</tr>

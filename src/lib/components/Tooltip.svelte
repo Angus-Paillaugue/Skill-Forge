@@ -9,7 +9,7 @@
 		content,
 		position = 'top',
 		class: className,
-		delay = 0,
+		delay = 300,
 		...restProps
 	} = $props();
 
@@ -130,7 +130,7 @@
 
 {#if isHovered}
 	<div
-		class={cn('fixed z-40 max-w-[250px] w-max p-2', positionClasses[position])}
+		class={cn('fixed z-40 w-max max-w-[250px] p-2', positionClasses[position])}
 		style={getStyles()}
 		transition:fly={flyOptions}
 		role="tooltip"
@@ -138,7 +138,7 @@
 		onmouseleave={hideTooltip}
 	>
 		<div
-			class="relative pointer-events-none rounded-lg gap-2 p-2 text-sm border border-neutral-700 bg-neutral-800 text-neutral-400"
+			class="pointer-events-none relative gap-2 rounded-lg border border-neutral-700 bg-neutral-800 p-2 text-sm text-neutral-400"
 		>
 			{@html content}
 		</div>

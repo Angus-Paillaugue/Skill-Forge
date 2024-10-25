@@ -30,7 +30,7 @@ export const load = async ({ params, locals }) => {
             -- Subquery to get tests without duplication
             (SELECT
                 JSON_ARRAYAGG(
-                    JSON_OBJECT('input', et.input, 'expected_output', et.expected_output)
+                    JSON_OBJECT('input', et.input, 'expected_output', et.expected_output, 'display_value', et.display_value)
                 )
             FROM exercise_tests et
             WHERE et.exercise_id = e.id
@@ -83,7 +83,7 @@ export const load = async ({ params, locals }) => {
             -- Subquery to get tests without duplication
             (SELECT
                 JSON_ARRAYAGG(
-                    JSON_OBJECT('input', et.input, 'expected_output', et.expected_output)
+                    JSON_OBJECT('input', et.input, 'expected_output', et.expected_output, 'display_value', et.display_value)
                 )
             FROM exercise_tests et
             WHERE et.exercise_id = e.id
@@ -132,5 +132,5 @@ export const load = async ({ params, locals }) => {
 
 	return {
 		exercise
-	};  
+	};
 };

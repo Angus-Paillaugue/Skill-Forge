@@ -73,7 +73,7 @@
 		/>
 	</svg>
 	<span
-		class="duration-[var(--transition-length)] delay-[var(--delay)] absolute inset-0 m-auto size-fit"
+		class="absolute inset-0 m-auto size-fit delay-[var(--delay)] duration-[var(--transition-length)]"
 	>
 		{value.toFixed(0)}
 	</span>

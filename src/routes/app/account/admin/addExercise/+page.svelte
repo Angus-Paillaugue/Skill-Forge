@@ -87,19 +87,19 @@
 
 <!-- Create button -->
 <button
-	class="px-2 py-2 text-base rounded-lg font-medium bg-neutral-800 flex flex-row items-center gap-2 absolute top-2 left-1/2 -translate-x-1/2"
+	class="absolute left-1/2 top-2 flex -translate-x-1/2 flex-row items-center gap-2 rounded-lg bg-neutral-800 px-2 py-2 text-base font-medium"
 	onclick={save}
 >
-	<div class="block relative size-5 text-green-600">
+	<div class="relative block size-5 text-green-600">
 		<Pickaxe
 			class={cn(
-				'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 duration-300 transition-all',
+				'absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300',
 				isSaving ? 'size-0' : 'size-5'
 			)}
 		/>
 		<div
 			class={cn(
-				'duration-300 transition-all absolute size-5 flex flex-col items-center justify-center top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'
+				'absolute left-1/2 top-1/2 flex size-5 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center transition-all duration-300'
 			)}
 		>
 			<Spinner class={cn('transition-all', isSaving ? 'size-5' : 'size-0')} />
@@ -110,7 +110,7 @@
 
 <PaneGroup
 	direction="horizontal"
-	class="grow !h-[calc(100vh-4rem)] overflow-hidden"
+	class="!h-[calc(100vh-4rem)] grow overflow-hidden"
 	style="height: auto;"
 	autoSaveId="adminAddExercisePage"
 >
@@ -119,23 +119,25 @@
 		{#if success}
 			<div
 				transition:scale
-				class="flex flex-col flex-shrink-0 p-4 border-green-600 border bg-neutral-900 rounded-xl"
+				class="flex flex-shrink-0 flex-col rounded-xl border border-green-600 bg-neutral-900 p-4"
 			>
 				<h1 class="text-2xl font-bold text-green-600">Success</h1>
 				<p>{success.message}</p>
-				<Button variant="link" href="/app/exercises/{urlHealer.identifier.join(success.slug, success.id)}" class="link"
-					>Go to exercise</Button
+				<Button
+					variant="link"
+					href="/app/exercises/{urlHealer.identifier.join(success.slug, success.id)}"
+					class="link">Go to exercise</Button
 				>
 			</div>
 		{/if}
 
-		<div class="flex flex-col grow bg-neutral-900 h-full rounded-xl">
-			<div class="p-4 grow flex flex-col overflow-y-auto">
+		<div class="flex h-full grow flex-col rounded-xl bg-neutral-900">
+			<div class="flex grow flex-col overflow-y-auto p-4">
 				<!-- Exercise difficulty -->
 				<select
 					bind:value={difficulty}
 					class={cn(
-						'block px-2 py-1 mt-6 rounded-full text-sm w-fit font-semibold',
+						'mt-6 block w-fit rounded-full px-2 py-1 text-sm font-semibold',
 						difficulty === 'easy' && 'bg-green-600 text-white',
 						difficulty === 'medium' && 'bg-yellow-600 text-black',
 						difficulty === 'hard' && 'bg-red-600 text-white'
@@ -149,16 +151,16 @@
 				<Input
 					id="exerciseTitle"
 					placeholder="Exercise title"
-					class="bg-neutral-800 mb-6 mt-4 text-2xl font-medium leading-[3.5rem] md:font-semibold md:leading-[4rem]"
+					class="mb-6 mt-4 bg-neutral-800 text-2xl font-medium leading-[3.5rem] md:font-semibold md:leading-[4rem]"
 					bind:value={title}
 				/>
 				<!-- Exercise description -->
-				<div class="flex flex-col grow">
+				<div class="flex grow flex-col">
 					<!-- Test/Preview buttons -->
-					<div class="flex flex-row shrink-0 gap-4 mb-2">
+					<div class="mb-2 flex shrink-0 flex-row gap-4">
 						<button
 							class={cn(
-								'flex flex-row gap-2 items-center rounded-xl px-2 py-1 transition-colors',
+								'flex flex-row items-center gap-2 rounded-xl px-2 py-1 transition-colors',
 								!isPreviewingDescription && 'bg-neutral-800'
 							)}
 							onclick={() => (isPreviewingDescription = false)}
@@ -168,7 +170,7 @@
 						</button>
 						<button
 							class={cn(
-								'flex flex-row gap-2 items-center rounded-xl px-2 py-1 transition-colors',
+								'flex flex-row items-center gap-2 rounded-xl px-2 py-1 transition-colors',
 								isPreviewingDescription && 'bg-neutral-800'
 							)}
 							onclick={() => (isPreviewingDescription = true)}
@@ -177,7 +179,7 @@
 							<ScanEye class="size-5" />
 						</button>
 					</div>
-					<div id="pageContainer" class="flex flex-col grow shrink-0">
+					<div id="pageContainer" class="flex shrink-0 grow flex-col">
 						{#if isPreviewingDescription}
 							{#await compileMarkdown()}
 								Loading...
@@ -188,7 +190,7 @@
 							<textarea
 								type="text"
 								bind:value={description}
-								class="grow w-full rounded-xl bg-neutral-800 px-6 py-3 text-base resize-none font-medium text-neutral-100 placeholder:text-neutral-400"
+								class="w-full grow resize-none rounded-xl bg-neutral-800 px-6 py-3 text-base font-medium text-neutral-100 placeholder:text-neutral-400"
 							></textarea>
 						{/if}
 					</div>
@@ -196,10 +198,10 @@
 			</div>
 		</div>
 	</Pane>
-	<PaneResizer class="relative flex w-2 items-center justify-center group">
+	<PaneResizer class="group relative flex w-2 items-center justify-center">
 		<div class="flex h-7 w-[2px] items-center justify-center rounded-sm bg-neutral-700"></div>
 		<div
-			class="absolute top-0 rounded-full transition-colors bottom-0 w-[2px] left-1/2 -translate-x-1/2 group-hover:bg-neutral-500"
+			class="absolute bottom-0 left-1/2 top-0 w-[2px] -translate-x-1/2 rounded-full transition-colors group-hover:bg-neutral-500"
 		></div>
 	</PaneResizer>
 	<!-- Right part -->
@@ -208,9 +210,9 @@
 		<div class="flex flex-col">
 			<!-- Full screen button -->
 			<div
-				class="flex flex-row items-center px-2 gap-2 h-10 rounded-t-xl bg-neutral-800 text-neutral-400"
+				class="flex h-10 flex-row items-center gap-2 rounded-t-xl bg-neutral-800 px-2 text-neutral-400"
 			>
-				<div class="flex flex-row items-center px-2 gap-2">
+				<div class="flex flex-row items-center gap-2 px-2">
 					<Code class="size-5" />
 					Code
 				</div>
@@ -218,8 +220,8 @@
 		</div>
 		<Editor language="javascript" bind:value={startValue} bind:this={editor} />
 		<!-- Tests cases -->
-		<div class="flex flex-col p-4 bg-neutral-800 rounded-xl shrink-0 mt-2">
-			<div class="flex flex-row flex-no-wrap overflow-x-auto gap-2">
+		<div class="mt-2 flex shrink-0 flex-col rounded-xl bg-neutral-800 p-4">
+			<div class="flex-no-wrap flex flex-row gap-2 overflow-x-auto">
 				{#each tests as _test, index}
 					<!-- svelte-ignore a11y_click_events_have_key_events -->
 					<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
@@ -227,7 +229,7 @@
 					<div
 						tabindex="0"
 						class={cn(
-							'px-3 shrink-0  py-1 rounded-xl flex flex-row items-center gap-2 cursor-pointer',
+							'flex shrink-0  cursor-pointer flex-row items-center gap-2 rounded-xl px-3 py-1',
 							index === selectedTestIndex && 'bg-neutral-900'
 						)}
 						onclick={() => (selectedTestIndex = index)}
@@ -250,7 +252,7 @@
 					</div>
 				{/each}
 				<button
-					class="px-3 py-1 shrink-0 rounded-lg flex flex-row transition-all items-center gap-2 bg-neutral-700"
+					class="flex shrink-0 flex-row items-center gap-2 rounded-lg bg-neutral-700 px-3 py-1 transition-all"
 					onclick={addTest}
 				>
 					Add
@@ -259,19 +261,19 @@
 			</div>
 			{#if tests.length > 0}
 				<div class="mt-4">
-					<h6 class="text-base font-medium mb-1">Input</h6>
+					<h6 class="mb-1 text-base font-medium">Input</h6>
 					<Input
 						id="testInput"
 						placeholder="Test input"
-						class="font-mono whitespace-pre-wrap bg-neutral-700"
+						class="whitespace-pre-wrap bg-neutral-700 font-mono"
 						bind:value={tests[selectedTestIndex].input}
 					/>
 
-					<h6 class="text-base font-medium mt-4 mb-1">Expected Output</h6>
+					<h6 class="mb-1 mt-4 text-base font-medium">Expected Output</h6>
 					<Input
 						id="testOutput"
 						placeholder="Test output"
-						class="font-mono whitespace-pre-wrap bg-neutral-700"
+						class="whitespace-pre-wrap bg-neutral-700 font-mono"
 						bind:value={tests[selectedTestIndex].expected_output}
 					/>
 				</div>

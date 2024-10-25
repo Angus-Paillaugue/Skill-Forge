@@ -92,7 +92,7 @@
 
 <!-- Navbar -->
 <!-- {#if sideBarVisible}
-  <div transition:fly={{ y:'100%' }} class="fixed left-1/2 bottom-4 -translate-x-1/2 bg-neutral-800/50 backdrop-blur-md border border-neutral-600/50 px-6 lg:px-5 py-4 rounded-full flex flex-row gap-8 max-lg:pb-8 z-10">
+  <div transition:fly={{ y:'100%' }} class="fixed left-1/2 bottom-4 -translate-x-1/2 bg-neutral-800/50 backdrop-blur border border-neutral-600/50 px-6 lg:px-5 py-4 rounded-full flex flex-row gap-8 max-lg:pb-8 z-10">
     {#each SECTIONS as section, index (section.id)}
       <button onclick={() => document.getElementById(section.id).scrollIntoView({ behavior: 'smooth' })} class="items-center justify-center capitalize flex flex-col gap-2 size-7 lg:size-9 transition-colors group relative">
         <span class="text-neutral-400 font-semibold text-sm absolute top-full lg:top-1/2 -translate-x-1/2 left-1/2 lg:-translate-y-1/2 lg:opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -106,37 +106,37 @@
 
 <!-- Hero -->
 <section
-	class="min-h-screen max-w-screen-xl mx-auto w-full grid grid-cols-1 lg:grid-cols-5 gap-16 px-4 py-10"
+	class="mx-auto grid min-h-screen w-full max-w-screen-xl grid-cols-1 gap-16 px-4 py-10 lg:grid-cols-5"
 	id="hero"
 >
 	<!-- Left column -->
-	<div class="lg:col-span-3 justify-center flex flex-col gap-10">
+	<div class="flex flex-col justify-center gap-10 lg:col-span-3">
 		<!-- Top hero part -->
 		<div class="flex flex-col gap-4">
 			<!-- Pills -->
-			<div class="flex flex-row gap-2 items-center flex-nowrap overflow-x-auto no-scrollbar">
+			<div class="no-scrollbar flex flex-row flex-nowrap items-center gap-2 overflow-x-auto">
 				<div
-					class="rounded-lg bg-blue-600/5 text-blue-600 px-4 py-1 text-sm font-medium capitalize shrink-0"
+					class="shrink-0 rounded-lg bg-blue-600/5 px-4 py-1 text-sm font-medium capitalize text-blue-600"
 				>
 					Join Skill Forge
 				</div>
 				<div
-					class="rounded-lg bg-green-600/5 text-green-600 px-4 py-1 text-sm font-medium capitalize shrink-0"
+					class="shrink-0 rounded-lg bg-green-600/5 px-4 py-1 text-sm font-medium capitalize text-green-600"
 				>
 					Start Learning
 				</div>
 				<div
-					class="rounded-lg bg-yellow-600/5 text-yellow-600 px-4 py-1 text-sm font-medium capitalize shrink-0"
+					class="shrink-0 rounded-lg bg-yellow-600/5 px-4 py-1 text-sm font-medium capitalize text-yellow-600"
 				>
 					Improve Your Skills
 				</div>
 			</div>
 			<!-- Main headings -->
 			<div class="flex flex-col gap-2">
-				<h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-wrap-balance">
+				<h1 class="text-4xl font-extrabold text-wrap-balance md:text-5xl lg:text-6xl">
 					Forge Your Skills, Shape Your Future
 				</h1>
-				<h2 class="text-base font-medium text-neutral-400 font-mono">
+				<h2 class="font-mono text-base font-medium text-neutral-400">
 					Master coding challenges designed to help you grow. From beginner to expert, Skill Forge
 					guides you through real-world problems with instant feedback and progress tracking.
 				</h2>
@@ -146,24 +146,24 @@
 		<!-- Carousel -->
 		<div class="relative mt-10 w-full">
 			<div
-				class="w-full overflow-x-auto snap-x snap-mandatory no-scrollbar relative"
+				class="no-scrollbar relative w-full snap-x snap-mandatory overflow-x-auto"
 				bind:this={carousel}
 			>
 				<div class="grid grid-cols-2 max-md:w-[200%]">
 					<div
-						class="border border-neutral-800/50 p-4 h-full md:border-r-0 w-full snap-start"
+						class="h-full w-full snap-start border border-neutral-800/50 p-4 md:border-r-0"
 						data-index="0"
 					>
-						<ArrowBigUpDash class="size-20 md:size-32 mx-auto text-neutral-300 my-6 md:my-10" />
-						<p class="text-neutral-400 italic text-base font-base">
+						<ArrowBigUpDash class="mx-auto my-6 size-20 text-neutral-300 md:my-10 md:size-32" />
+						<p class="font-base text-base italic text-neutral-400">
 							Whether you're just starting out or you're a seasoned pro, Skill Forge offers
 							exercises that fit your skill level. Choose from beginner, intermediate, and advanced
 							problems to keep pushing your boundaries
 						</p>
 					</div>
-					<div class="border border-neutral-800/50 p-4 h-full w-full snap-start" data-index="0">
-						<Shapes class="size-20 md:size-32 mx-auto text-neutral-300 my-6 md:my-10" />
-						<p class="text-neutral-400 italic text-base font-base">
+					<div class="h-full w-full snap-start border border-neutral-800/50 p-4" data-index="0">
+						<Shapes class="mx-auto my-6 size-20 text-neutral-300 md:my-10 md:size-32" />
+						<p class="font-base text-base italic text-neutral-400">
 							Every step forward counts! Monitor your growth with detailed submission history and
 							rankings. See how you improve with each challenge you complete.
 						</p>
@@ -180,7 +180,7 @@
 					});
 				}}
 				class={cn(
-					'flex md:hidden p-2 absolute right-2 top-2 transition-all flex-col items-center justify-center rounded-full bg-neutral-800',
+					'absolute right-2 top-2 flex flex-col items-center justify-center rounded-full bg-neutral-800 p-2 transition-all md:hidden',
 					carouselIndex === 1 && 'rotate-180'
 				)}
 			>
@@ -191,23 +191,23 @@
 
 	<!-- Forms -->
 	<div
-		class="flex flex-col items-center justify-center gap-4 lg:col-span-2 w-full max-w-lg mx-auto"
+		class="mx-auto flex w-full max-w-lg flex-col items-center justify-center gap-4 lg:col-span-2"
 	>
 		<!-- Form selector -->
-		<div class="flex flex-col relative w-full" bind:this={formSelectContainer}>
+		<div class="relative flex w-full flex-col" bind:this={formSelectContainer}>
 			<!-- Indicator -->
 			<div
-				class="w-1/2 bg-neutral-200 absolute top-0 bottom-0 rounded-full"
+				class="absolute bottom-0 top-0 w-1/2 rounded-full bg-neutral-200"
 				style="left: {$formIndicatorPos}px;"
 			></div>
 			<!-- Buttons -->
-			<div class="grid grid-cols-2 w-full relative">
+			<div class="relative grid w-full grid-cols-2">
 				<button
 					aria-label="Change form to Sign up"
 					disabled={isSendingForm}
 					onclick={() => (formIndex = 0)}
 					class={cn(
-						'font-semibold p-2 text-lg w-full rounded-full transition-colors',
+						'w-full rounded-full p-2 text-lg font-semibold transition-colors',
 						formIndex === 0 ? 'text-neutral-900' : 'text-neutral-400'
 					)}>Sign up</button
 				>
@@ -216,22 +216,22 @@
 					disabled={isSendingForm}
 					onclick={() => (formIndex = 1)}
 					class={cn(
-						'font-semibold p-2 text-lg w-full rounded-full transition-colors',
+						'w-full rounded-full p-2 text-lg font-semibold transition-colors',
 						formIndex === 1 ? 'text-neutral-900' : 'text-neutral-400'
 					)}>Log in</button
 				>
 			</div>
 		</div>
 		<!-- Forms -->
-		<div class="overflow-hidden w-full">
+		<div class="w-full overflow-hidden">
 			<div
-				class="grid grid-cols-2 gap-4 w-[calc(200%+1rem)] transition-all duration-300"
+				class="grid w-[calc(200%+1rem)] grid-cols-2 gap-4 transition-all duration-300"
 				style="margin-left: {formPos}px;"
 				bind:this={formContainer}
 			>
 				<!-- Sign up form -->
 				<form
-					class="flex w-full flex-col gap-6 p-6 rounded-xl bg-neutral-200 text-neutral-900"
+					class="flex w-full flex-col gap-6 rounded-xl bg-neutral-200 p-6 text-neutral-900"
 					method="POST"
 					action="?/signUp"
 					use:enhance={() => {
@@ -245,13 +245,13 @@
 					<h1 class="text-3xl font-bold text-inherit">Sign up</h1>
 					<Input
 						id="username"
-						class="bg-neutral-300 placeholder:text-neutral-600 text-neutral-800"
+						class="bg-neutral-300 text-neutral-800 placeholder:text-neutral-600"
 						placeholder="Username"
 						tabindex={formIndex === 0 ? 0 : -1}
 					/>
 					<Input
 						id="password"
-						class="bg-neutral-300 placeholder:text-neutral-600 text-neutral-800"
+						class="bg-neutral-300 text-neutral-800 placeholder:text-neutral-600"
 						type="password"
 						placeholder="Password"
 						tabindex={formIndex === 0 ? 0 : -1}
@@ -272,7 +272,7 @@
 
 				<!-- Log in form -->
 				<form
-					class="flex w-full flex-col gap-6 p-6 rounded-xl bg-neutral-200 text-neutral-900"
+					class="flex w-full flex-col gap-6 rounded-xl bg-neutral-200 p-6 text-neutral-900"
 					method="POST"
 					action="?/logIn"
 					use:enhance={() => {
@@ -286,13 +286,13 @@
 					<h1 class="text-3xl font-bold text-inherit">Log in</h1>
 					<Input
 						id="username"
-						class="bg-neutral-300 placeholder:text-neutral-600 text-neutral-800"
+						class="bg-neutral-300 text-neutral-800 placeholder:text-neutral-600"
 						placeholder="Username"
 						tabindex={formIndex === 1 ? 0 : -1}
 					/>
 					<Input
 						id="password"
-						class="bg-neutral-300 placeholder:text-neutral-600 text-neutral-800"
+						class="bg-neutral-300 text-neutral-800 placeholder:text-neutral-600"
 						type="password"
 						placeholder="Password"
 						tabindex={formIndex === 1 ? 0 : -1}
@@ -316,46 +316,46 @@
 </section>
 
 <!-- About -->
-<section class="min-h-screen space-y-6 max-w-screen-2xl mx-auto mt-10 w-full p-4" id="about">
-	<h1 class="text-4xl lg:text-6xl font-bold text-center">Why Choose Skill Forge?</h1>
-	<div class="grid lg:grid-cols-2 w-full min-h-[80vh]">
+<section class="mx-auto mt-10 min-h-screen w-full max-w-screen-2xl space-y-6 p-4" id="about">
+	<h1 class="text-center text-4xl font-bold lg:text-6xl">Why Choose Skill Forge?</h1>
+	<div class="grid min-h-[80vh] w-full lg:grid-cols-2">
 		<!-- Left column -->
 		<div class="flex flex-col">
 			<!-- Learn at your own pace section -->
 			<div
-				class="shrink-0 p-4 lg:p-8 border lg:border-b-0 lg:border-r-0 border-neutral-800/50 flex flex-col gap-4 lg:gap-8 text-center justify-center items-center"
+				class="flex shrink-0 flex-col items-center justify-center gap-4 border border-neutral-800/50 p-4 text-center lg:gap-8 lg:border-b-0 lg:border-r-0 lg:p-8"
 			>
 				<Hourglass class="size-16 text-[#ED5D45]" />
 				<h2 class="text-4xl font-bold text-neutral-100">Learn at Your Own Pace</h2>
-				<p class="font-normal text-base leading-6 font-mono text-neutral-400">
+				<p class="font-mono text-base font-normal leading-6 text-neutral-400">
 					Whether you're a beginner or an expert, Skill Forge allows you to progress at your own
 					pace. Explore bite-sized exercises or dive into complex coding problems.
 				</p>
 			</div>
 			<!-- Free/No ads section -->
 			<div
-				class="shrink-0 group overflow-hidden relative max-lg:border-y-0 lg:border-b-0 lg:border-r-0 p-4 lg:p-8 border border-neutral-800/50 flex flex-col gap-4 lg:gap-8 text-center justify-center items-center"
+				class="group relative flex shrink-0 flex-col items-center justify-center gap-4 overflow-hidden border border-neutral-800/50 p-4 text-center max-lg:border-y-0 lg:gap-8 lg:border-b-0 lg:border-r-0 lg:p-8"
 			>
 				<ShieldBan class="size-16 text-[#3F7DDE]" />
 				<h2 class="text-4xl font-bold text-neutral-100">Completely Free, No Ads</h2>
-				<p class="font-normal text-base leading-6 font-mono text-neutral-400">
-					Skill Forge is a <span class="text-neutral-100 font-semibold">100% free</span> platform with
+				<p class="font-mono text-base font-normal leading-6 text-neutral-400">
+					Skill Forge is a <span class="font-semibold text-neutral-100">100% free</span> platform with
 					no distractions. Focus entirely on your coding journey without any interruptions from ads.
 					Learn, practice, and grow without limits.
 				</p>
 			</div>
 			<!-- Get started section -->
 			<div
-				class="grow relative overflow-hidden lg:border-r-0 group p-6 border border-neutral-800/50 flex flex-col items-center justify-center gap-4"
+				class="group relative flex grow flex-col items-center justify-center gap-4 overflow-hidden border border-neutral-800/50 p-6 lg:border-r-0"
 			>
 				<button
 					onclick={getStarted}
-					class="text-4xl font-bold capitalize relative rounded-full transition-all hover:ring-4 hover:ring-neutral-600/50 py-2 px-4"
+					class="relative rounded-full px-4 py-2 text-4xl font-bold capitalize transition-all hover:ring-4 hover:ring-neutral-600/50"
 				>
 					Get Started
 					<!-- Moving line -->
 					<div
-						class="absolute bottom-0 right-2 left-2 h-px [mask-image:linear-gradient(to_right,rgba(217,217,217,0)_0%,#d9d9d9_25%,#d9d9d9_75%,rgba(217,217,217,0)_100%)]"
+						class="absolute bottom-0 left-2 right-2 h-px [mask-image:linear-gradient(to_right,rgba(217,217,217,0)_0%,#d9d9d9_25%,#d9d9d9_75%,rgba(217,217,217,0)_100%)]"
 					>
 						<div
 							class="h-2 w-full bg-gradient-to-r from-neutral-100/0 via-[#F2B655] to-neutral-100/0"
@@ -365,7 +365,7 @@
 				</button>
 				<!-- Background grid -->
 				<svg
-					class="absolute -z-10 w-full h-full inset-0 stroke-neutral-800/50 [mask-image:radial-gradient(50%_50%_at_center_center,transparent,white)]"
+					class="absolute inset-0 -z-10 h-full w-full stroke-neutral-800/50 [mask-image:radial-gradient(50%_50%_at_center_center,transparent,white)]"
 					aria-hidden="true"
 					><defs
 						><pattern
@@ -384,51 +384,51 @@
 		<div class="flex flex-col">
 			<!-- Star -->
 			<div
-				class="grow p-4 lg:p-8 min-h-[500px] border border-neutral-800/50 max-lg:border-y-0 relative"
+				class="relative min-h-[500px] grow border border-neutral-800/50 p-4 max-lg:border-y-0 lg:p-8"
 			>
 				<div
-					class="absolute overflow-hidden flex flex-col items-center justify-evenly inset-8 blur-[10px]"
+					class="absolute inset-8 flex flex-col items-center justify-evenly overflow-hidden blur"
 				>
 					{#each { length: 3 } as _}
 						<h1
-							class="text-9xl text-center font-extrabold bg-gradient-to-r from-[#ED5D45] via-[#F2B655] to-[#3FBED8] bg-clip-text text-transparent inline-block select-none"
+							class="inline-block select-none bg-gradient-to-r from-[#ED5D45] via-[#F2B655] to-[#3FBED8] bg-clip-text text-center text-9xl font-extrabold text-transparent"
 						>
 							Skill
 						</h1>
 						<h1
-							class="text-9xl text-center font-extrabold bg-gradient-to-r from-[#ED5D45] via-[#F2B655] to-[#3FBED8] bg-clip-text text-transparent inline-block select-none"
+							class="inline-block select-none bg-gradient-to-r from-[#ED5D45] via-[#F2B655] to-[#3FBED8] bg-clip-text text-center text-9xl font-extrabold text-transparent"
 						>
 							Forge
 						</h1>
 					{/each}
 				</div>
-				<div class="absolute inset-12 lg:inset-24 flex flex-col items-center justify-center">
+				<div class="absolute inset-12 flex flex-col items-center justify-center lg:inset-24">
 					<img
 						src="/Star.svg"
 						draggable="false"
-						class="w-full max-w-[400px] h-full object-contain"
+						class="h-full w-full max-w-[400px] object-contain"
 						alt=""
 					/>
 				</div>
 			</div>
 			<!-- Two cards side to side -->
-			<div class="grid lg:grid-cols-2 w-full shrink-0">
+			<div class="grid w-full shrink-0 lg:grid-cols-2">
 				<div
-					class="p-4 lg:p-8 flex flex-col gap-4 border lg:border-t-0 lg:border-r-0 border-neutral-800/50"
+					class="flex flex-col gap-4 border border-neutral-800/50 p-4 lg:border-r-0 lg:border-t-0 lg:p-8"
 				>
 					<Zap class="size-16 text-[#3FBED8]" />
 					<h1 class="text-2xl font-semibold text-neutral-100">10 + Coding Exercises</h1>
-					<p class="text-base leading-6 font-normal font-mono text-neutral-400">
+					<p class="font-mono text-base font-normal leading-6 text-neutral-400">
 						Practice with a vast collection of coding challenges across various difficulty levels
 						and topics.
 					</p>
 				</div>
 				<div
-					class="p-4 lg:p-8 flex flex-col gap-4 max-lg:border-t-0 border lg:border-t-0 border-neutral-800/50"
+					class="flex flex-col gap-4 border border-neutral-800/50 p-4 max-lg:border-t-0 lg:border-t-0 lg:p-8"
 				>
 					<Route class="size-16 text-[#F2B655]" />
 					<h1 class="text-2xl font-semibold text-neutral-100">Progress Tracking</h1>
-					<p class="text-base leading-6 font-normal font-mono text-neutral-400">
+					<p class="font-mono text-base font-normal leading-6 text-neutral-400">
 						Monitor your progress, identify areas for improvement, and track your coding skills
 						growth.
 					</p>
@@ -440,9 +440,9 @@
 
 <!-- Footer -->
 <footer
-	class="flex flex-row gap-12 bg-neutral-200 text-neutral-900 max-w-screen-2xl mx-auto rounded-2xl py-12 px-6 mb-6 w-full"
+	class="mx-auto mb-6 flex w-full max-w-screen-2xl flex-row gap-12 rounded-2xl bg-neutral-200 px-6 py-12 text-neutral-900"
 >
-	<p class="text-sm font-mono">© {new Date().getFullYear()} Skill Forge. All rights reserved.</p>
+	<p class="font-mono text-sm">© {new Date().getFullYear()} Skill Forge. All rights reserved.</p>
 </footer>
 
 <style>

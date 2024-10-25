@@ -49,41 +49,41 @@
 </svelte:head>
 
 <main
-	class="flex flex-col gap-4 md:gap-8 flex-1 items-start p-4 sm:px-6 sm:py-0 max-w-screen-lg w-full mx-auto"
+	class="mx-auto flex w-full max-w-screen-lg flex-1 flex-col items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8"
 >
 	<!-- Hero -->
-	<div class="grid gap-4 grid-cols-1 md:grid-cols-3 w-full">
-		<div class="bg-neutral-800 text-neutral-100 rounded-lg md:col-span-2">
-			<div class="flex flex-row p-6 pb-3 gap-4">
-				<img src="/default_avatar.jpg" class="rounded-xl size-20 object-cover" alt="Avatar" />
+	<div class="grid w-full grid-cols-1 gap-4 md:grid-cols-3">
+		<div class="rounded-lg bg-neutral-800 text-neutral-100 md:col-span-2">
+			<div class="flex flex-row gap-4 p-6 pb-3">
+				<img src="/default_avatar.jpg" class="size-20 rounded-xl object-cover" alt="Avatar" />
 				<div class="flex flex-col space-y-1.5">
 					<h3 class="text-lg font-semibold leading-none tracking-tight">{user.username}</h3>
 
-					<p class="text-neutral-400 max-w-lg text-balance ltexteading-relaxed">
+					<p class="ltexteading-relaxed max-w-lg text-balance text-neutral-400">
 						Rank
 						{#if rank.user_rank === 1}
 							<span
-								class="bg-gradient-to-r from-teal-500 via-purple-500 to-orange-500 bg-clip-text text-xl text-transparent font-black inline-block"
+								class="inline-block bg-gradient-to-r from-teal-500 via-purple-500 to-orange-500 bg-clip-text text-xl font-black text-transparent"
 								style="animation: text 5s ease infinite;">{rank.user_rank}</span
 							>
 						{:else}
-							<span class="font-black inline-block text-xl text-neutral-100">{rank.user_rank}</span>
+							<span class="inline-block text-xl font-black text-neutral-100">{rank.user_rank}</span>
 						{/if}
 					</p>
 				</div>
 			</div>
 
-			<div class="flex items-center p-6 pt-0 flex-row gap-4">
+			<div class="flex flex-row items-center gap-4 p-6 pt-0">
 				<a
 					href="/app/account/log-out"
-					class="px-3 py-1 rounded-xl bg-neutral-700 text-base font-medium flex flex-row gap-2 items-center"
+					class="flex flex-row items-center gap-2 rounded-xl bg-neutral-700 px-3 py-1 text-base font-medium"
 				>
 					<LogOut class="size-4" />
 					Log out
 				</a>
 				<a
 					href="/app/account/settings"
-					class="px-3 py-1 rounded-xl bg-neutral-700 text-base font-medium flex flex-row gap-2 items-center"
+					class="flex flex-row items-center gap-2 rounded-xl bg-neutral-700 px-3 py-1 text-base font-medium"
 				>
 					<Settings class="size-4" />
 					Settings
@@ -91,7 +91,7 @@
 				{#if user.admin}
 					<a
 						href="/app/account/admin"
-						class="px-3 py-1 rounded-xl bg-neutral-700 text-base font-medium flex flex-row gap-2 items-center"
+						class="flex flex-row items-center gap-2 rounded-xl bg-neutral-700 px-3 py-1 text-base font-medium"
 					>
 						<Shield class="size-4" />
 						Admin dashboard
@@ -100,12 +100,12 @@
 			</div>
 		</div>
 
-		<div class="bg-neutral-800 text-neutral-100 rounded-lg">
+		<div class="rounded-lg bg-neutral-800 text-neutral-100">
 			<div class="flex flex-col space-y-1.5 p-6 pb-2">
 				<p class="text-lg font-semibold leading-none tracking-tight">Solved problems</p>
 
-				<h3 class="font-semibold tracking-tight text-4xl">
-					{rank.distinct_exercise_count}<span class="text-neutral-400 text-xl ml-1"
+				<h3 class="text-4xl font-semibold tracking-tight">
+					{rank.distinct_exercise_count}<span class="ml-1 text-xl text-neutral-400"
 						>/{rank.no_exercises}</span
 					>
 				</h3>
@@ -113,7 +113,7 @@
 
 			{#if rank.distinct_exercise_count === rank.no_exercises}
 				<div class="p-6 pt-0">
-					<div class="text-neutral-400 text-sm">
+					<div class="text-sm text-neutral-400">
 						Wow, you solved all of the problems on the site ! Congratulation, you have no life.
 					</div>
 				</div>
@@ -122,10 +122,10 @@
 	</div>
 
 	<!-- Contribution grid -->
-	<div class="bg-neutral-800 rounded-xl flex flex-col p-6 gap-4 w-full">
+	<div class="flex w-full flex-col gap-4 rounded-xl bg-neutral-800 p-6">
 		<h3 class="text-lg font-semibold leading-none tracking-tight">Contributions</h3>
-		<div class="w-full overflow-x-auto h-full">
-			<div class="flex flex-row flex-nowrap gap-1 w-full">
+		<div class="h-full w-full overflow-x-auto">
+			<div class="flex w-full flex-row flex-nowrap gap-1">
 				{#each { length: 53 } as _, weekNo}
 					<div class="flex shrink-0 flex-col gap-1">
 						{#each { length: 7 } as _, dayNo}
@@ -145,6 +145,7 @@
 										.sort((a, b) => b - a)[0] || Object.keys(activityThresholds)[0]}
 								<Tooltip
 									class="size-[0.85rem] shrink-0"
+									delay={0}
 									content="{contrib?.submission_count ??
 										'No'} contribution{contrib?.submission_count > 1
 										? 's'
@@ -152,7 +153,7 @@
 								>
 									<button
 										aria-label="Activity for {formattedDate}"
-										class={cn('size-full aspect-square block rounded', activityThresholds[bg])}
+										class={cn('block aspect-square size-full rounded', activityThresholds[bg])}
 									></button>
 								</Tooltip>
 							{/if}
@@ -161,7 +162,7 @@
 				{/each}
 			</div>
 		</div>
-		<div class="flex flex-row gap-1 items-center text-xs text-neutral-400 font-base">
+		<div class="font-base flex flex-row items-center gap-1 text-xs text-neutral-400">
 			Less
 			{#each Object.keys(activityThresholds) as key}
 				<div class={cn('size-[0.85rem] rounded', activityThresholds[key])}></div>
@@ -171,40 +172,45 @@
 	</div>
 
 	<!-- Recent activity -->
-	<div class="bg-neutral-800 rounded-xl w-full">
+	<div class="w-full rounded-xl bg-neutral-800">
 		<div class="flex flex-col space-y-1.5 p-6 px-7">
 			<h3 class="text-lg font-semibold leading-none tracking-tight">Activity</h3>
 
-			<p class="text-neutral-400 text-sm">Recent activity.</p>
+			<p class="text-sm text-neutral-400">Recent activity.</p>
 		</div>
 
 		<div class="p-6 pt-0">
-			<div class="relative w-full overflow-auto max-h-[300px]">
+			<div class="relative max-h-[300px] w-full overflow-auto">
 				{#if recentActivity.length === 0}
-					<div class="grow bg-neutral-700 p-4 rounded-lg">
+					<div class="grow rounded-lg bg-neutral-700 p-4">
 						<h2 class="text-base font-medium">You have no recent activity!</h2>
 					</div>
 				{:else}
 					<table class="w-full caption-bottom text-sm">
-						<thead class="border-b border-neutral-700 sticky top-0 bg-neutral-800"
+						<thead class="sticky top-0 border-b border-neutral-700 bg-neutral-800"
 							><tr
-								><th class="text-neutral-400 h-12 px-4 text-left align-middle font-medium">Name</th>
-								<th class="text-neutral-400 h-12 px-4 align-middle font-medium text-right">Date</th
+								><th class="h-12 px-4 text-left align-middle font-medium text-neutral-400">Name</th>
+								<th class="h-12 px-4 text-right align-middle font-medium text-neutral-400">Date</th
 								></tr
 							></thead
 						>
 						<tbody class="[&amp;_tr:last-child]:border-0">
 							{#each recentActivity as activity}
-								<tr class="odd:bg-neutral-700/20 border-b border-neutral-700 transition-colors"
+								<tr class="border-b border-neutral-700 transition-colors odd:bg-neutral-700/20"
 									><td class="p-4 align-middle">
-										<a href="/app/exercises/{urlHealer.identifier.join(activity.slug, activity.exercise_id)}">
+										<a
+											href="/app/exercises/{urlHealer.identifier.join(
+												activity.slug,
+												activity.exercise_id
+											)}"
+										>
 											<div class="font-medium">{activity.title}</div>
-											<div class="text-neutral-400 hidden text-sm md:inline">
+											<div class="hidden text-sm text-neutral-400 md:inline">
 												{activity.exercise_difficulty}
 											</div>
 										</a>
 									</td>
-									<td class="p-4 align-middle text-right">{formatDate(activity.completed_at)}</td
+									<td class="p-4 text-right align-middle">{formatDate(activity.completed_at)}</td
 									></tr
 								>
 							{/each}

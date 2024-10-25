@@ -8,7 +8,10 @@ export async function load() {
 	try {
 		const [exercise] = await db.query('SELECT * FROM exercises ORDER BY RAND() LIMIT 1');
 		const randomExercise = exercise[0];
-		throw redirect(303, `/app/exercises/${urlHealer.identifier.join(randomExercise.slug, randomExercise.id)}`);
+		throw redirect(
+			303,
+			`/app/exercises/${urlHealer.identifier.join(randomExercise.slug, randomExercise.id)}`
+		);
 	} finally {
 		db.end();
 	}

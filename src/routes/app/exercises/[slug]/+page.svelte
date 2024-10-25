@@ -70,6 +70,8 @@
 		isSubmitting = true;
 		rateLimiting = true;
 		try {
+			editor.formatCode();
+			await new Promise((resolve) => setTimeout(resolve, 100));
 			const res = await fetch('/api/submitSolution', {
 				method: 'POST',
 				headers: {
@@ -206,30 +208,29 @@
 </svelte:head>
 
 <!-- Code action buttons -->
-<div class="z-20 absolute max-lg:bottom-4 lg:top-2 w-52 left-1/2 -ml-[6.5rem]">
-	<div class="grid grid-cols-2 items-center gap-px relative">
+<div class="absolute left-1/2 z-20 -ml-[6.5rem] w-52 max-lg:bottom-4 lg:top-2">
+	<div class="relative grid grid-cols-2 items-center gap-px">
 		<!-- Run button -->
 		<Tooltip
 			content={isRunning ? 'Running' : 'Run <kbd>CTRL</kbd> <kbd>Enter</kbd>'}
-			delay={100}
 			position="bottom"
 		>
 			<button
-				class="px-2 py-2 w-full text-center justify-center text-base rounded-l-lg font-medium text-neutral-300 bg-neutral-900 lg:bg-neutral-800 flex flex-row items-center gap-2"
+				class="flex w-full flex-row items-center justify-center gap-2 rounded-l-lg bg-neutral-900 px-2 py-2 text-center text-base font-medium text-neutral-300 lg:bg-neutral-800"
 				onclick={() => {
 					runCode();
 				}}
 			>
-				<div class="block relative size-5">
+				<div class="relative block size-5">
 					<Play
 						class={cn(
-							'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 fill-neutral-300 duration-300 transition-all',
+							'absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 fill-neutral-300 transition-all duration-300',
 							isRunning ? 'size-0' : 'size-5'
 						)}
 					/>
 					<div
 						class={cn(
-							'duration-300 transition-all absolute size-5 flex flex-col items-center justify-center top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'
+							'absolute left-1/2 top-1/2 flex size-5 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center transition-all duration-300'
 						)}
 					>
 						<Spinner class={cn('transition-all', isRunning ? 'size-5' : 'size-0')} />
@@ -240,19 +241,19 @@
 		</Tooltip>
 		<!-- Submit button -->
 		<button
-			class="px-2 py-2 text-base rounded-r-lg font-medium text-green-600 bg-neutral-900 lg:bg-neutral-800 flex flex-row items-center gap-2"
+			class="flex flex-row items-center gap-2 rounded-r-lg bg-neutral-900 px-2 py-2 text-base font-medium text-green-600 lg:bg-neutral-800"
 			onclick={submitSolution}
 		>
-			<div class="block relative size-5">
+			<div class="relative block size-5">
 				<CloudDownload
 					class={cn(
-						'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 duration-300 transition-all',
+						'absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300',
 						isSubmitting ? 'size-0' : 'size-5'
 					)}
 				/>
 				<div
 					class={cn(
-						'duration-300 transition-all absolute size-5 flex flex-col items-center justify-center top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'
+						'absolute left-1/2 top-1/2 flex size-5 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center transition-all duration-300'
 					)}
 				>
 					<Spinner class={cn('transition-all', isSubmitting ? 'size-5' : 'size-0')} />
@@ -263,18 +264,17 @@
 
 		<!-- Timer -->
 		<div
-			class="absolute -top-full max-lg:-translate-x-1/2 max-lg:-mt-2 max-lg:left-1/2 lg:left-full lg:ml-2 lg:top-0 rounded-lg overflow-hidden"
+			class="absolute -top-full overflow-hidden rounded-lg max-lg:left-1/2 max-lg:-mt-2 max-lg:-translate-x-1/2 lg:left-full lg:top-0 lg:ml-2"
 		>
 			<div class="flex flex-row gap-px">
 				<Tooltip
 					content={timerInterval ? 'Reset timer' : 'Start timer'}
-					delay={100}
 					class="size-10 bg-neutral-800"
 					position="bottom"
 				>
 					<button
 						aria-label="Start timer"
-						class="flex flex-col items-center justify-center size-10 text-neutral-300 bg-neutral-900 lg:bg-neutral-800"
+						class="flex size-10 flex-col items-center justify-center bg-neutral-900 text-neutral-300 lg:bg-neutral-800"
 						onclick={() => {
 							if (timer || timerInterval) clearTimer();
 							else startTimer();
@@ -292,16 +292,16 @@
 					</button>
 				</Tooltip>
 				{#if timer || timerInterval}
-					<div class="flex flex-row gap-px w-fit" transition:slide={{ axis: 'x', duration: 700 }}>
+					<div class="flex w-fit flex-row gap-px" transition:slide={{ axis: 'x', duration: 700 }}>
 						<!-- Time display -->
 						<div
-							class="flex flex-col items-center px-2 justify-center text-center text-neutral-400 h-10 bg-neutral-900 lg:bg-neutral-800"
+							class="flex h-10 flex-col items-center justify-center bg-neutral-900 px-2 text-center text-neutral-400 lg:bg-neutral-800"
 						>
 							{formatTime(timer)}
 						</div>
 						<!-- Play/Pause button -->
 						<button
-							class="flex size-10 shrink-0 bg-neutral-900 text-neutral-300 lg:bg-neutral-800 flex-col items-center justify-center"
+							class="flex size-10 shrink-0 flex-col items-center justify-center bg-neutral-900 text-neutral-300 lg:bg-neutral-800"
 							aria-label="Reset timer"
 							onclick={() => {
 								if (timerInterval !== null) pauseTimer();
@@ -326,43 +326,43 @@
 </div>
 
 <!-- Main content on < lg screen size -->
-<div class="max-lg:flex hidden flex-col grow !h-[calc(100vh-4rem)] overflow-hidden">
+<div class="hidden !h-[calc(100vh-4rem)] grow flex-col overflow-hidden max-lg:flex">
 	<div
-		class="grid mb-2 grid-cols-3 shrink-0 rounded-full flex-nowrap overflow-x-auto bg-neutral-800"
+		class="mb-2 grid shrink-0 grid-cols-3 flex-nowrap overflow-x-auto rounded-full bg-neutral-800"
 	>
 		<button
 			class={cn(
-				'px-3 py-1 text-lg font-semibold justify-center transition-colors rounded-full flex flex-row items-center gap-2',
+				'flex flex-row items-center justify-center gap-2 rounded-full px-3 py-1 text-lg font-semibold transition-colors',
 				mobileActiveTabIndex != 0 ? 'text-neutral-400 hover:bg-neutral-900/50' : 'bg-neutral-700'
 			)}
 			onclick={() => (mobileActiveTabIndex = 0)}>Problem</button
 		>
 		<button
 			class={cn(
-				'px-3 py-1 text-lg font-semibold justify-center transition-colors rounded-full flex flex-row items-center gap-2',
+				'flex flex-row items-center justify-center gap-2 rounded-full px-3 py-1 text-lg font-semibold transition-colors',
 				mobileActiveTabIndex != 1 ? 'text-neutral-400 hover:bg-neutral-900/50' : 'bg-neutral-700'
 			)}
 			onclick={() => (mobileActiveTabIndex = 1)}>Code</button
 		>
 		<button
 			class={cn(
-				'px-3 py-1 text-lg font-semibold justify-center transition-colors rounded-full flex flex-row items-center gap-2',
+				'flex flex-row items-center justify-center gap-2 rounded-full px-3 py-1 text-lg font-semibold transition-colors',
 				mobileActiveTabIndex != 2 ? 'text-neutral-400 hover:bg-neutral-900/50' : 'bg-neutral-700'
 			)}
 			onclick={() => (mobileActiveTabIndex = 2)}>Tests</button
 		>
 	</div>
 	<div
-		class="grid grid-cols-3 grow no-scrollbar w-[calc(300%+2rem)] gap-4 transition-transform overflow-hidden"
+		class="no-scrollbar grid w-[calc(300%+2rem)] grow grid-cols-3 gap-4 overflow-hidden transition-transform"
 		style="transform: translateX(-{(mobileActiveTabIndex * 100) / 2.974}%);"
 	>
 		<div class="flex flex-col overflow-y-auto">
 			<LeftPane {exercise} bind:leftPaneActiveIndex bind:value bind:editor bind:submissions />
 		</div>
-		<div class="flex flex-col grow">
+		<div class="flex grow flex-col">
 			<Editor {exercise} bind:editor bind:value {runCode} />
 		</div>
-		<div class="flex flex-col grow">
+		<div class="flex grow flex-col">
 			<Testcase {exercise} bind:latestRunnedTestsResults />
 		</div>
 	</div>
@@ -371,7 +371,7 @@
 <!-- Main content on > lg screen size -->
 <PaneGroup
 	direction="horizontal"
-	class="grow !h-[calc(100vh-4rem)] overflow-hidden lg:!flex !hidden"
+	class="!hidden !h-[calc(100vh-4rem)] grow overflow-hidden lg:!flex"
 	style="height: auto;"
 	autoSaveId="exercisePage"
 >
@@ -379,10 +379,10 @@
 	<Pane defaultSize={50} class="flex flex-col">
 		<LeftPane {exercise} bind:leftPaneActiveIndex bind:value bind:editor bind:submissions />
 	</Pane>
-	<PaneResizer class="relative flex w-2 items-center justify-center group">
+	<PaneResizer class="group relative flex w-2 items-center justify-center">
 		<div class="flex h-7 w-[2px] items-center justify-center rounded-sm bg-neutral-700"></div>
 		<div
-			class="absolute top-0 rounded-full transition-colors bottom-0 w-[2px] left-1/2 -translate-x-1/2 group-hover:bg-neutral-500"
+			class="absolute bottom-0 left-1/2 top-0 w-[2px] -translate-x-1/2 rounded-full transition-colors group-hover:bg-neutral-500"
 		></div>
 	</PaneResizer>
 

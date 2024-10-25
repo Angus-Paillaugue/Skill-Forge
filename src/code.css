@@ -37,7 +37,7 @@
 	@apply text-neutral-300;
 }
 #pageContainer a {
-	@apply flex-row items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all text-neutral-400 text-base font-medium hover:text-neutral-100 underline;
+	@apply flex-row items-center justify-center gap-2 text-base font-medium text-neutral-400 underline transition-all hover:text-neutral-100 disabled:cursor-not-allowed disabled:opacity-50;
 }
 
 /* Code */
@@ -54,7 +54,7 @@ code {
 }
 /* Highlighted code blocks */
 .shiki {
-	@apply relative overflow-auto whitespace-pre rounded border py-6 focus:-outline-offset-1 border-neutral-700 bg-neutral-900;
+	@apply relative overflow-auto whitespace-pre rounded border border-neutral-700 bg-neutral-900 py-6 focus:-outline-offset-1;
 }
 .line-numbers .line::before {
 	content: counter(codeStep);
@@ -81,24 +81,24 @@ pre > code {
 }
 /* Inline code */
 code:not(pre code) {
-	@apply rounded px-1 py-0.5 text-neutral-400 text-sm bg-neutral-700/50 border border-neutral-600;
+	@apply rounded border border-neutral-600 bg-neutral-700/50 px-1 py-0.5 text-sm text-neutral-400;
 }
 
 /* Styling page components */
 
 /* Table */
 #pageContainer table {
-	@apply rounded-t-xl overflow-hidden mb-4;
+	@apply mb-4 overflow-hidden rounded-t-xl;
 }
 #pageContainer table thead {
 	@apply bg-neutral-600/50;
 }
 
 #pageContainer table th {
-	@apply border-b p-4 pb-3 pl-8 text-left font-medium border-neutral-600/50 text-neutral-200;
+	@apply border-b border-neutral-600/50 p-4 pb-3 pl-8 text-left font-medium text-neutral-200;
 }
 #pageContainer table tr:not(#pageContainer table thead tr) {
-	@apply even:bg-neutral-700/30 last:border-b border-t border-neutral-600;
+	@apply border-t border-neutral-600 last:border-b even:bg-neutral-700/30;
 }
 #pageContainer table td {
 	@apply p-4 pl-8 text-neutral-400;
@@ -120,7 +120,7 @@ code:not(pre code) {
 	@apply m-0;
 }
 #pageContainer ul > li::before {
-	@apply absolute -left-[1.25rem] top-[12px] h-0.5 w-3 rounded-full content-[''] bg-neutral-700;
+	@apply absolute -left-[1.25rem] top-[12px] h-0.5 w-3 rounded-full bg-neutral-700 content-[''];
 }
 #pageContainer ol > li {
 	@apply list-decimal;
@@ -131,10 +131,10 @@ code:not(pre code) {
 	@apply flex flex-row items-center gap-2;
 }
 #pageContainer .task-list-item p input[type='checkbox'] {
-	@apply relative size-[1.15rem] appearance-none rounded border after:absolute after:left-1/2 after:top-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:text-sm after:font-bold after:text-green-800 checked:after:content-["✓"] border-neutral-700 checked:bg-green-400;
+	@apply relative size-[1.15rem] appearance-none rounded border border-neutral-700 after:absolute after:left-1/2 after:top-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:text-sm after:font-bold after:text-green-800 checked:bg-green-400 checked:after:content-["✓"];
 }
 
 /* Image */
 #pageContainer img {
-	@apply w-max object-cover max-h-[200px] rounded-lg;
+	@apply max-h-[200px] w-max rounded-lg object-cover;
 }
