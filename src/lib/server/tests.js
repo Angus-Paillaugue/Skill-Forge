@@ -21,8 +21,12 @@ export async function runTests(exercise_id, user_input) {
 		const results = [];
 
 		for (const test of tests) {
-			const { input, expected_output } = test;
+			let { input, expected_output } = test;
 
+			// Add support for boolean values
+			if (expected_output == 'true' || expected_output == 'false') {
+				expected_output = expected_output == 'true';
+			}
 			try {
 				// Measure memory usage before the test
 				const memStart = process.memoryUsage().heapUsed;
@@ -38,7 +42,7 @@ export async function runTests(exercise_id, user_input) {
 				results.push({
 					input,
 					expected_output,
-					actual_output: result,
+					actual_output: result || " ",
 					passed: result == expected_output,
 					memUsage // Memory usage for this test
 				});
@@ -46,7 +50,7 @@ export async function runTests(exercise_id, user_input) {
 				results.push({
 					input,
 					expected_output,
-					actual_output: null,
+					actual_output: " ",
 					error: error.message,
 					passed: false,
 					memUsage: null

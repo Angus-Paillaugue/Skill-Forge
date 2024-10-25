@@ -6,7 +6,6 @@ export async function load({ params }) {
 	const { id } = params;
 	const db = await createConnection();
 	try {
-		const [categories] = await db.query('SELECT * FROM categories');
 		const [exercise] = await db.query(
 			`
 			SELECT
@@ -35,7 +34,7 @@ export async function load({ params }) {
 			[id]
 		);
 		if (!exercise.length) throw new error(404, { message: 'Exercise not found' });
-		return { categories, exercise: exercise[0] };
+		return { exercise: exercise[0] };
 	} catch (err) {
 		console.error(err);
 		throw new error(500, { message: 'Failed to load exercise' });

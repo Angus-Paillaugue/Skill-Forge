@@ -1,7 +1,7 @@
 <script>
 	import { cn } from '$lib/utils';
 	import { Spinner, Editor, Button, Input } from '$lib/components';
-	import { fade, fly, scale } from 'svelte/transition';
+	import { scale } from 'svelte/transition';
 	import { PaneGroup, Pane, PaneResizer } from 'paneforge';
 	import { newToast } from '$lib/stores';
 	import { Save, Plus, Text, ScanEye, Code, X } from 'lucide-svelte';
@@ -9,19 +9,14 @@
 	const { data } = $props();
 	const { exercise } = data;
 	const DIFFICULTIES = ['easy', 'medium', 'hard'];
-	let categories = $state(data.categories);
 	let title = $state(exercise.title);
 	let description = $state(exercise.description);
-	// svelte-ignore state_referenced_locally
-	let category = $state(categories[0].id);
 	let isSaving = $state(false);
 	let tests = $state(exercise.tests);
 	let selectedTestIndex = $state(0);
 	let difficulty = $state(exercise.difficulty);
 	let startValue = $state(exercise.content);
 	let editor = $state();
-	let createCategoryModalVisible = $state(false);
-	let isCreatingCategory = $state(false);
 	let isPreviewingDescription = $state(false);
 	let success = $state(null);
 
@@ -68,47 +63,6 @@
 	}
 
 	/**
-	 * Asynchronous function to create a new exercise category.
-	 * This function is triggered by an event, typically a form submission.
-	 *
-	 * @param {Event} e - The event object from the form submission.
-	 */
-	async function createCategory(e) {
-		e.preventDefault();
-		isCreatingCategory = true;
-		const categoryName = new FormData(e.target).get('name');
-
-		if (!categoryName) {
-			newToast({ type: 'red', message: 'Category name is required' });
-			isCreatingCategory = false;
-			return;
-		}
-
-		try {
-			const res = await fetch('/api/createCategory', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({ name: categoryName })
-			});
-			const data = await res.json();
-			if (!res.ok) {
-				newToast({ type: 'red', message: data.message });
-				return;
-			}
-			categories = [...categories, { id: data.id, name: data.name }];
-			category = data.id;
-			createCategoryModalVisible = false;
-		} catch (error) {
-			newToast({ type: 'red', message: error.message });
-			isCreatingCategory = false;
-		} finally {
-			isCreatingCategory = false;
-		}
-	}
-
-	/**
 	 * This function compiles the provided Markdown content into HTML.
 	 * It is an asynchronous function that processes the Markdown input
 	 * and returns the compiled HTML output.
@@ -134,40 +88,6 @@
 <svelte:head>
 	<title>Edit an exercise</title>
 </svelte:head>
-
-{#if createCategoryModalVisible}
-	<div transition:fade class="fixed z-40 inset-0 bg-neutral-900/50 backdrop-blur-md"></div>
-	<div
-		transition:fly={{ y: '100%' }}
-		class="fixed z-40 inset-0 flex flex-col items-center justify-center p-2"
-	>
-		<form
-			onsubmit={createCategory}
-			class="p-4 rounded-xl bg-neutral-800 max-w-md w-full flex flex-col gap-4"
-		>
-			<h2 class="text-2xl font-semibold">Create category</h2>
-			<Input id="name" placeholder="Category name" />
-			<div class="grid grid-cols-2 gap-4">
-				<button
-					type="button"
-					class="text-base font-medium md:font-semibold w-full rounded-xl bg-neutral-700 px-4 py-2 text-neutral-100 placeholder:text-neutral-400"
-					onclick={() => (createCategoryModalVisible = false)}
-				>
-					Cancel
-				</button>
-				<button
-					type="submit"
-					class="text-base font-medium md:font-semibold w-full rounded-xl bg-neutral-900 px-4 py-2 text-neutral-100 placeholder:text-neutral-400 focus:flex flex-row items-center justify-center gap-2"
-				>
-					{#if isCreatingCategory}
-						<Spinner class="size-5" />
-					{/if}
-					Create
-				</button>
-			</div>
-		</form>
-	</div>
-{/if}
 
 <!-- Create button -->
 <button
@@ -215,27 +135,6 @@
 
 		<div class="flex flex-col grow bg-neutral-900 h-full rounded-xl">
 			<div class="p-4 grow flex flex-col overflow-y-auto">
-				<!-- Category -->
-				<div class="flex flex-row items-center">
-					<!-- Select category -->
-					<select
-						bind:value={category}
-						class="block px-2 h-9 rounded-l-lg bg-neutral-800 text-base font-semibold w-fit"
-					>
-						{#each categories as _category}
-							<option value={_category.id}>{_category.name}</option>
-						{/each}
-					</select>
-					<div class="h-full w-px bg-neutral-900"></div>
-					<!-- Add new category -->
-					<button
-						class="size-9 flex flex-col items-center justify-center rounded-r-lg bg-neutral-800 text-base font-semibold"
-						aria-label="Create category"
-						onclick={() => (createCategoryModalVisible = true)}
-					>
-						<Plus class="size-6" />
-					</button>
-				</div>
 				<!-- Exercise difficulty -->
 				<select
 					bind:value={difficulty}

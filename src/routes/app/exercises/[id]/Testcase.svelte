@@ -86,7 +86,7 @@
 				{exercise.tests[selectedTestIndex].expected_output}
 			</div>
 
-			{#if latestRunnedTestsResults}
+			{#if latestRunnedTestsResults && !latestRunnedTestsResults[selectedTestIndex].passed}
 				<h6 class="text-base font-medium mt-4">Actual Output</h6>
 				<div class="font-mono whitespace-pre-wrap p-2 mt-1 rounded-xl w-full bg-neutral-700">
 					{latestRunnedTestsResults.results[selectedTestIndex].actual_output}

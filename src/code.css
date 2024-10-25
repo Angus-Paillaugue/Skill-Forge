@@ -87,15 +87,21 @@ code:not(pre code) {
 /* Styling page components */
 
 /* Table */
+#pageContainer table {
+	@apply rounded-t-xl overflow-hidden mb-4;
+}
 #pageContainer table thead {
-	@apply bg-neutral-800/50;
+	@apply bg-neutral-600/50;
 }
 
 #pageContainer table th {
-	@apply border-b p-4 pb-3 pl-8 text-left font-medium border-neutral-700/50 text-neutral-200;
+	@apply border-b p-4 pb-3 pl-8 text-left font-medium border-neutral-600/50 text-neutral-200;
+}
+#pageContainer table tr:not(#pageContainer table thead tr) {
+	@apply even:bg-neutral-700/30 last:border-b border-t border-neutral-600;
 }
 #pageContainer table td {
-	@apply border-b border-neutral-700 p-4 pl-8 text-neutral-400;
+	@apply p-4 pl-8 text-neutral-400;
 }
 
 /* Lists */
