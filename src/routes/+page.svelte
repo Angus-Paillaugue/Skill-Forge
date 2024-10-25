@@ -444,7 +444,6 @@
 >
 	<p class="text-sm font-mono">© {new Date().getFullYear()} Skill Forge. All rights reserved.</p>
 </footer>
-1800
 
 <style>
 	@keyframes -global-starlight-right {
