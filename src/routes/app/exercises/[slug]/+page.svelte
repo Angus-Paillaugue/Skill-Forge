@@ -209,7 +209,11 @@
 <div class="z-20 absolute max-lg:bottom-4 lg:top-2 w-52 left-1/2 -ml-[6.5rem]">
 	<div class="grid grid-cols-2 items-center gap-px relative">
 		<!-- Run button -->
-		<Tooltip content={isRunning ? "Running" : "Run <kbd>CTRL</kbd> <kbd>Enter</kbd>"} delay={100} position="bottom">
+		<Tooltip
+			content={isRunning ? 'Running' : 'Run <kbd>CTRL</kbd> <kbd>Enter</kbd>'}
+			delay={100}
+			position="bottom"
+		>
 			<button
 				class="px-2 py-2 w-full text-center justify-center text-base rounded-l-lg font-medium text-neutral-300 bg-neutral-900 lg:bg-neutral-800 flex flex-row items-center gap-2"
 				onclick={() => {

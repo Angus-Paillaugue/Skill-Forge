@@ -39,7 +39,8 @@ export async function load({ locals }) {
         s.completed_at,
         e.id AS exercise_id,
         e.difficulty AS exercise_difficulty,
-        e.title
+        e.title,
+        e.slug
       FROM
         submissions s
       JOIN

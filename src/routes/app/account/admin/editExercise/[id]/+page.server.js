@@ -11,6 +11,7 @@ export async function load({ params }) {
 			SELECT
 					e.id AS exercise_id,
 					e.title,
+					e.slug,
 					e.description,
 					e.content,
 					e.difficulty,

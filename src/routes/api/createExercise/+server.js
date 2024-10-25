@@ -1,5 +1,6 @@
 import { json } from '@sveltejs/kit';
 import { createConnection } from '$lib/server/db';
+import { urlHealer } from '$lib/utils';
 
 export async function POST({ request, locals }) {
 	const { title, description, difficulty, tests, content } = await request.json();
@@ -11,12 +12,12 @@ export async function POST({ request, locals }) {
 	if (!title || !description || !difficulty || !tests || !content) {
 		return json({ message: 'Missing required fields' }, { status: 400 });
 	}
-
+	const slug = urlHealer.sanitize(title);
 	const db = await createConnection();
 	try {
 		const [newExercise] = await db.query(
-			'INSERT INTO exercises (title, description, content, difficulty) VALUES (?, ?, ?, ?)',
-			[title, description, content, difficulty]
+			'INSERT INTO exercises (title, slug, description, content, difficulty) VALUES (?, ?, ?, ?, ?)',
+			[title, slug, description, content, difficulty]
 		);
 		const newExerciseId = newExercise.insertId;
 		for (const test of tests) {
@@ -25,7 +26,7 @@ export async function POST({ request, locals }) {
 				[newExerciseId, test.input, test.expected_output]
 			);
 		}
-		return json({ message: 'Exercise created successfully', id: newExerciseId });
+		return json({ message: 'Exercise created successfully', id: newExerciseId, slug });
 	} catch (error) {
 		console.error(error);
 		return json({ message: 'Error creating exercise' }, { status: 500 });

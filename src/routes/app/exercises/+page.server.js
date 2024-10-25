@@ -10,6 +10,7 @@ export async function load({ locals }) {
       SELECT DISTINCT
         e.id AS exercise_id,
         e.title,
+        e.slug,
         e.description,
         e.difficulty,
         e.created_at,

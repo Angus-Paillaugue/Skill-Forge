@@ -1,5 +1,5 @@
 <script>
-	import { cn } from '$lib/utils';
+	import { cn, urlHealer } from '$lib/utils';
 	import { Spinner, Editor, Button, Input } from '$lib/components';
 	import { scale } from 'svelte/transition';
 	import { PaneGroup, Pane, PaneResizer } from 'paneforge';
@@ -127,7 +127,7 @@
 			>
 				<h1 class="text-2xl font-bold text-green-600">Success</h1>
 				<p>{success.message}</p>
-				<Button variant="link" href="/app/exercises/{exercise.exercise_id}" class="link"
+				<Button variant="link" href="/app/exercises/{urlHealer.identifier.join(exercise.slug, exercise.exercise_id)}" class="link"
 					>Go to exercise</Button
 				>
 			</div>

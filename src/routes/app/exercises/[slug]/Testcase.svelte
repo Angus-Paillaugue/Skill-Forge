@@ -1,7 +1,7 @@
 <script>
 	import { cn, formatBytes } from '$lib/utils';
 	import { scale } from 'svelte/transition';
-	import { TestTubeDiagonal, MemoryStick } from 'lucide-svelte';
+	import { TestTubeDiagonal, MemoryStick, Terminal } from 'lucide-svelte';
 	import { Tooltip } from '$lib/components';
 
 	let { exercise, latestRunnedTestsResults = $bindable() } = $props();
@@ -77,21 +77,39 @@
 		{/if}
 		<div class="mt-4">
 			<h6 class="text-base font-medium">Input</h6>
-			<div class="font-mono whitespace-pre-wrap p-2 mt-1 rounded-xl w-full bg-neutral-700">
-				{exercise.tests[selectedTestIndex].input}
+			<div class="font-mono whitespace-pre-wrap p-2 h-10 mt-1 rounded-xl w-full bg-neutral-700">
+				{exercise.tests[selectedTestIndex].input.split('\n').at(-1)}
 			</div>
 
 			<h6 class="text-base font-medium mt-4">Expected Output</h6>
-			<div class="font-mono whitespace-pre-wrap p-2 mt-1 rounded-xl w-full bg-neutral-700">
+			<div class="font-mono whitespace-pre-wrap p-2 h-10 mt-1 rounded-xl w-full bg-neutral-700">
 				{exercise.tests[selectedTestIndex].expected_output}
 			</div>
 
 			{#if latestRunnedTestsResults && !latestRunnedTestsResults.results[selectedTestIndex].passed}
 				<h6 class="text-base font-medium mt-4">Actual Output</h6>
-				<div class="font-mono whitespace-pre-wrap p-2 mt-1 rounded-xl w-full bg-neutral-700">
+				<div class="font-mono whitespace-pre-wrap p-2 mt-1 h-10 rounded-xl w-full bg-neutral-700">
 					{latestRunnedTestsResults.results[selectedTestIndex].actual_output}
 				</div>
 			{/if}
 		</div>
 	</div>
 </div>
+
+{#if latestRunnedTestsResults && latestRunnedTestsResults.results[selectedTestIndex].consoleOutput}
+	<div class="flex flex-col rounded-xl overflow-hidden max-lg:grow shrink-0 lg:mt-2">
+		<div
+			class="flex flex-row items-center px-2 justify-between flex-nowrap overflow-x-auto h-10 shrink-0 bg-neutral-700 p-1"
+		>
+			<div class="flex flex-row items-center gap-2">
+				<Terminal class="size-5" />
+				Console
+			</div>
+		</div>
+		<div class="flex flex-col p-4 bg-neutral-800 max-lg:grow">
+			<p class="font-mono whitespace-pre-wrap max-h-[120px] overflow-y-auto w-full m-0">
+				{latestRunnedTestsResults.results[selectedTestIndex].consoleOutput.join('\n')}
+			</p>
+		</div>
+	</div>
+{/if}

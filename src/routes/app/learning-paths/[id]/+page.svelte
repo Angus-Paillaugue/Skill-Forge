@@ -1,6 +1,6 @@
 <script>
 	import { TestTubeDiagonal, CircleCheckBig } from 'lucide-svelte';
-	import { stripMD } from '$lib/utils';
+	import { stripMD, urlHealer } from '$lib/utils';
 	import { CircularProgress } from '$lib/components';
 	import { onMount } from 'svelte';
 
@@ -67,7 +67,7 @@
 							{#each path.exercises as exercise}
 								<tr class="odd:bg-neutral-700/20 border-b border-neutral-700 transition-colors"
 									><td class="p-4 align-middle w-1/3">
-										<a href="/app/exercises/{exercise.id}">
+										<a href="/app/exercises/{urlHealer.identifier.join(exercise.slug, exercise.id)}">
 											<div class="font-medium">{exercise.title}</div>
 											<div class="text-neutral-400 inline text-xs md:text-sm">
 												{exercise.difficulty}

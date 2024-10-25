@@ -1,7 +1,7 @@
 <script>
 	import { Difficulty, Input } from '$lib/components';
 	import { CircleCheckBig, ChevronDown } from 'lucide-svelte';
-	import { formatDate, cn } from '$lib/utils';
+	import { formatDate, cn, urlHealer } from '$lib/utils';
 	import { flip } from 'svelte/animate';
 	import { slide } from 'svelte/transition';
 	import Fuse from 'fuse.js';
@@ -162,7 +162,13 @@
 							{/if}
 						</td>
 						<td class="w-1/2 px-3 md:px-6 py-2">
-							<a href="/app/exercises/{exercise.exercise_id}" class="text-lg md:text-2xl font-bold">
+							<a
+								href="/app/exercises/{urlHealer.identifier.join(
+									exercise.slug,
+									exercise.exercise_id
+								)}"
+								class="text-lg md:text-2xl font-bold"
+							>
 								{exercise.title}
 							</a>
 						</td>

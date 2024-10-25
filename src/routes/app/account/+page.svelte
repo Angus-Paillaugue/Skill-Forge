@@ -1,5 +1,5 @@
 <script>
-	import { formatDate, cn } from '$lib/utils';
+	import { formatDate, cn, urlHealer } from '$lib/utils';
 	import { LogOut, Shield, Settings } from 'lucide-svelte';
 	import { Tooltip } from '$lib/components';
 
@@ -197,7 +197,7 @@
 							{#each recentActivity as activity}
 								<tr class="odd:bg-neutral-700/20 border-b border-neutral-700 transition-colors"
 									><td class="p-4 align-middle">
-										<a href="/app/exercises/{activity.exercise_id}">
+										<a href="/app/exercises/{urlHealer.identifier.join(activity.slug, activity.exercise_id)}">
 											<div class="font-medium">{activity.title}</div>
 											<div class="text-neutral-400 hidden text-sm md:inline">
 												{activity.exercise_difficulty}
