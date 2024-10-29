@@ -7,7 +7,8 @@ import bcrypt from 'bcrypt';
 export const actions = {
 	logIn: async ({ cookies, request }) => {
 		const formData = Object.fromEntries(await request.formData());
-		const { logInUsername: username, signUpPassword: password } = formData;
+		const { logInUsername: username, logInPassword: password } = formData;
+
 		const db = await createConnection();
 
 		// Check if username is provided
@@ -39,7 +40,7 @@ export const actions = {
 	},
 	signUp: async ({ cookies, request }) => {
 		const formData = Object.fromEntries(await request.formData());
-		const { signUpUsername: username, logInPassword: password } = formData;
+		const { signUpUsername: username, signUpPassword: password } = formData;
 		const db = await createConnection();
 
 		// Check if username is already used
