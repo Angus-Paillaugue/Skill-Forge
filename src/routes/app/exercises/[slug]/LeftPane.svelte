@@ -42,7 +42,9 @@
 		<!-- Exercise description -->
 		{#if leftPaneActiveIndex === 0}
 			{#if exercise?.submissions?.length > 0}
-				<div class="mb-4 flex flex-row text-base font-medium items-center gap-2 bg-neutral-700 rounded-full py-1 px-3 w-fit">
+				<div
+					class="mb-4 flex w-fit flex-row items-center gap-2 rounded-full bg-neutral-700 px-3 py-1 text-base font-medium"
+				>
 					Solved
 					<CircleCheckBig class="size-5 text-green-600" />
 				</div>
@@ -67,7 +69,7 @@
 							<tr>
 								<th scope="col" class="px-6 py-3"> Code </th>
 								<th scope="col" class="px-6 py-3"> Date </th>
-								{#if !submissions.every(s => s.ram_usage === null)}
+								{#if !submissions.every((s) => s.ram_usage === null)}
 									<th scope="col" class="px-6 py-3"> RAM usage </th>
 								{/if}
 							</tr>
@@ -90,7 +92,7 @@
 										<td class="px-6 py-4">
 											{formatDate(submission.completed_at)}
 										</td>
-										{#if !submissions.every(s => s.ram_usage === null)}
+										{#if !submissions.every((s) => s.ram_usage === null)}
 											<td class="px-6 py-4">
 												{formatBytes(submission.ram_usage)}
 											</td>

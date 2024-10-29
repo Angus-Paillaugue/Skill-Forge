@@ -19,37 +19,36 @@
 
 <!-- SEO -->
 <svelte:head>
-  <!-- Normal tags -->
-  <title>{path.name} | Skill-Forge</title>
-  <meta
-    property="description"
-    content={path.description}
-  />
+	<!-- Normal tags -->
+	<title>{path.name} | Skill-Forge</title>
+	<meta property="description" content={path.description} />
 
-  <!-- Open Graph tags -->
-  <meta property="og:title" content='{path.name} | Skill-Forge' />
-  <meta
-    property="og:description"
-    content={path.description}
-  />
+	<!-- Open Graph tags -->
+	<meta property="og:title" content="{path.name} | Skill-Forge" />
+	<meta property="og:description" content={path.description} />
 
-  <!-- Twitter / X tags -->
-  <meta property="twitter:title" content='{path.name} | Skill-Forge' />
-  <meta
-    property="twitter:description"
-    content={path.description}
-  />
+	<!-- Twitter / X tags -->
+	<meta property="twitter:title" content="{path.name} | Skill-Forge" />
+	<meta property="twitter:description" content={path.description} />
 </svelte:head>
 
-<div class="w-full h-[250px] relative overflow-hidden">
+<div class="relative h-[250px] w-full overflow-hidden">
 	<div class="absolute inset-0 [mask-image:linear-gradient(to_bottom,#FFFFFF,rgba(0,0,0,0))]">
-		<div class="absolute left-1/2 top-1/2 h-full w-full max-w-screen-md -translate-x-1/2 -translate-y-3/4 rounded-[100%] opacity-70 blur-[60px] bg-yellow-500/20"></div>
-		<div class="absolute inset-0 opacity-10 bg-[linear-gradient(to_top,#FFF_0%,transparent_5%),linear-gradient(to_left,#FFF_0%,transparent_5%)]" style="background-size:20px 20px"></div>
+		<div
+			class="absolute left-1/2 top-1/2 h-full w-full max-w-screen-md -translate-x-1/2 -translate-y-3/4 rounded-[100%] bg-yellow-500/20 opacity-70 blur-[60px]"
+		></div>
+		<div
+			class="absolute inset-0 bg-[linear-gradient(to_top,#FFF_0%,transparent_5%),linear-gradient(to_left,#FFF_0%,transparent_5%)] opacity-10"
+			style="background-size:20px 20px"
+		></div>
 	</div>
-	<div class="max-w-screen-xl py-10 px-4 mx-auto h-full relative flex flex-col items-center gap-8">
+	<div class="relative mx-auto flex h-full max-w-screen-xl flex-col items-center gap-8 px-4 py-10">
 		<!-- Go back button -->
-		<Tooltip class="absolute top-10 left-4" content="Go to paths list">
-			<a href="." class="rounded bg-neutral-300/10 text-neutral-300 p-1 block transition-colors hover:bg-neutral-300/15">
+		<Tooltip class="absolute left-4 top-10" content="Go to paths list">
+			<a
+				href="."
+				class="block rounded bg-neutral-300/10 p-1 text-neutral-300 transition-colors hover:bg-neutral-300/15"
+			>
 				<ChevronLeft class="size-6 stroke-[1.5]" />
 			</a>
 		</Tooltip>
@@ -58,8 +57,11 @@
 
 		<!-- Start button -->
 		{#if firstExercise}
-			<a href="/app/exercises/{urlHealer.identifier.join(firstExercise.slug, firstExercise.id)}" class="bg-neutral-100 px-4 py-1 rounded-full text-neutral-900 flex flex-row gap-1 font-medium text-base items-center">
-				<Play class='fill-inherit size-5' />
+			<a
+				href="/app/exercises/{urlHealer.identifier.join(firstExercise.slug, firstExercise.id)}"
+				class="flex flex-row items-center gap-1 rounded-full bg-neutral-100 px-4 py-1 text-base font-medium text-neutral-900"
+			>
+				<Play class="size-5 fill-inherit" />
 				Start
 			</a>
 		{/if}

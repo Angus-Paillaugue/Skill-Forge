@@ -19,7 +19,6 @@ function urlStartsWith(url, path) {
 
 const PROTECTED_ROUTES = ['/app', '/api'];
 
-
 export const handle = async ({ event, resolve }) => {
 	const { url, cookies, locals } = event;
 

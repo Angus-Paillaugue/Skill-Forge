@@ -27,30 +27,21 @@
 
 <!-- SEO -->
 <svelte:head>
-  <!-- Normal tags -->
-  <title>Settings | Skill-Forge</title>
-  <meta
-    property="description"
-    content='Your account settings page on Skill-Forge.'
-  />
+	<!-- Normal tags -->
+	<title>Settings | Skill-Forge</title>
+	<meta property="description" content="Your account settings page on Skill-Forge." />
 
-  <!-- Open Graph tags -->
-  <meta property="og:title" content='Settings | Skill-Forge' />
-  <meta
-    property="og:description"
-    content='Your account settings page on Skill-Forge.'
-  />
+	<!-- Open Graph tags -->
+	<meta property="og:title" content="Settings | Skill-Forge" />
+	<meta property="og:description" content="Your account settings page on Skill-Forge." />
 
-  <!-- Twitter / X tags -->
-  <meta property="twitter:title" content='Settings | Skill-Forge' />
-  <meta
-    property="twitter:description"
-    content='Your account settings page on Skill-Forge.'
-  />
+	<!-- Twitter / X tags -->
+	<meta property="twitter:title" content="Settings | Skill-Forge" />
+	<meta property="twitter:description" content="Your account settings page on Skill-Forge." />
 </svelte:head>
 
 <main class="mx-auto flex w-full max-w-screen-lg flex-col gap-10 md:gap-8">
-	<div class="border border-neutral-700/50 bg-neutral-800/50 rounded-xl p-4">
+	<div class="rounded-xl border border-neutral-700/50 bg-neutral-800/50 p-4">
 		<div class="flex flex-row gap-4">
 			<a href="/app/account" class="rounded-full bg-neutral-900 p-2" arial-label="Go back"
 				><Undo2 class="size-5" /></a
@@ -58,7 +49,7 @@
 			<h1 class="text-3xl font-bold">Settings</h1>
 		</div>
 	</div>
-	<div class="border border-neutral-700/50 bg-neutral-800/50 rounded-xl p-4">
+	<div class="rounded-xl border border-neutral-700/50 bg-neutral-800/50 p-4">
 		<form
 			method="POST"
 			action="?/saveInfos"
@@ -81,7 +72,7 @@
 			/>
 
 			<button
-				class="mt-4 flex w-full flex-row items-center justify-center gap-2 rounded-xl bg-neutral-700 hover:bg-neutral-700/50 p-2 text-base font-semibold transition-all disabled:cursor-not-allowed disabled:bg-neutral-700/50"
+				class="mt-4 flex w-full flex-row items-center justify-center gap-2 rounded-xl bg-neutral-700 p-2 text-base font-semibold transition-all hover:bg-neutral-700/50 disabled:cursor-not-allowed disabled:bg-neutral-700/50"
 				disabled={!hasChangedInfos}
 			>
 				{#if isSavingInfos}
@@ -91,7 +82,7 @@
 			</button>
 		</form>
 	</div>
-	<div class="border border-neutral-700/50 bg-neutral-800/50 rounded-xl p-4">
+	<div class="rounded-xl border border-neutral-700/50 bg-neutral-800/50 p-4">
 		<form
 			method="POST"
 			action="?/changePassword"
@@ -129,7 +120,7 @@
 			/>
 
 			<button
-				class="mt-4 flex w-full flex-row items-center justify-center gap-2 rounded-xl bg-neutral-700 hover:bg-neutral-700/50 p-2 text-base font-semibold"
+				class="mt-4 flex w-full flex-row items-center justify-center gap-2 rounded-xl bg-neutral-700 p-2 text-base font-semibold hover:bg-neutral-700/50"
 			>
 				{#if isChangingPassword}
 					<Spinner class="size-5" />

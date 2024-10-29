@@ -18,7 +18,7 @@
 	let formatted = $state(false);
 	let fontSize = $state(16);
 	let wordWrap = $state(true);
-	let saved = $state(false)
+	let saved = $state(false);
 
 	/**
 	 * Retrieves the value of a specified CSS variable.
@@ -77,16 +77,16 @@
 	};
 
 	function saveTryValue() {
-		if(saved) return;
+		if (saved) return;
 		localStorage.setItem(saveId, value);
 		saved = true;
 		setTimeout(() => {
 			saved = false;
-		}, 1500)
+		}, 1500);
 	}
 
-	function getLastTryValue () {
-		return localStorage.getItem(saveId)
+	function getLastTryValue() {
+		return localStorage.getItem(saveId);
 	}
 
 	onMount(async () => {
@@ -96,7 +96,7 @@
 		if (localStorageFontSize) fontSize = parseInt(localStorageFontSize);
 
 		// If the user has saved, set the last save value to the editor value
-		if(getLastTryValue()) {
+		if (getLastTryValue()) {
 			value = getLastTryValue();
 		}
 
@@ -141,7 +141,7 @@
 				label: 'Save',
 				keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS],
 				run: () => {
-					saveTryValue()
+					saveTryValue();
 				}
 			}
 		];
@@ -216,7 +216,7 @@
 		<Tooltip content="Save <kbd>Ctrl</kbd> <kbd>S</kbd>" position="bottom">
 			<button
 				onclick={saveTryValue}
-				class="flex flex-row items-center gap-2 transition-colors p-1 rounded hover:bg-neutral-700/50"
+				class="flex flex-row items-center gap-2 rounded p-1 transition-colors hover:bg-neutral-700/50"
 				aria-label="Save"
 			>
 				{#if saved}
@@ -234,7 +234,7 @@
 		<Tooltip content="Format <kbd>Alt</kbd> <kbd>Shift</kbd> <kbd>F</kbd>" position="bottom">
 			<button
 				onclick={formatCode}
-				class="flex flex-row items-center gap-2 transition-colors p-1 rounded hover:bg-neutral-700/50"
+				class="flex flex-row items-center gap-2 rounded p-1 transition-colors hover:bg-neutral-700/50"
 				aria-label="Format code"
 				disabled={formatted}
 			>
@@ -253,7 +253,7 @@
 		<Tooltip content="Toggle word wrap <kbd>Alt</kbd> <kbd>Z</kbd>" position="bottom">
 			<button
 				onclick={() => (wordWrap = !wordWrap)}
-				class="flex flex-row items-center gap-2 transition-colors p-1 rounded hover:bg-neutral-700/50"
+				class="flex flex-row items-center gap-2 rounded p-1 transition-colors hover:bg-neutral-700/50"
 				aria-label="Toggle word wrap"
 			>
 				<WrapText class="size-5" />
@@ -265,7 +265,7 @@
 			<Tooltip content="Reset to default configuration" position="bottom">
 				<button
 					onclick={resetEditor}
-					class="flex flex-row items-center gap-2 transition-colors p-1 rounded hover:bg-neutral-700/50"
+					class="flex flex-row items-center gap-2 rounded p-1 transition-colors hover:bg-neutral-700/50"
 					aria-label="Reset to default configuration"
 				>
 					<RotateCcw class="size-5" />

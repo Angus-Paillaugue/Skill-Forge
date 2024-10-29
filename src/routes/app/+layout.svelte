@@ -22,14 +22,14 @@
 			<a
 				href="/app/exercises"
 				aria-label="Go to exercises list"
-				class="flex w-full flex-row items-center justify-center gap-2 rounded-full bg-neutral-600/30 border border-neutral-700/50 px-4 py-2 text-center text-base transition-colors"
+				class="flex w-full flex-row items-center justify-center gap-2 rounded-full border border-neutral-700/50 bg-neutral-600/30 px-4 py-2 text-center text-base transition-colors"
 			>
 				<List class="size-5" />
 				Exercises list
 			</a>
 			<a
 				href="/app/exercises/random"
-				class="flex w-full flex-row items-center justify-center gap-2 rounded-full bg-neutral-600/30 border border-neutral-700/50 px-4 py-2 text-center text-base transition-colors"
+				class="flex w-full flex-row items-center justify-center gap-2 rounded-full border border-neutral-700/50 bg-neutral-600/30 px-4 py-2 text-center text-base transition-colors"
 				aria-label="Go to a random exercise"
 			>
 				<Shuffle class="size-4" />
@@ -43,7 +43,7 @@
 
 			<a
 				href="/app/learning-paths"
-				class="flex w-full flex-row items-center justify-center gap-2 rounded-full bg-neutral-600/30 border border-neutral-700/50 px-4 py-2 text-center text-base transition-colors"
+				class="flex w-full flex-row items-center justify-center gap-2 rounded-full border border-neutral-700/50 bg-neutral-600/30 px-4 py-2 text-center text-base transition-colors"
 				aria-label="Go to the learning paths"
 			>
 				<Route class="size-4" />
@@ -70,7 +70,7 @@
 			<a
 				href="/app"
 				aria-label="Go home"
-				class="group size-10 flex-col items-center justify-center rounded-full bg-neutral-700/50 flex"
+				class="group flex size-10 flex-col items-center justify-center rounded-full bg-neutral-700/50"
 			>
 				<Home class="size-6 text-neutral-400 transition-colors group-hover:text-neutral-100" />
 			</a>
@@ -79,7 +79,7 @@
 
 			<!-- Button group -->
 			<div
-				class="group h-10 flex-row gap-px overflow-hidden rounded-lg text-neutral-400 hover:text-neutral-100 flex"
+				class="group flex h-10 flex-row gap-px overflow-hidden rounded-lg text-neutral-400 hover:text-neutral-100"
 			>
 				<a
 					href="/app/exercises"
@@ -97,7 +97,10 @@
 				</a>
 			</div>
 
-			<a class="flex overflow-hidden rounded-lg flex-row text-neutral-400 hover:text-neutral-100 h-10 items-center gap-2 px-2 text-base transition-colors hover:bg-neutral-700/70" href="/app/learning-paths">
+			<a
+				class="flex h-10 flex-row items-center gap-2 overflow-hidden rounded-lg px-2 text-base text-neutral-400 transition-colors hover:bg-neutral-700/70 hover:text-neutral-100"
+				href="/app/learning-paths"
+			>
 				<Route class="size-4" />
 				Leaning paths
 			</a>

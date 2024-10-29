@@ -17,7 +17,7 @@
 </script>
 
 <!-- Tests cases -->
-<div class="flex grow lg:shrink-0 flex-col overflow-hidden rounded-xl lg:mt-2">
+<div class="flex grow flex-col overflow-hidden rounded-xl lg:mt-2 lg:shrink-0">
 	<div
 		class="flex h-10 shrink-0 flex-row flex-nowrap items-center justify-between overflow-x-auto bg-neutral-700 p-1 px-2"
 	>
@@ -102,7 +102,7 @@
 
 {#if latestRunnedTestsResults && latestRunnedTestsResults?.consoleOutput?.length > 0}
 	<div
-		class="flex shrink-0 flex-col overflow-hidden rounded-xl mt-2"
+		class="mt-2 flex shrink-0 flex-col overflow-hidden rounded-xl"
 		transition:slide={{ axis: 'y' }}
 	>
 		<div
@@ -125,11 +125,11 @@
 		</div>
 		{#if consoleVisible}
 			<div
-				class="flex max-h-[140px] flex-col overflow-y-auto bg-neutral-800 p-4 grow"
+				class="flex max-h-[140px] grow flex-col overflow-y-auto bg-neutral-800 p-4"
 				transition:slide={{ axis: 'y' }}
 			>
 				{#each latestRunnedTestsResults.consoleOutput as line}
-					<p class="whitespace-pre-wrap grow font-mono text-base">
+					<p class="grow whitespace-pre-wrap font-mono text-base">
 						{line}
 					</p>
 				{/each}

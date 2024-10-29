@@ -18,7 +18,7 @@
 <Editor
 	language={exercise.language.toLowerCase()}
 	defaultValue={exercise.content}
-	saveId={"exercise-"+exercise.exercise_id}
+	saveId={'exercise-' + exercise.exercise_id}
 	bind:value
 	bind:this={editor}
 	onRunCodeShortcut={runCode}

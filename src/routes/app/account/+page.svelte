@@ -33,26 +33,17 @@
 
 <!-- SEO -->
 <svelte:head>
-  <!-- Normal tags -->
-  <title>Account | Skill-Forge</title>
-  <meta
-    property="description"
-    content='Your account page on Skill-Forge.'
-  />
+	<!-- Normal tags -->
+	<title>Account | Skill-Forge</title>
+	<meta property="description" content="Your account page on Skill-Forge." />
 
-  <!-- Open Graph tags -->
-  <meta property="og:title" content='Account | Skill-Forge' />
-  <meta
-    property="og:description"
-    content='Your account page on Skill-Forge.'
-  />
+	<!-- Open Graph tags -->
+	<meta property="og:title" content="Account | Skill-Forge" />
+	<meta property="og:description" content="Your account page on Skill-Forge." />
 
-  <!-- Twitter / X tags -->
-  <meta property="twitter:title" content='Account | Skill-Forge' />
-  <meta
-    property="twitter:description"
-    content='Your account page on Skill-Forge.'
-  />
+	<!-- Twitter / X tags -->
+	<meta property="twitter:title" content="Account | Skill-Forge" />
+	<meta property="twitter:description" content="Your account page on Skill-Forge." />
 
 	<style>
 		@keyframes text {
@@ -69,12 +60,12 @@
 	</style>
 </svelte:head>
 
-<main
-	class="mx-auto flex w-full max-w-screen-lg flex-1 flex-col items-start gap-4 md:gap-8"
->
+<main class="mx-auto flex w-full max-w-screen-lg flex-1 flex-col items-start gap-4 md:gap-8">
 	<!-- Hero -->
 	<div class="grid w-full grid-cols-1 gap-4 md:grid-cols-3">
-		<div class="border border-neutral-700/50 bg-neutral-800/50 rounded-xl text-neutral-100 md:col-span-2">
+		<div
+			class="rounded-xl border border-neutral-700/50 bg-neutral-800/50 text-neutral-100 md:col-span-2"
+		>
 			<div class="flex flex-row gap-4 p-6 pb-3">
 				<img src="/default_avatar.jpg" class="size-20 rounded-xl object-cover" alt="Avatar" />
 				<div class="flex flex-col space-y-1.5">
@@ -97,14 +88,14 @@
 			<div class="flex flex-row flex-wrap items-center gap-4 p-6 pt-0">
 				<a
 					href="/app/account/log-out"
-					class="flex flex-row items-center gap-2 rounded-xl bg-neutral-700 hover:bg-neutral-700/50 transition-colors px-3 py-1 text-base font-medium"
+					class="flex flex-row items-center gap-2 rounded-xl bg-neutral-700 px-3 py-1 text-base font-medium transition-colors hover:bg-neutral-700/50"
 				>
 					<LogOut class="size-4" />
 					Log out
 				</a>
 				<a
 					href="/app/account/settings"
-					class="flex flex-row items-center gap-2 rounded-xl bg-neutral-700 hover:bg-neutral-700/50 transition-colors px-3 py-1 text-base font-medium"
+					class="flex flex-row items-center gap-2 rounded-xl bg-neutral-700 px-3 py-1 text-base font-medium transition-colors hover:bg-neutral-700/50"
 				>
 					<Settings class="size-4" />
 					Settings
@@ -112,7 +103,7 @@
 				{#if user.admin}
 					<a
 						href="/app/account/admin"
-						class="flex flex-row items-center gap-2 rounded-xl bg-neutral-700 hover:bg-neutral-700/50 transition-colors px-3 py-1 text-base font-medium"
+						class="flex flex-row items-center gap-2 rounded-xl bg-neutral-700 px-3 py-1 text-base font-medium transition-colors hover:bg-neutral-700/50"
 					>
 						<Shield class="size-4" />
 						Admin dashboard
@@ -121,7 +112,7 @@
 			</div>
 		</div>
 
-		<div class="border border-neutral-700/50 bg-neutral-800/50 rounded-xl text-neutral-100">
+		<div class="rounded-xl border border-neutral-700/50 bg-neutral-800/50 text-neutral-100">
 			<div class="flex flex-col space-y-1.5 p-6 pb-2">
 				<p class="text-lg font-semibold leading-none tracking-tight">Solved problems</p>
 
@@ -143,7 +134,9 @@
 	</div>
 
 	<!-- Contribution grid -->
-	<div class="flex w-full flex-col gap-4 border border-neutral-700/50 bg-neutral-800/50 rounded-xl p-6">
+	<div
+		class="flex w-full flex-col gap-4 rounded-xl border border-neutral-700/50 bg-neutral-800/50 p-6"
+	>
 		<h3 class="text-lg font-semibold leading-none tracking-tight">Contributions</h3>
 		<div class="h-full w-full overflow-x-auto">
 			<div class="flex w-full flex-row flex-nowrap gap-1">
@@ -193,7 +186,7 @@
 	</div>
 
 	<!-- Recent activity -->
-	<div class="w-full border border-neutral-700/50 bg-neutral-800/50 rounded-xl">
+	<div class="w-full rounded-xl border border-neutral-700/50 bg-neutral-800/50">
 		<div class="flex flex-col space-y-1.5 p-6 px-7">
 			<h3 class="text-lg font-semibold leading-none tracking-tight">Activity</h3>
 
@@ -201,7 +194,7 @@
 		</div>
 
 		<div class="p-6 pt-0">
-			<div class="relative max-h-[300px] w-full rounded-xl overflow-auto">
+			<div class="relative max-h-[300px] w-full overflow-auto rounded-xl">
 				{#if recentActivity.length === 0}
 					<div class="grow rounded-lg bg-neutral-700 p-4">
 						<h2 class="text-base font-medium">You have no recent activity!</h2>

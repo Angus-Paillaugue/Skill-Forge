@@ -87,22 +87,22 @@
 </script>
 
 <svelte:head>
-  <title>Home | Skill Forge</title>
-  <meta property="og:title" content="Home | Skill Forge" />
-  <meta property="twitter:title" content="Home | Skill Forge" />
+	<title>Home | Skill Forge</title>
+	<meta property="og:title" content="Home | Skill Forge" />
+	<meta property="twitter:title" content="Home | Skill Forge" />
 
-  <meta
-    name="description"
-    content="Master coding challenges designed to help you grow. From beginner to expert, Skill Forge guides you through real-world problems with instant feedback and progress tracking."
-  />
-  <meta
-    property="og:description"
-    content="Master coding challenges designed to help you grow. From beginner to expert, Skill Forge guides you through real-world problems with instant feedback and progress tracking."
-  />
-  <meta
-    property="twitter:description"
-    content="Master coding challenges designed to help you grow. From beginner to expert, Skill Forge guides you through real-world problems with instant feedback and progress tracking."
-  />
+	<meta
+		name="description"
+		content="Master coding challenges designed to help you grow. From beginner to expert, Skill Forge guides you through real-world problems with instant feedback and progress tracking."
+	/>
+	<meta
+		property="og:description"
+		content="Master coding challenges designed to help you grow. From beginner to expert, Skill Forge guides you through real-world problems with instant feedback and progress tracking."
+	/>
+	<meta
+		property="twitter:description"
+		content="Master coding challenges designed to help you grow. From beginner to expert, Skill Forge guides you through real-world problems with instant feedback and progress tracking."
+	/>
 </svelte:head>
 
 <!-- Navbar -->
@@ -275,7 +275,7 @@
 					<button
 						disabled={isSendingForm}
 						type="submit"
-						class="w-full bg-neutral-800 flex flex-row items-center justify-center text-lg font-medium gap-2 px-4 py-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all text-neutral-100 rounded-xl"
+						class="flex w-full flex-row items-center justify-center gap-2 rounded-xl bg-neutral-800 px-4 py-2 text-lg font-medium text-neutral-100 transition-all disabled:cursor-not-allowed disabled:opacity-50"
 						tabindex={formIndex === 0 ? 0 : -1}
 					>
 						{#if isSendingForm}
@@ -317,7 +317,7 @@
 						disabled={isSendingForm}
 						tabindex={formIndex === 1 ? 0 : -1}
 						type="submit"
-						class="w-full bg-neutral-800 flex flex-row items-center justify-center text-lg font-medium gap-2 px-4 py-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all text-neutral-100 rounded-xl"
+						class="flex w-full flex-row items-center justify-center gap-2 rounded-xl bg-neutral-800 px-4 py-2 text-lg font-medium text-neutral-100 transition-all disabled:cursor-not-allowed disabled:opacity-50"
 					>
 						{#if isSendingForm}
 							<Spinner />

@@ -209,10 +209,11 @@ print(test_results)
 		};
 	} catch (parseError) {
 		return {
-			message: parseError?.error
-				?.split('\n')
-				?.filter((e) => e)
-				?.at(-1) ?? 'Failed to run tests',
+			message:
+				parseError?.error
+					?.split('\n')
+					?.filter((e) => e)
+					?.at(-1) ?? 'Failed to run tests',
 			consoleOutput: null,
 			ok: false
 		};

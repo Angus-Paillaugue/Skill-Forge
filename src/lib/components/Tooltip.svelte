@@ -60,7 +60,7 @@
 
 		// Hide tooltip when clicking outside of it
 		document.addEventListener('click', (e) => {
-			if(!tooltip) return;
+			if (!tooltip) return;
 			if (isHovered && !tooltip.contains(e.target) && !tooltipContent.contains(e.target))
 				hideTooltip();
 		});

@@ -216,31 +216,19 @@
 	};
 </script>
 
-<svelte:head>
-	<title>{exercise.title}</title>
-</svelte:head>
 <!-- SEO -->
 <svelte:head>
-  <!-- Normal tags -->
-  <title>{exercise.title} | Skill-Forge</title>
-  <meta
-    property="description"
-    content={exercise.description.slice(0, 160)}
-  />
+	<!-- Normal tags -->
+	<title>{exercise.title} | Skill-Forge</title>
+	<meta property="description" content={exercise.description.slice(0, 160)} />
 
-  <!-- Open Graph tags -->
-  <meta property="og:title" content='{exercise.title} | Skill-Forge' />
-  <meta
-    property="og:description"
-    content={exercise.description.slice(0, 160)}
-  />
+	<!-- Open Graph tags -->
+	<meta property="og:title" content="{exercise.title} | Skill-Forge" />
+	<meta property="og:description" content={exercise.description.slice(0, 160)} />
 
-  <!-- Twitter / X tags -->
-  <meta property="twitter:title" content='{exercise.title} | Skill-Forge' />
-  <meta
-    property="twitter:description"
-    content={exercise.description.slice(0, 160)}
-  />
+	<!-- Twitter / X tags -->
+	<meta property="twitter:title" content="{exercise.title} | Skill-Forge" />
+	<meta property="twitter:description" content={exercise.description.slice(0, 160)} />
 </svelte:head>
 
 <!-- Code action buttons -->
@@ -252,7 +240,7 @@
 			position="bottom"
 		>
 			<button
-				class="flex w-full flex-row items-center justify-center gap-2 rounded-l-lg px-2 py-2 text-center text-base font-medium text-neutral-300 bg-neutral-800"
+				class="flex w-full flex-row items-center justify-center gap-2 rounded-l-lg bg-neutral-800 px-2 py-2 text-center text-base font-medium text-neutral-300"
 				onclick={() => {
 					runCode();
 				}}
@@ -277,7 +265,7 @@
 		</Tooltip>
 		<!-- Submit button -->
 		<button
-			class="flex flex-row items-center gap-2 rounded-r-lg px-2 py-2 text-base font-medium text-green-600 bg-neutral-800"
+			class="flex flex-row items-center gap-2 rounded-r-lg bg-neutral-800 px-2 py-2 text-base font-medium text-green-600"
 			onclick={submitSolution}
 		>
 			<div class="relative block size-5">
@@ -310,7 +298,7 @@
 				>
 					<button
 						aria-label="Start timer"
-						class="flex size-10 flex-col items-center justify-center text-neutral-300 bg-neutral-800"
+						class="flex size-10 flex-col items-center justify-center bg-neutral-800 text-neutral-300"
 						onclick={() => {
 							if (timer || timerInterval) clearTimer();
 							else startTimer();

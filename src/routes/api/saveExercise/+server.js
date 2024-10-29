@@ -2,22 +2,13 @@ import { json } from '@sveltejs/kit';
 import { createConnection } from '$lib/server/db';
 
 export async function POST({ request, locals }) {
-	const { id, title, description, difficulty, tests, content } =
-		await request.json();
+	const { id, title, description, difficulty, tests, content } = await request.json();
 	const { user } = locals;
 	if (!user.admin) {
 		return json({ message: 'Unauthorized' }, { status: 401 });
 	}
 
-	if (
-		!title ||
-		!description ||
-		!difficulty ||
-		!tests ||
-		!content ||
-		tests.length === 0 ||
-		!id
-	) {
+	if (!title || !description || !difficulty || !tests || !content || tests.length === 0 || !id) {
 		return json({ message: 'Missing required fields' }, { status: 400 });
 	}
 

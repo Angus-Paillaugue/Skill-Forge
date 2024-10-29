@@ -9,12 +9,6 @@
 	};
 </script>
 
-<span
-	class={cn(
-		difficultyClasses[difficulty],
-		'inline-block text-sm font-bold',
-		className
-	)}
->
+<span class={cn(difficultyClasses[difficulty], 'inline-block text-sm font-bold', className)}>
 	{difficulty}
 </span>

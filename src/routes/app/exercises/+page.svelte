@@ -93,40 +93,38 @@
 
 <!-- SEO -->
 <svelte:head>
-  <!-- Normal tags -->
-  <title>All exercises | Skill-Forge</title>
-  <meta
-    property="description"
-    content='On this page, you will find all the exercises available on Skill-Forge.'
-  />
+	<!-- Normal tags -->
+	<title>All exercises | Skill-Forge</title>
+	<meta
+		property="description"
+		content="On this page, you will find all the exercises available on Skill-Forge."
+	/>
 
-  <!-- Open Graph tags -->
-  <meta property="og:title" content='All exercises | Skill-Forge' />
-  <meta
-    property="og:description"
-    content='On this page, you will find all the exercises paths available on Skill-Forge.'
-  />
+	<!-- Open Graph tags -->
+	<meta property="og:title" content="All exercises | Skill-Forge" />
+	<meta
+		property="og:description"
+		content="On this page, you will find all the exercises paths available on Skill-Forge."
+	/>
 
-  <!-- Twitter / X tags -->
-  <meta property="twitter:title" content='All exercises | Skill-Forge' />
-  <meta
-    property="twitter:description"
-    content='On this page, you will find all the exercises paths available on Skill-Forge.'
-  />
+	<!-- Twitter / X tags -->
+	<meta property="twitter:title" content="All exercises | Skill-Forge" />
+	<meta
+		property="twitter:description"
+		content="On this page, you will find all the exercises paths available on Skill-Forge."
+	/>
 </svelte:head>
 
 <div class="mx-auto w-full max-w-screen-lg md:mt-10">
 	<Input
 		id="search"
 		placeholder="Search for an exercise"
-		class="bg-neutral-800 mb-4"
+		class="mb-4 bg-neutral-800"
 		bind:value={searchValue}
 		oninput={onSearchInput}
 	/>
 	<div class="relative w-full overflow-x-auto overflow-y-hidden rounded-lg shadow-md">
-		<table
-			class="w-full overflow-y-auto min-w-[700px] table-auto text-sm"
-		>
+		<table class="w-full min-w-[700px] table-auto overflow-y-auto text-sm">
 			<thead class="border-b border-neutral-700 bg-neutral-800">
 				<tr>
 					<th scope="col" class="h-12 px-4 text-left align-middle font-medium text-neutral-400">

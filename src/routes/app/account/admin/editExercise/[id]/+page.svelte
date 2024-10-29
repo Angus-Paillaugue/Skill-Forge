@@ -87,26 +87,17 @@
 
 <!-- SEO -->
 <svelte:head>
-  <!-- Normal tags -->
-  <title>Edit an exercise | Skill-Forge</title>
-  <meta
-    property="description"
-    content='Edit an exercise'
-  />
+	<!-- Normal tags -->
+	<title>Edit an exercise | Skill-Forge</title>
+	<meta property="description" content="Edit an exercise" />
 
-  <!-- Open Graph tags -->
-  <meta property="og:title" content='Edit an exercise | Skill-Forge' />
-  <meta
-    property="og:description"
-    content='Edit an exercise'
-  />
+	<!-- Open Graph tags -->
+	<meta property="og:title" content="Edit an exercise | Skill-Forge" />
+	<meta property="og:description" content="Edit an exercise" />
 
-  <!-- Twitter / X tags -->
-  <meta property="twitter:title" content='Edit an exercise | Skill-Forge' />
-  <meta
-    property="twitter:description"
-    content='Edit an exercise'
-  />
+	<!-- Twitter / X tags -->
+	<meta property="twitter:title" content="Edit an exercise | Skill-Forge" />
+	<meta property="twitter:description" content="Edit an exercise" />
 </svelte:head>
 
 <!-- Create button -->
@@ -148,8 +139,9 @@
 				<h1 class="text-2xl font-bold text-green-600">Success</h1>
 				<p>{success.message}</p>
 				<a
-					class="underline text-neutral-100 hover:text-neutral-400 transition-colors"
-					href="/app/exercises/{urlHealer.identifier.join(exercise.slug, exercise.exercise_id)}">Go to exercise</a
+					class="text-neutral-100 underline transition-colors hover:text-neutral-400"
+					href="/app/exercises/{urlHealer.identifier.join(exercise.slug, exercise.exercise_id)}"
+					>Go to exercise</a
 				>
 			</div>
 		{/if}
