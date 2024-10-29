@@ -91,8 +91,28 @@
 	}
 </script>
 
+<!-- SEO -->
 <svelte:head>
-	<title>All exercises</title>
+  <!-- Normal tags -->
+  <title>All exercises | Skill-Forge</title>
+  <meta
+    property="description"
+    content='On this page, you will find all the exercises available on Skill-Forge.'
+  />
+
+  <!-- Open Graph tags -->
+  <meta property="og:title" content='All exercises | Skill-Forge' />
+  <meta
+    property="og:description"
+    content='On this page, you will find all the exercises paths available on Skill-Forge.'
+  />
+
+  <!-- Twitter / X tags -->
+  <meta property="twitter:title" content='All exercises | Skill-Forge' />
+  <meta
+    property="twitter:description"
+    content='On this page, you will find all the exercises paths available on Skill-Forge.'
+  />
 </svelte:head>
 
 <div class="mx-auto w-full max-w-screen-lg md:mt-10">

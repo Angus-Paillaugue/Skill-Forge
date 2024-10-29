@@ -8,8 +8,28 @@
 	let editExerciseModalVisible = $state(false);
 </script>
 
+<!-- SEO -->
 <svelte:head>
-	<title>Admin dashboard</title>
+  <!-- Normal tags -->
+  <title>Admin dashboard | Skill-Forge</title>
+  <meta
+    property="description"
+    content='Skill-Forge admin dashboard.'
+  />
+
+  <!-- Open Graph tags -->
+  <meta property="og:title" content='Admin dashboard | Skill-Forge' />
+  <meta
+    property="og:description"
+    content='Skill-Forge admin dashboard.'
+  />
+
+  <!-- Twitter / X tags -->
+  <meta property="twitter:title" content='Admin dashboard | Skill-Forge' />
+  <meta
+    property="twitter:description"
+    content='Skill-Forge admin dashboard.'
+  />
 </svelte:head>
 
 {#if editExerciseModalVisible}

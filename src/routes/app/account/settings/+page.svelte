@@ -25,8 +25,28 @@
 	});
 </script>
 
+<!-- SEO -->
 <svelte:head>
-	<title>Settings</title>
+  <!-- Normal tags -->
+  <title>Settings | Skill-Forge</title>
+  <meta
+    property="description"
+    content='Your account settings page on Skill-Forge.'
+  />
+
+  <!-- Open Graph tags -->
+  <meta property="og:title" content='Settings | Skill-Forge' />
+  <meta
+    property="og:description"
+    content='Your account settings page on Skill-Forge.'
+  />
+
+  <!-- Twitter / X tags -->
+  <meta property="twitter:title" content='Settings | Skill-Forge' />
+  <meta
+    property="twitter:description"
+    content='Your account settings page on Skill-Forge.'
+  />
 </svelte:head>
 
 <main class="mx-auto flex w-full max-w-screen-lg flex-col gap-10 md:gap-8">

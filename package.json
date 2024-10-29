@@ -1,20 +1,23 @@
 {
-	"name": "my-exercise-platform",
+	"name": "skill-forge",
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
 		"dev": "vite dev",
-		"build": "vite build",
+		"build": "pnpm generate-sitemap && vite build",
 		"preview": "vite preview",
 		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write .",
-		"build-containers": "sudo docker build -t python-runner ./src/lib/server/containers/python"
+		"build-containers": "sudo docker build -t python-runner ./src/lib/server/containers/python",
+		"generate-sitemap": "node ./scripts/generate-sitemap.js",
+		"depcheck": "npx depcheck --detailed"
 	},
 	"devDependencies": {
 		"@sveltejs/kit": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^4.0.0-next.6",
 		"@types/eslint": "^9.6.0",
 		"autoprefixer": "^10.4.20",
+		"depcheck": "^1.4.7",
 		"eslint": "^9.0.0",
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-svelte": "^2.36.0",
@@ -33,6 +36,7 @@
 		"@sveltejs/adapter-node": "^5.2.8",
 		"bcrypt": "^5.1.1",
 		"clsx": "^2.1.1",
+		"directory-tree": "^3.5.2",
 		"express": "^4.21.1",
 		"fuse.js": "^7.0.0",
 		"isolated-vm": "^5.0.1",
@@ -44,6 +48,7 @@
 		"mysql2": "^3.11.3",
 		"paneforge": "^0.0.6",
 		"shiki": "^1.22.0",
-		"tailwind-merge": "^2.5.4"
+		"tailwind-merge": "^2.5.4",
+		"vite-plugin-compression": "^0.5.1"
 	}
 }

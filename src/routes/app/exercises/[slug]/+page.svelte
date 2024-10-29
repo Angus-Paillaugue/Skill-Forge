@@ -219,6 +219,29 @@
 <svelte:head>
 	<title>{exercise.title}</title>
 </svelte:head>
+<!-- SEO -->
+<svelte:head>
+  <!-- Normal tags -->
+  <title>{exercise.title} | Skill-Forge</title>
+  <meta
+    property="description"
+    content={exercise.description.slice(0, 160)}
+  />
+
+  <!-- Open Graph tags -->
+  <meta property="og:title" content='{exercise.title} | Skill-Forge' />
+  <meta
+    property="og:description"
+    content={exercise.description.slice(0, 160)}
+  />
+
+  <!-- Twitter / X tags -->
+  <meta property="twitter:title" content='{exercise.title} | Skill-Forge' />
+  <meta
+    property="twitter:description"
+    content={exercise.description.slice(0, 160)}
+  />
+</svelte:head>
 
 <!-- Code action buttons -->
 <div class="absolute left-1/2 z-40 -ml-[6.5rem] w-52 max-lg:bottom-2 lg:top-2">

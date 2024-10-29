@@ -6,8 +6,28 @@
 	const notStartedPaths = paths.filter((path) => path.solved_exercises === 0);
 </script>
 
+<!-- SEO -->
 <svelte:head>
-	<title>Learning paths</title>
+  <!-- Normal tags -->
+  <title>Learning paths | Skill-Forge</title>
+  <meta
+    property="description"
+    content='On this page, you will find all the learning paths available on Skill-Forge.'
+  />
+
+  <!-- Open Graph tags -->
+  <meta property="og:title" content='Learning paths | Skill-Forge' />
+  <meta
+    property="og:description"
+    content='On this page, you will find all the learning paths available on Skill-Forge.'
+  />
+
+  <!-- Twitter / X tags -->
+  <meta property="twitter:title" content='Learning paths | Skill-Forge' />
+  <meta
+    property="twitter:description"
+    content='On this page, you will find all the learning paths available on Skill-Forge.'
+  />
 </svelte:head>
 
 {#snippet card(path)}

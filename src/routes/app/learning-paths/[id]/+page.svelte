@@ -17,8 +17,28 @@
 	});
 </script>
 
+<!-- SEO -->
 <svelte:head>
-	<title>{path.name}</title>
+  <!-- Normal tags -->
+  <title>{path.name} | Skill-Forge</title>
+  <meta
+    property="description"
+    content={path.description}
+  />
+
+  <!-- Open Graph tags -->
+  <meta property="og:title" content='{path.name} | Skill-Forge' />
+  <meta
+    property="og:description"
+    content={path.description}
+  />
+
+  <!-- Twitter / X tags -->
+  <meta property="twitter:title" content='{path.name} | Skill-Forge' />
+  <meta
+    property="twitter:description"
+    content={path.description}
+  />
 </svelte:head>
 
 <div class="w-full h-[250px] relative overflow-hidden">

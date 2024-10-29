@@ -85,8 +85,28 @@
 	}
 </script>
 
+<!-- SEO -->
 <svelte:head>
-	<title>Edit an exercise</title>
+  <!-- Normal tags -->
+  <title>Edit an exercise | Skill-Forge</title>
+  <meta
+    property="description"
+    content='Edit an exercise'
+  />
+
+  <!-- Open Graph tags -->
+  <meta property="og:title" content='Edit an exercise | Skill-Forge' />
+  <meta
+    property="og:description"
+    content='Edit an exercise'
+  />
+
+  <!-- Twitter / X tags -->
+  <meta property="twitter:title" content='Edit an exercise | Skill-Forge' />
+  <meta
+    property="twitter:description"
+    content='Edit an exercise'
+  />
 </svelte:head>
 
 <!-- Create button -->

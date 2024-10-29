@@ -3,7 +3,22 @@
 </script>
 
 <svelte:head>
-	<title>Error {$page.status}</title>
+  <title>{$page.status} | Skill Forge</title>
+  <meta property="og:title" content="{$page.status} | Skill Forge" />
+  <meta property="twitter:title" content="{$page.status} | Skill Forge" />
+
+  <meta
+    name="description"
+    content="A {$page.status} error occurred : {$page.error.message}"
+  />
+  <meta
+    property="og:description"
+    content="A {$page.status} error occurred : {$page.error.message}"
+  />
+  <meta
+    property="twitter:description"
+    content="A {$page.status} error occurred : {$page.error.message}"
+  />
 </svelte:head>
 
 {#if $page.status === 404}

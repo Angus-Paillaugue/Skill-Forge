@@ -1,0 +1,8 @@
+User-agent: Googlebot
+Disallow: /api
+Disallow: /app
+
+User-agent: *
+Allow: /
+
+Sitemap: https://skill-forge.paillaugue.fr/sitemap.xml

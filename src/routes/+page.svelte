@@ -87,7 +87,22 @@
 </script>
 
 <svelte:head>
-	<title>Skill Forge</title>
+  <title>Home | Skill Forge</title>
+  <meta property="og:title" content="Home | Skill Forge" />
+  <meta property="twitter:title" content="Home | Skill Forge" />
+
+  <meta
+    name="description"
+    content="Master coding challenges designed to help you grow. From beginner to expert, Skill Forge guides you through real-world problems with instant feedback and progress tracking."
+  />
+  <meta
+    property="og:description"
+    content="Master coding challenges designed to help you grow. From beginner to expert, Skill Forge guides you through real-world problems with instant feedback and progress tracking."
+  />
+  <meta
+    property="twitter:description"
+    content="Master coding challenges designed to help you grow. From beginner to expert, Skill Forge guides you through real-world problems with instant feedback and progress tracking."
+  />
 </svelte:head>
 
 <!-- Navbar -->
