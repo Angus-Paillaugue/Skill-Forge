@@ -10,7 +10,8 @@
 		"format": "prettier --write .",
 		"build-containers": "sudo docker build -t python-runner ./src/lib/server/containers/python",
 		"generate-sitemap": "node ./scripts/generate-sitemap.js",
-		"depcheck": "npx depcheck --detailed"
+		"depcheck": "npx depcheck --detailed",
+		"deploy": "./scripts/deploy.sh"
 	},
 	"devDependencies": {
 		"@sveltejs/kit": "^2.7.3",

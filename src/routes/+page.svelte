@@ -265,9 +265,9 @@
 						tabindex={formIndex === 0 ? 0 : -1}
 					/>
 					<Input
-						id="password"
+						id="signUpPassword"
 						class="bg-neutral-200 text-neutral-800 placeholder:text-neutral-600"
-						type="signUpPassword"
+						type="password"
 						placeholder="Password"
 						tabindex={formIndex === 0 ? 0 : -1}
 					/>
