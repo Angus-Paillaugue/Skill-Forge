@@ -220,7 +220,7 @@
 <svelte:head>
 	<!-- Normal tags -->
 	<title>{exercise.title} | Skill-Forge</title>
-	<meta property="description" content={exercise.description.slice(0, 160)} />
+	<meta name="description" content={exercise.description.slice(0, 160)} />
 
 	<!-- Open Graph tags -->
 	<meta property="og:title" content="{exercise.title} | Skill-Forge" />

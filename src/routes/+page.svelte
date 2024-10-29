@@ -259,7 +259,7 @@
 				>
 					<h1 class="text-3xl font-bold text-inherit">Sign up</h1>
 					<Input
-						id="username"
+						id="signUpUsername"
 						class="bg-neutral-200 text-neutral-800 placeholder:text-neutral-600"
 						placeholder="Username"
 						tabindex={formIndex === 0 ? 0 : -1}
@@ -267,7 +267,7 @@
 					<Input
 						id="password"
 						class="bg-neutral-200 text-neutral-800 placeholder:text-neutral-600"
-						type="password"
+						type="signUpPassword"
 						placeholder="Password"
 						tabindex={formIndex === 0 ? 0 : -1}
 					/>
@@ -300,13 +300,13 @@
 				>
 					<h1 class="text-3xl font-bold text-inherit">Log in</h1>
 					<Input
-						id="username"
+						id="logInUsername"
 						class="bg-neutral-200 text-neutral-800 placeholder:text-neutral-600"
 						placeholder="Username"
 						tabindex={formIndex === 1 ? 0 : -1}
 					/>
 					<Input
-						id="password"
+						id="logInPassword"
 						class="bg-neutral-200 text-neutral-800 placeholder:text-neutral-600"
 						type="password"
 						placeholder="Password"

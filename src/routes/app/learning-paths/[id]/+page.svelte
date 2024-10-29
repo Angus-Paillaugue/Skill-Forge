@@ -21,7 +21,7 @@
 <svelte:head>
 	<!-- Normal tags -->
 	<title>{path.name} | Skill-Forge</title>
-	<meta property="description" content={path.description} />
+	<meta name="description" content={path.description} />
 
 	<!-- Open Graph tags -->
 	<meta property="og:title" content="{path.name} | Skill-Forge" />
@@ -47,6 +47,7 @@
 		<Tooltip class="absolute left-4 top-10" content="Go to paths list">
 			<a
 				href="."
+				aria-label="Go to paths list"
 				class="block rounded bg-neutral-300/10 p-1 text-neutral-300 transition-colors hover:bg-neutral-300/15"
 			>
 				<ChevronLeft class="size-6 stroke-[1.5]" />

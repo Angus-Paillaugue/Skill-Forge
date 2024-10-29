@@ -29,7 +29,7 @@
 <svelte:head>
 	<!-- Normal tags -->
 	<title>Settings | Skill-Forge</title>
-	<meta property="description" content="Your account settings page on Skill-Forge." />
+	<meta name="description" content="Your account settings page on Skill-Forge." />
 
 	<!-- Open Graph tags -->
 	<meta property="og:title" content="Settings | Skill-Forge" />

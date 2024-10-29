@@ -89,7 +89,7 @@
 <svelte:head>
 	<!-- Normal tags -->
 	<title>Edit an exercise | Skill-Forge</title>
-	<meta property="description" content="Edit an exercise" />
+	<meta name="description" content="Edit an exercise" />
 
 	<!-- Open Graph tags -->
 	<meta property="og:title" content="Edit an exercise | Skill-Forge" />

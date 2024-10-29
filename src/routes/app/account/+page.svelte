@@ -35,7 +35,7 @@
 <svelte:head>
 	<!-- Normal tags -->
 	<title>Account | Skill-Forge</title>
-	<meta property="description" content="Your account page on Skill-Forge." />
+	<meta name="description" content="Your account page on Skill-Forge." />
 
 	<!-- Open Graph tags -->
 	<meta property="og:title" content="Account | Skill-Forge" />

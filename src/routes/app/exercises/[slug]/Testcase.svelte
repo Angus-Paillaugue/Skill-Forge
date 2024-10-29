@@ -77,20 +77,20 @@
 			{/if}
 		{/if}
 		<div class="mt-4">
-			<h6 class="text-base font-medium">Input</h6>
+			<p class="text-base font-medium">Input</p>
 			<div class="mt-1 h-10 w-full whitespace-pre-wrap rounded-xl bg-neutral-700 p-2 font-mono">
 				{exercise.tests[selectedTestIndex]?.display_value ||
 					exercise.tests[selectedTestIndex].input.split('\n').at(-1)}
 			</div>
 
-			<h6 class="mt-4 text-base font-medium">Expected Output</h6>
+			<p class="mt-4 text-base font-medium">Expected Output</p>
 			<div class="mt-1 h-10 w-full whitespace-pre-wrap rounded-xl bg-neutral-700 p-2 font-mono">
 				{exercise.tests[selectedTestIndex].expected_output}
 			</div>
 
 			{#if latestRunnedTestsResults && !latestRunnedTestsResults.results[selectedTestIndex].passed}
 				<div class="block" transition:slide={{ axis: 'y' }}>
-					<h6 class="mt-4 text-base font-medium">Actual Output</h6>
+					<p class="mt-4 text-base font-medium">Actual Output</p>
 					<div class="mt-1 h-10 w-full whitespace-pre-wrap rounded-xl bg-neutral-700 p-2 font-mono">
 						{latestRunnedTestsResults.results[selectedTestIndex].actual_output}
 					</div>
@@ -100,6 +100,7 @@
 	</div>
 </div>
 
+<!-- Console -->
 {#if latestRunnedTestsResults && latestRunnedTestsResults?.consoleOutput?.length > 0}
 	<div
 		class="mt-2 flex shrink-0 flex-col overflow-hidden rounded-xl"

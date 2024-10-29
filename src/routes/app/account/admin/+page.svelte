@@ -12,7 +12,7 @@
 <svelte:head>
 	<!-- Normal tags -->
 	<title>Admin dashboard | Skill-Forge</title>
-	<meta property="description" content="Skill-Forge admin dashboard." />
+	<meta name="description" content="Skill-Forge admin dashboard." />
 
 	<!-- Open Graph tags -->
 	<meta property="og:title" content="Admin dashboard | Skill-Forge" />
