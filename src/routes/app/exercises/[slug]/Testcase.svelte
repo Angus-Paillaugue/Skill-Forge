@@ -1,5 +1,5 @@
 <script>
-	import { cn, formatBytes, formatDate } from '$lib/utils';
+	import { cn, formatBytes } from '$lib/utils';
 	import { slide } from 'svelte/transition';
 	import { TestTubeDiagonal, MemoryStick, Terminal, ChevronDown } from 'lucide-svelte';
 	import { Tooltip } from '$lib/components';
@@ -17,7 +17,7 @@
 </script>
 
 <!-- Tests cases -->
-<div class="flex shrink-0 flex-col overflow-hidden rounded-xl max-lg:grow lg:mt-2">
+<div class="flex grow lg:shrink-0 flex-col overflow-hidden rounded-xl lg:mt-2">
 	<div
 		class="flex h-10 shrink-0 flex-row flex-nowrap items-center justify-between overflow-x-auto bg-neutral-700 p-1 px-2"
 	>
@@ -25,7 +25,7 @@
 			<TestTubeDiagonal class="size-5" />
 			Testcase
 		</div>
-		{#if latestRunnedTestsResults}
+		{#if latestRunnedTestsResults && latestRunnedTestsResults?.averageRamUsage}
 			<div class="flex flex-row gap-2">
 				<Tooltip class="flex flex-row items-center gap-2" content="RAM Usage">
 					<MemoryStick class="size-5" />
@@ -100,9 +100,9 @@
 	</div>
 </div>
 
-{#if latestRunnedTestsResults && latestRunnedTestsResults?.consoleOutput !== null}
+{#if latestRunnedTestsResults && latestRunnedTestsResults?.consoleOutput?.length > 0}
 	<div
-		class="flex shrink-0 flex-col overflow-hidden rounded-xl max-lg:grow lg:mt-2"
+		class="flex shrink-0 flex-col overflow-hidden rounded-xl mt-2"
 		transition:slide={{ axis: 'y' }}
 	>
 		<div
@@ -125,11 +125,11 @@
 		</div>
 		{#if consoleVisible}
 			<div
-				class="flex max-h-[140px] flex-col overflow-y-auto bg-neutral-800 p-4 max-lg:grow"
+				class="flex max-h-[140px] flex-col overflow-y-auto bg-neutral-800 p-4 grow"
 				transition:slide={{ axis: 'y' }}
 			>
 				{#each latestRunnedTestsResults.consoleOutput as line}
-					<p class="whitespace-pre-wrap font-mono text-base">
+					<p class="whitespace-pre-wrap grow font-mono text-base">
 						{line}
 					</p>
 				{/each}

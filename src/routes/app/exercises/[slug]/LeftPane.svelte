@@ -41,15 +41,13 @@
 	<div class={cn('grow overflow-y-auto', leftPaneActiveIndex === 0 && 'p-4')}>
 		<!-- Exercise description -->
 		{#if leftPaneActiveIndex === 0}
-			<div class="flex flex-row items-center justify-between">
-				{#if exercise?.submissions?.length > 0}
-					<div class="flex flex-row items-center gap-2">
-						Solved
-						<CircleCheckBig class="size-5 text-green-600" />
-					</div>
-				{/if}
-			</div>
-			<Difficulty class="mt-6" difficulty={exercise.difficulty} />
+			{#if exercise?.submissions?.length > 0}
+				<div class="mb-4 flex flex-row text-base font-medium items-center gap-2 bg-neutral-700 rounded-full py-1 px-3 w-fit">
+					Solved
+					<CircleCheckBig class="size-5 text-green-600" />
+				</div>
+			{/if}
+			<Difficulty difficulty={exercise.difficulty} />
 			<h1 class="text-3xl font-medium leading-[3.5rem] md:font-semibold md:leading-[4rem]">
 				{exercise.title}
 			</h1>
@@ -69,7 +67,9 @@
 							<tr>
 								<th scope="col" class="px-6 py-3"> Code </th>
 								<th scope="col" class="px-6 py-3"> Date </th>
-								<th scope="col" class="px-6 py-3"> RAM usage </th>
+								{#if !submissions.every(s => s.ram_usage === null)}
+									<th scope="col" class="px-6 py-3"> RAM usage </th>
+								{/if}
 							</tr>
 						</thead>
 						<tbody>
@@ -90,9 +90,11 @@
 										<td class="px-6 py-4">
 											{formatDate(submission.completed_at)}
 										</td>
-										<td class="px-6 py-4">
-											{formatBytes(submission.ram_usage)}
-										</td>
+										{#if !submissions.every(s => s.ram_usage === null)}
+											<td class="px-6 py-4">
+												{formatBytes(submission.ram_usage)}
+											</td>
+										{/if}
 									</tr>
 								{/each}
 							{/key}

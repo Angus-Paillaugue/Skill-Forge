@@ -1,6 +1,6 @@
 <script>
 	import { cn, urlHealer } from '$lib/utils';
-	import { Spinner, Editor, Button, Input } from '$lib/components';
+	import { Spinner, Editor, Input } from '$lib/components';
 	import { scale } from 'svelte/transition';
 	import { PaneGroup, Pane, PaneResizer } from 'paneforge';
 	import { newToast } from '$lib/stores';
@@ -87,7 +87,7 @@
 
 <!-- Create button -->
 <button
-	class="absolute left-1/2 top-2 flex -translate-x-1/2 flex-row items-center gap-2 rounded-lg bg-neutral-800 px-2 py-2 text-base font-medium"
+	class="absolute left-1/2 top-2 z-40 flex -translate-x-1/2 flex-row items-center gap-2 rounded-lg bg-neutral-800 px-2 py-2 text-base font-medium"
 	onclick={save}
 >
 	<div class="relative block size-5 text-green-600">
@@ -123,10 +123,9 @@
 			>
 				<h1 class="text-2xl font-bold text-green-600">Success</h1>
 				<p>{success.message}</p>
-				<Button
-					variant="link"
-					href="/app/exercises/{urlHealer.identifier.join(success.slug, success.id)}"
-					class="link">Go to exercise</Button
+				<a
+					class="underline text-neutral-100 hover:text-neutral-400 transition-colors"
+					href="/app/exercises/{urlHealer.identifier.join(success.slug, success.id)}">Go to exercise</a
 				>
 			</div>
 		{/if}

@@ -1,5 +1,5 @@
 <script>
-	import { Difficulty, Input } from '$lib/components';
+	import { Difficulty, Input, LanguageIcon } from '$lib/components';
 	import { CircleCheckBig, ChevronDown } from 'lucide-svelte';
 	import { formatDate, cn, urlHealer } from '$lib/utils';
 	import { flip } from 'svelte/animate';
@@ -54,7 +54,7 @@
 		// If the order is 'created_at', sort the items based on the date
 		// If the order is 'difficulty', sort the items based on the difficulty level (easy, medium, hard) using the DIFFICULTY_MAP to get their weight
 		let exercises = filteredExercises.sort((a, b) =>
-			order === 'title'
+			order === 'title' || order === 'language'
 				? a[order].localeCompare(b[order])
 				: order === 'created_at'
 					? new Date(a[order]) - new Date(b[order])
@@ -96,24 +96,32 @@
 </svelte:head>
 
 <div class="mx-auto w-full max-w-screen-lg md:mt-10">
-	<div class="sticky top-14 z-10 w-full py-2">
-		<Input
-			id="search"
-			placeholder="Search for an exercise"
-			class="bg-neutral-800 max-md:shadow-xl"
-			bind:value={searchValue}
-			oninput={onSearchInput}
-		/>
-	</div>
+	<Input
+		id="search"
+		placeholder="Search for an exercise"
+		class="bg-neutral-800 mb-4"
+		bind:value={searchValue}
+		oninput={onSearchInput}
+	/>
 	<div class="relative w-full overflow-x-auto overflow-y-hidden rounded-lg shadow-md">
 		<table
-			class="w-full min-w-[500px] table-auto text-left text-sm text-neutral-400 rtl:text-right"
+			class="w-full overflow-y-auto min-w-[700px] table-auto text-sm"
 		>
-			<thead class="bg-neutral-800/50 text-xs uppercase text-neutral-400">
+			<thead class="border-b border-neutral-700 bg-neutral-800">
 				<tr>
-					<th scope="col" class="px-3 py-3 md:px-6">
+					<th scope="col" class="h-12 px-4 text-left align-middle font-medium text-neutral-400">
+						<button class="flex flex-row items-center gap-4" onclick={() => sortBy('language')}>
+							Language
+							{#if orderBy === 'language'}
+								<ChevronDown
+									class={cn('size-4 transition-transform', orderWay === 'DESC' && 'rotate-180')}
+								/>
+							{/if}
+						</button>
+					</th>
+					<th scope="col" class="h-12 px-4 text-left align-middle font-medium text-neutral-400">
 						<button class="flex flex-row items-center gap-4" onclick={() => sortBy('solved')}>
-							Status
+							Solved
 							{#if orderBy === 'solved'}
 								<ChevronDown
 									class={cn('size-4 transition-transform', orderWay === 'DESC' && 'rotate-180')}
@@ -121,7 +129,7 @@
 							{/if}
 						</button>
 					</th>
-					<th scope="col" class="px-3 py-3 md:px-6">
+					<th scope="col" class="h-12 px-4 text-left align-middle font-medium text-neutral-400">
 						<button class="flex flex-row items-center gap-4" onclick={() => sortBy('title')}>
 							Title
 							{#if orderBy === 'title'}
@@ -131,7 +139,7 @@
 							{/if}
 						</button>
 					</th>
-					<th scope="col" class="px-3 py-3 md:px-6">
+					<th scope="col" class="h-12 px-4 text-left align-middle font-medium text-neutral-400">
 						<button class="flex flex-row items-center gap-4" onclick={() => sortBy('difficulty')}>
 							Difficulty
 							{#if orderBy === 'difficulty'}
@@ -141,7 +149,7 @@
 							{/if}
 						</button>
 					</th>
-					<th scope="col" class="px-3 py-3 md:px-6">
+					<th scope="col" class="h-12 px-4 text-left align-middle font-medium text-neutral-400">
 						<button class="flex flex-row items-center gap-4" onclick={() => sortBy('created_at')}>
 							Added
 							{#if orderBy === 'created_at'}
@@ -153,33 +161,36 @@
 					</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody class="[&amp;_tr:last-child]:border-0">
 				{#each sortedExercises as exercise (exercise.exercise_id)}
 					<tr
-						class="border-b border-neutral-700 even:bg-neutral-800/50"
+						class="border-b border-neutral-700 transition-colors even:bg-neutral-800/50"
 						transition:slide={{ axis: 'y' }}
 						animate:flip={{ duration: 300 }}
 					>
-						<td class="w-1/6 whitespace-nowrap px-3 py-2 font-medium text-white md:px-6 md:py-4">
+						<td class="w-1/12 px-4 align-middle">
+							<LanguageIcon name={exercise.language} />
+						</td>
+						<td class="w-1/12 px-4 align-middle">
 							{#if exercise.solved}
 								<CircleCheckBig class="size-5 text-green-600" />
 							{/if}
 						</td>
-						<td class="w-1/2 px-3 py-2 md:px-6">
+						<td class="px-3 py-4 md:px-6">
 							<a
 								href="/app/exercises/{urlHealer.identifier.join(
 									exercise.slug,
 									exercise.exercise_id
 								)}"
-								class="text-lg font-bold md:text-2xl"
+								class="text-lg font-bold md:text-xl"
 							>
 								{exercise.title}
 							</a>
 						</td>
-						<td class="w-1/6 px-3 py-2 md:px-6 md:py-4">
+						<td class="w-1/12 px-4 align-middle">
 							<Difficulty difficulty={exercise.difficulty} />
 						</td>
-						<td class="w-2/5 px-3 py-2 md:px-6 md:py-4">
+						<td class="w-1/6 px-4 align-middle">
 							{formatDate(exercise.created_at)}
 						</td>
 					</tr>

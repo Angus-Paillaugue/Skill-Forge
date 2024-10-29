@@ -2,10 +2,11 @@
 	import { onDestroy, onMount } from 'svelte';
 	import { Tooltip } from '$lib/components';
 	import { scale } from 'svelte/transition';
-	import { Check, AlignLeft, RotateCcw, Plus, Minus, WrapText } from 'lucide-svelte';
+	import { Check, AlignLeft, RotateCcw, Plus, Minus, WrapText, Save } from 'lucide-svelte';
 
 	let {
 		value = $bindable(''),
+		saveId,
 		language = 'javascript',
 		defaultValue,
 		onRunCodeShortcut
@@ -17,6 +18,7 @@
 	let formatted = $state(false);
 	let fontSize = $state(16);
 	let wordWrap = $state(true);
+	let saved = $state(false)
 
 	/**
 	 * Retrieves the value of a specified CSS variable.
@@ -74,11 +76,29 @@
 		}, 1500);
 	};
 
+	function saveTryValue() {
+		if(saved) return;
+		localStorage.setItem(saveId, value);
+		saved = true;
+		setTimeout(() => {
+			saved = false;
+		}, 1500)
+	}
+
+	function getLastTryValue () {
+		return localStorage.getItem(saveId)
+	}
+
 	onMount(async () => {
 		monaco = (await import('./monaco')).default;
 
 		const localStorageFontSize = localStorage.getItem('font-size');
 		if (localStorageFontSize) fontSize = parseInt(localStorageFontSize);
+
+		// If the user has saved, set the last save value to the editor value
+		if(getLastTryValue()) {
+			value = getLastTryValue();
+		}
 
 		const backgroundColor = getCSSVariableValue('--tw-neutral-800');
 
@@ -96,10 +116,6 @@
 				id: 'run-code-shortcut',
 				label: 'Run code',
 				keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter],
-				precondition: null,
-				keybindingContext: null,
-				contextMenuGroupId: 'navigation',
-				contextMenuOrder: 1.5,
 				run: () => {
 					onRunCodeShortcut?.();
 				}
@@ -108,10 +124,6 @@
 				id: 'formatCode',
 				label: 'Format code',
 				keybindings: [monaco.KeyMod.Alt | monaco.KeyMod.Shift | monaco.KeyCode.KeyF],
-				precondition: null,
-				keybindingContext: null,
-				contextMenuGroupId: 'navigation',
-				contextMenuOrder: 1.5,
 				run: () => {
 					formatCode();
 				}
@@ -120,12 +132,16 @@
 				id: 'toggleWordWrap',
 				label: 'Toggle word wrap',
 				keybindings: [monaco.KeyMod.Alt | monaco.KeyCode.KeyZ],
-				precondition: null,
-				keybindingContext: null,
-				contextMenuGroupId: 'navigation',
-				contextMenuOrder: 1.5,
 				run: () => {
 					wordWrap = !wordWrap;
+				}
+			},
+			{
+				id: 'saveState',
+				label: 'Save',
+				keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS],
+				run: () => {
+					saveTryValue()
 				}
 			}
 		];
@@ -194,13 +210,31 @@
 
 <div class="flex h-full grow flex-col overflow-hidden">
 	<div
-		class="flex h-10 shrink-0 flex-row items-center gap-2 border-b border-neutral-700 bg-neutral-800 p-2 text-neutral-400"
+		class="flex h-10 shrink-0 flex-row items-center border-b border-neutral-700 bg-neutral-800 p-2 text-neutral-400"
 	>
+		<!-- Save button -->
+		<Tooltip content="Save <kbd>Ctrl</kbd> <kbd>S</kbd>" position="bottom">
+			<button
+				onclick={saveTryValue}
+				class="flex flex-row items-center gap-2 transition-colors p-1 rounded hover:bg-neutral-700/50"
+				aria-label="Save"
+			>
+				{#if saved}
+					<span in:scale>
+						<Check class="size-5" />
+					</span>
+				{:else}
+					<span in:scale>
+						<Save class="size-5" />
+					</span>
+				{/if}
+			</button>
+		</Tooltip>
 		<!-- Format code button -->
 		<Tooltip content="Format <kbd>Alt</kbd> <kbd>Shift</kbd> <kbd>F</kbd>" position="bottom">
 			<button
 				onclick={formatCode}
-				class="flex flex-row items-center gap-2"
+				class="flex flex-row items-center gap-2 transition-colors p-1 rounded hover:bg-neutral-700/50"
 				aria-label="Format code"
 				disabled={formatted}
 			>
@@ -219,18 +253,19 @@
 		<Tooltip content="Toggle word wrap <kbd>Alt</kbd> <kbd>Z</kbd>" position="bottom">
 			<button
 				onclick={() => (wordWrap = !wordWrap)}
-				class="flex flex-row items-center gap-2"
+				class="flex flex-row items-center gap-2 transition-colors p-1 rounded hover:bg-neutral-700/50"
 				aria-label="Toggle word wrap"
 			>
 				<WrapText class="size-5" />
 			</button>
 		</Tooltip>
+
 		{#if defaultValue}
 			<!-- Reset to default configuration button -->
 			<Tooltip content="Reset to default configuration" position="bottom">
 				<button
 					onclick={resetEditor}
-					class="flex flex-row items-center gap-2"
+					class="flex flex-row items-center gap-2 transition-colors p-1 rounded hover:bg-neutral-700/50"
 					aria-label="Reset to default configuration"
 				>
 					<RotateCcw class="size-5" />

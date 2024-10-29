@@ -7,7 +7,8 @@
 		"build": "vite build",
 		"preview": "vite preview",
 		"lint": "prettier --check . && eslint .",
-		"format": "prettier --write ."
+		"format": "prettier --write .",
+		"build-containers": "sudo docker build -t python-runner ./src/lib/server/containers/python"
 	},
 	"devDependencies": {
 		"@sveltejs/kit": "^2.0.0",

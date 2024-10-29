@@ -15,12 +15,10 @@ export async function load({ params, locals }) {
                 JSON_ARRAYAGG(
                     JSON_OBJECT(
                         'id', e.id,
+                        'slug', e.slug,
                         'title', e.title,
-                        'description', e.description,
                         'difficulty', e.difficulty,
-                        'created_at', e.created_at,
-                        'is_completed', IF(s.latest_submission_id IS NOT NULL, TRUE, FALSE),
-                        'completed_at', s.completed_at
+                        'is_completed', IF(s.latest_submission_id IS NOT NULL, TRUE, FALSE)
                     )
                 ) AS exercises
             FROM

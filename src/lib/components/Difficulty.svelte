@@ -3,16 +3,16 @@
 	const { difficulty = 'easy', class: className } = $props();
 
 	const difficultyClasses = {
-		easy: 'bg-green-600 text-white',
-		medium: 'bg-yellow-600 text-black',
-		hard: 'bg-red-600 text-white'
+		easy: 'text-green-600',
+		medium: 'text-yellow-600',
+		hard: 'text-red-600'
 	};
 </script>
 
 <span
 	class={cn(
 		difficultyClasses[difficulty],
-		'block w-fit rounded-full px-2 py-1 text-sm font-semibold',
+		'inline-block text-sm font-bold',
 		className
 	)}
 >

@@ -30,7 +30,7 @@ export async function load({ params }) {
 			WHERE
 					e.id = ?
 			GROUP BY
-					e.id, e.title, e.description, e.content, e.difficulty, e.created_at, cat.name;
+					e.id, e.title, e.description, e.content, e.difficulty, e.created_at;
 		`,
 			[id]
 		);

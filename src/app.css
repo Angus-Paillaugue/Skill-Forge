@@ -26,8 +26,12 @@
 	}
 }
 
+* {
+	overscroll-behavior: contain;
+}
+
 body {
-	@apply bg-neutral-900 text-neutral-200;
+	@apply bg-neutral-900 text-neutral-100;
 }
 
 hr {

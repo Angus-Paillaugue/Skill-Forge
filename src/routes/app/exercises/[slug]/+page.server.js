@@ -27,6 +27,7 @@ export const load = async ({ params, locals }) => {
             e.content,
             e.difficulty,
             e.created_at,
+            l.name AS language,
             -- Subquery to get tests without duplication
             (SELECT
                 JSON_ARRAYAGG(
@@ -52,6 +53,8 @@ export const load = async ({ params, locals }) => {
             exercises e
         LEFT JOIN
             submissions uep ON e.id = uep.exercise_id AND uep.user_id = ?
+        LEFT JOIN
+            languages l ON e.language_id = l.id
         WHERE
             e.id = ?
         GROUP BY

@@ -39,6 +39,7 @@ Skill Forge is more than just a coding platform. It’s a learning tool that ada
 
 # TODO
 
+- [x] Add other supported languages (JavaScript and Python)
 - [x] Use exercise slug instead if it's id (used both instead to make a self regenerating slug)
 - [x] Add console output
 - [x] Add learning paths instead of categories
@@ -63,4 +64,3 @@ Skill Forge is more than just a coding platform. It’s a learning tool that ada
 - [x] Add a user dashboard
 - [ ] Fix random exercise page not reloading current exercise if already on the exercise page
 - [ ] Make a logo
-- [ ] Add other supported languages

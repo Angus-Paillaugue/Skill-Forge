@@ -60,6 +60,7 @@
 
 		// Hide tooltip when clicking outside of it
 		document.addEventListener('click', (e) => {
+			if(!tooltip) return;
 			if (isHovered && !tooltip.contains(e.target) && !tooltipContent.contains(e.target))
 				hideTooltip();
 		});
@@ -77,6 +78,11 @@
 			tooltip.removeEventListener('mouseleave', hideTooltip);
 			tooltip.removeEventListener('focus', showTooltip);
 			tooltip.removeEventListener('blur', hideTooltip);
+			tooltip.removeEventListener('click', showTooltip);
+			document.removeEventListener('click', hideTooltip);
+			window.removeEventListener('scroll', hideTooltip);
+			window.removeEventListener('resize', hideTooltip);
+			window.onmousemove = null;
 		};
 	});
 

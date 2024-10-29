@@ -49,11 +49,11 @@
 </svelte:head>
 
 <main
-	class="mx-auto flex w-full max-w-screen-lg flex-1 flex-col items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8"
+	class="mx-auto flex w-full max-w-screen-lg flex-1 flex-col items-start gap-4 md:gap-8"
 >
 	<!-- Hero -->
 	<div class="grid w-full grid-cols-1 gap-4 md:grid-cols-3">
-		<div class="rounded-lg bg-neutral-800 text-neutral-100 md:col-span-2">
+		<div class="border border-neutral-700/50 bg-neutral-800/50 rounded-xl text-neutral-100 md:col-span-2">
 			<div class="flex flex-row gap-4 p-6 pb-3">
 				<img src="/default_avatar.jpg" class="size-20 rounded-xl object-cover" alt="Avatar" />
 				<div class="flex flex-col space-y-1.5">
@@ -73,17 +73,17 @@
 				</div>
 			</div>
 
-			<div class="flex flex-row items-center gap-4 p-6 pt-0">
+			<div class="flex flex-row flex-wrap items-center gap-4 p-6 pt-0">
 				<a
 					href="/app/account/log-out"
-					class="flex flex-row items-center gap-2 rounded-xl bg-neutral-700 px-3 py-1 text-base font-medium"
+					class="flex flex-row items-center gap-2 rounded-xl bg-neutral-700 hover:bg-neutral-700/50 transition-colors px-3 py-1 text-base font-medium"
 				>
 					<LogOut class="size-4" />
 					Log out
 				</a>
 				<a
 					href="/app/account/settings"
-					class="flex flex-row items-center gap-2 rounded-xl bg-neutral-700 px-3 py-1 text-base font-medium"
+					class="flex flex-row items-center gap-2 rounded-xl bg-neutral-700 hover:bg-neutral-700/50 transition-colors px-3 py-1 text-base font-medium"
 				>
 					<Settings class="size-4" />
 					Settings
@@ -91,7 +91,7 @@
 				{#if user.admin}
 					<a
 						href="/app/account/admin"
-						class="flex flex-row items-center gap-2 rounded-xl bg-neutral-700 px-3 py-1 text-base font-medium"
+						class="flex flex-row items-center gap-2 rounded-xl bg-neutral-700 hover:bg-neutral-700/50 transition-colors px-3 py-1 text-base font-medium"
 					>
 						<Shield class="size-4" />
 						Admin dashboard
@@ -100,7 +100,7 @@
 			</div>
 		</div>
 
-		<div class="rounded-lg bg-neutral-800 text-neutral-100">
+		<div class="border border-neutral-700/50 bg-neutral-800/50 rounded-xl text-neutral-100">
 			<div class="flex flex-col space-y-1.5 p-6 pb-2">
 				<p class="text-lg font-semibold leading-none tracking-tight">Solved problems</p>
 
@@ -122,7 +122,7 @@
 	</div>
 
 	<!-- Contribution grid -->
-	<div class="flex w-full flex-col gap-4 rounded-xl bg-neutral-800 p-6">
+	<div class="flex w-full flex-col gap-4 border border-neutral-700/50 bg-neutral-800/50 rounded-xl p-6">
 		<h3 class="text-lg font-semibold leading-none tracking-tight">Contributions</h3>
 		<div class="h-full w-full overflow-x-auto">
 			<div class="flex w-full flex-row flex-nowrap gap-1">
@@ -141,7 +141,7 @@
 								{@const bg =
 									Object.keys(activityThresholds)
 										.map(Number)
-										.filter((key) => key <= contrib?.submission_count ?? 0)
+										.filter((key) => key <= contrib?.submission_count || 0)
 										.sort((a, b) => b - a)[0] || Object.keys(activityThresholds)[0]}
 								<Tooltip
 									class="size-[0.85rem] shrink-0"
@@ -172,7 +172,7 @@
 	</div>
 
 	<!-- Recent activity -->
-	<div class="w-full rounded-xl bg-neutral-800">
+	<div class="w-full border border-neutral-700/50 bg-neutral-800/50 rounded-xl">
 		<div class="flex flex-col space-y-1.5 p-6 px-7">
 			<h3 class="text-lg font-semibold leading-none tracking-tight">Activity</h3>
 
@@ -180,13 +180,13 @@
 		</div>
 
 		<div class="p-6 pt-0">
-			<div class="relative max-h-[300px] w-full overflow-auto">
+			<div class="relative max-h-[300px] w-full rounded-xl overflow-auto">
 				{#if recentActivity.length === 0}
 					<div class="grow rounded-lg bg-neutral-700 p-4">
 						<h2 class="text-base font-medium">You have no recent activity!</h2>
 					</div>
 				{:else}
-					<table class="w-full caption-bottom text-sm">
+					<table class="w-full table-auto text-sm">
 						<thead class="sticky top-0 border-b border-neutral-700 bg-neutral-800"
 							><tr
 								><th class="h-12 px-4 text-left align-middle font-medium text-neutral-400">Name</th>
@@ -196,7 +196,7 @@
 						>
 						<tbody class="[&amp;_tr:last-child]:border-0">
 							{#each recentActivity as activity}
-								<tr class="border-b border-neutral-700 transition-colors odd:bg-neutral-700/20"
+								<tr class="border-b border-neutral-700 transition-colors odd:bg-neutral-800"
 									><td class="p-4 align-middle">
 										<a
 											href="/app/exercises/{urlHealer.identifier.join(

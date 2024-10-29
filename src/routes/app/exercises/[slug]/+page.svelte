@@ -134,30 +134,43 @@
 		rateLimiting = true;
 		isRunning = true;
 
-		const res = await fetch('/api/runTests', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				exercise_id: exercise.exercise_id,
-				user_input: value
-			})
-		});
-		const data = await res.json();
+		try {
+			const res = await fetch('/api/runTests', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					exercise_id: exercise.exercise_id,
+					user_input: value
+				})
+			});
+			const data = await res.json();
+			if (!data.ok) {
+				newToast({
+					type: 'red',
+					message: data.message
+				});
+				isRunning = false;
+			} else {
+				latestRunnedTestsResults = data;
+				mobileActiveTabIndex = 2;
+				if (editor) editor.resetEditorLayout();
 
-		latestRunnedTestsResults = data;
-		mobileActiveTabIndex = 2;
-		if (editor) editor.resetEditorLayout();
-
-		// Check if all tests passed
-		const isSolutionAccepted = data.results.every((test) => test.passed);
-		if (isSolutionAccepted) {
-			newToast({ type: 'green', message: 'All tests passed!', timeout: 1500 });
-		} else {
-			newToast({ type: 'red', message: 'Some tests failed!', timeout: 1500 });
+				// Check if all tests passed
+				const isSolutionAccepted = data.results.every((test) => test.passed);
+				if (isSolutionAccepted) {
+					newToast({ type: 'green', message: 'All tests passed!', timeout: 1500 });
+				} else {
+					newToast({ type: 'red', message: 'Some tests failed!', timeout: 1500 });
+				}
+			}
+		} catch (error) {
+			newToast({
+				type: 'red',
+				message: error
+			});
 		}
-
 		isRunning = false;
 
 		setTimeout(() => {
@@ -208,7 +221,7 @@
 </svelte:head>
 
 <!-- Code action buttons -->
-<div class="absolute left-1/2 z-20 -ml-[6.5rem] w-52 max-lg:bottom-4 lg:top-2">
+<div class="absolute left-1/2 z-40 -ml-[6.5rem] w-52 max-lg:bottom-2 lg:top-2">
 	<div class="relative grid grid-cols-2 items-center gap-px">
 		<!-- Run button -->
 		<Tooltip
@@ -216,7 +229,7 @@
 			position="bottom"
 		>
 			<button
-				class="flex w-full flex-row items-center justify-center gap-2 rounded-l-lg bg-neutral-900 px-2 py-2 text-center text-base font-medium text-neutral-300 lg:bg-neutral-800"
+				class="flex w-full flex-row items-center justify-center gap-2 rounded-l-lg px-2 py-2 text-center text-base font-medium text-neutral-300 bg-neutral-800"
 				onclick={() => {
 					runCode();
 				}}
@@ -241,7 +254,7 @@
 		</Tooltip>
 		<!-- Submit button -->
 		<button
-			class="flex flex-row items-center gap-2 rounded-r-lg bg-neutral-900 px-2 py-2 text-base font-medium text-green-600 lg:bg-neutral-800"
+			class="flex flex-row items-center gap-2 rounded-r-lg px-2 py-2 text-base font-medium text-green-600 bg-neutral-800"
 			onclick={submitSolution}
 		>
 			<div class="relative block size-5">
@@ -274,7 +287,7 @@
 				>
 					<button
 						aria-label="Start timer"
-						class="flex size-10 flex-col items-center justify-center bg-neutral-900 text-neutral-300 lg:bg-neutral-800"
+						class="flex size-10 flex-col items-center justify-center text-neutral-300 bg-neutral-800"
 						onclick={() => {
 							if (timer || timerInterval) clearTimer();
 							else startTimer();
@@ -326,7 +339,7 @@
 </div>
 
 <!-- Main content on < lg screen size -->
-<div class="hidden !h-[calc(100vh-4rem)] grow flex-col overflow-hidden max-lg:flex">
+<div class="hidden !h-[calc(100vh-4rem-6rem)] grow flex-col overflow-hidden max-lg:flex">
 	<div
 		class="mb-2 grid shrink-0 grid-cols-3 flex-nowrap overflow-x-auto rounded-full bg-neutral-800"
 	>

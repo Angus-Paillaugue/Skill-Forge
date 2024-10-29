@@ -29,8 +29,8 @@
 	<title>Settings</title>
 </svelte:head>
 
-<main class="mx-auto flex w-full max-w-screen-lg flex-col gap-10 p-4 sm:px-6 sm:py-0 md:gap-8">
-	<div class="rounded-lg bg-neutral-800 p-4 text-neutral-100">
+<main class="mx-auto flex w-full max-w-screen-lg flex-col gap-10 md:gap-8">
+	<div class="border border-neutral-700/50 bg-neutral-800/50 rounded-xl p-4">
 		<div class="flex flex-row gap-4">
 			<a href="/app/account" class="rounded-full bg-neutral-900 p-2" arial-label="Go back"
 				><Undo2 class="size-5" /></a
@@ -38,7 +38,7 @@
 			<h1 class="text-3xl font-bold">Settings</h1>
 		</div>
 	</div>
-	<div class="rounded-lg bg-neutral-800 p-4 text-neutral-100">
+	<div class="border border-neutral-700/50 bg-neutral-800/50 rounded-xl p-4">
 		<form
 			method="POST"
 			action="?/saveInfos"
@@ -61,7 +61,7 @@
 			/>
 
 			<button
-				class="mt-4 flex w-full flex-row items-center justify-center gap-2 rounded-xl bg-neutral-700 p-2 text-base font-semibold transition-all disabled:cursor-not-allowed disabled:opacity-50"
+				class="mt-4 flex w-full flex-row items-center justify-center gap-2 rounded-xl bg-neutral-700 hover:bg-neutral-700/50 p-2 text-base font-semibold transition-all disabled:cursor-not-allowed disabled:bg-neutral-700/50"
 				disabled={!hasChangedInfos}
 			>
 				{#if isSavingInfos}
@@ -71,7 +71,7 @@
 			</button>
 		</form>
 	</div>
-	<div class="rounded-lg bg-neutral-800 p-4 text-neutral-100">
+	<div class="border border-neutral-700/50 bg-neutral-800/50 rounded-xl p-4">
 		<form
 			method="POST"
 			action="?/changePassword"
@@ -109,7 +109,7 @@
 			/>
 
 			<button
-				class="mt-4 flex w-full flex-row items-center justify-center gap-2 rounded-xl bg-neutral-700 p-2 text-base font-semibold"
+				class="mt-4 flex w-full flex-row items-center justify-center gap-2 rounded-xl bg-neutral-700 hover:bg-neutral-700/50 p-2 text-base font-semibold"
 			>
 				{#if isChangingPassword}
 					<Spinner class="size-5" />

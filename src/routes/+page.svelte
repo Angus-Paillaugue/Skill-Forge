@@ -1,6 +1,6 @@
 <script>
 	import { enhance } from '$app/forms';
-	import { Button, Spinner, Input } from '$lib/components';
+	import { Spinner, Input } from '$lib/components';
 	import { newToast } from '$lib/stores';
 	import { cn } from '$lib/utils';
 	import { spring } from 'svelte/motion';
@@ -197,7 +197,7 @@
 		<div class="relative flex w-full flex-col" bind:this={formSelectContainer}>
 			<!-- Indicator -->
 			<div
-				class="absolute bottom-0 top-0 w-1/2 rounded-full bg-neutral-200"
+				class="absolute bottom-0 top-0 w-1/2 rounded-full bg-neutral-50"
 				style="left: {$formIndicatorPos}px;"
 			></div>
 			<!-- Buttons -->
@@ -231,7 +231,7 @@
 			>
 				<!-- Sign up form -->
 				<form
-					class="flex w-full flex-col gap-6 rounded-xl bg-neutral-200 p-6 text-neutral-900"
+					class="flex w-full flex-col gap-6 rounded-xl bg-neutral-50 p-6 text-neutral-900"
 					method="POST"
 					action="?/signUp"
 					use:enhance={() => {
@@ -245,34 +245,34 @@
 					<h1 class="text-3xl font-bold text-inherit">Sign up</h1>
 					<Input
 						id="username"
-						class="bg-neutral-300 text-neutral-800 placeholder:text-neutral-600"
+						class="bg-neutral-200 text-neutral-800 placeholder:text-neutral-600"
 						placeholder="Username"
 						tabindex={formIndex === 0 ? 0 : -1}
 					/>
 					<Input
 						id="password"
-						class="bg-neutral-300 text-neutral-800 placeholder:text-neutral-600"
+						class="bg-neutral-200 text-neutral-800 placeholder:text-neutral-600"
 						type="password"
 						placeholder="Password"
 						tabindex={formIndex === 0 ? 0 : -1}
 					/>
 
-					<Button
+					<button
 						disabled={isSendingForm}
 						type="submit"
-						class="w-full bg-neutral-800"
+						class="w-full bg-neutral-800 flex flex-row items-center justify-center text-lg font-medium gap-2 px-4 py-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all text-neutral-100 rounded-xl"
 						tabindex={formIndex === 0 ? 0 : -1}
 					>
 						{#if isSendingForm}
 							<Spinner />
 						{/if}
 						Sign up
-					</Button>
+					</button>
 				</form>
 
 				<!-- Log in form -->
 				<form
-					class="flex w-full flex-col gap-6 rounded-xl bg-neutral-200 p-6 text-neutral-900"
+					class="flex w-full flex-col gap-6 rounded-xl bg-neutral-50 p-6 text-neutral-900"
 					method="POST"
 					action="?/logIn"
 					use:enhance={() => {
@@ -286,29 +286,29 @@
 					<h1 class="text-3xl font-bold text-inherit">Log in</h1>
 					<Input
 						id="username"
-						class="bg-neutral-300 text-neutral-800 placeholder:text-neutral-600"
+						class="bg-neutral-200 text-neutral-800 placeholder:text-neutral-600"
 						placeholder="Username"
 						tabindex={formIndex === 1 ? 0 : -1}
 					/>
 					<Input
 						id="password"
-						class="bg-neutral-300 text-neutral-800 placeholder:text-neutral-600"
+						class="bg-neutral-200 text-neutral-800 placeholder:text-neutral-600"
 						type="password"
 						placeholder="Password"
 						tabindex={formIndex === 1 ? 0 : -1}
 					/>
 
-					<Button
+					<button
 						disabled={isSendingForm}
 						tabindex={formIndex === 1 ? 0 : -1}
 						type="submit"
-						class="w-full bg-neutral-800"
+						class="w-full bg-neutral-800 flex flex-row items-center justify-center text-lg font-medium gap-2 px-4 py-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all text-neutral-100 rounded-xl"
 					>
 						{#if isSendingForm}
 							<Spinner />
 						{/if}
 						Log in
-					</Button>
+					</button>
 				</form>
 			</div>
 		</div>
@@ -440,7 +440,7 @@
 
 <!-- Footer -->
 <footer
-	class="mx-auto mb-6 flex w-full max-w-screen-2xl flex-row gap-12 rounded-2xl bg-neutral-200 px-6 py-12 text-neutral-900"
+	class="mx-auto mb-6 flex w-full max-w-screen-2xl flex-row gap-12 rounded-2xl bg-neutral-50 px-6 py-12 text-neutral-900"
 >
 	<p class="font-mono text-sm">© {new Date().getFullYear()} Skill Forge. All rights reserved.</p>
 </footer>

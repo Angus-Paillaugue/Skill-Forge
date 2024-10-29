@@ -16,8 +16,9 @@
 	</div>
 </div>
 <Editor
-	language="javascript"
+	language={exercise.language.toLowerCase()}
 	defaultValue={exercise.content}
+	saveId={"exercise-"+exercise.exercise_id}
 	bind:value
 	bind:this={editor}
 	onRunCodeShortcut={runCode}

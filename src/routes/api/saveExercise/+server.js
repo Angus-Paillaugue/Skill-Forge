@@ -2,7 +2,7 @@ import { json } from '@sveltejs/kit';
 import { createConnection } from '$lib/server/db';
 
 export async function POST({ request, locals }) {
-	const { id, title, description, difficulty, tests, content, learning_path_id } =
+	const { id, title, description, difficulty, tests, content } =
 		await request.json();
 	const { user } = locals;
 	if (!user.admin) {
@@ -15,7 +15,6 @@ export async function POST({ request, locals }) {
 		!difficulty ||
 		!tests ||
 		!content ||
-		!learning_path_id ||
 		tests.length === 0 ||
 		!id
 	) {
@@ -28,10 +27,10 @@ export async function POST({ request, locals }) {
 		await db.query(
 			`
 			UPDATE exercises
-			SET title = ?, description = ?, difficulty = ?, content = ?, learning_path_id = ?
+			SET title = ?, description = ?, difficulty = ?, content = ?
 			WHERE id = ?
 		`,
-			[title, description, difficulty, content, learning_path_id, id]
+			[title, description, difficulty, content, id]
 		);
 
 		// Delete existing tests
