@@ -9,10 +9,10 @@ importers:
   .:
     dependencies:
       '@shikijs/transformers':
-        specifier: ^1.22.0
+        specifier: ^1.22.2
         version: 1.22.2
       '@sveltejs/adapter-node':
-        specifier: ^5.2.8
+        specifier: ^5.2.9
         version: 5.2.9(@sveltejs/kit@2.7.3(@sveltejs/vite-plugin-svelte@4.0.0(svelte@5.1.4)(vite@5.4.10(@types/node@22.8.4)))(svelte@5.1.4)(vite@5.4.10(@types/node@22.8.4)))
       bcrypt:
         specifier: ^5.1.1
@@ -39,8 +39,8 @@ importers:
         specifier: ^9.0.2
         version: 9.0.2
       lucide-svelte:
-        specifier: ^0.453.0
-        version: 0.453.0(svelte@5.1.4)
+        specifier: ^0.454.0
+        version: 0.454.0(svelte@5.1.4)
       mdsvex:
         specifier: ^0.12.3
         version: 0.12.3(svelte@5.1.4)
@@ -54,7 +54,7 @@ importers:
         specifier: ^0.0.6
         version: 0.0.6(svelte@5.1.4)
       shiki:
-        specifier: ^1.22.0
+        specifier: ^1.22.2
         version: 1.22.2
       tailwind-merge:
         specifier: ^2.5.4
@@ -64,13 +64,13 @@ importers:
         version: 0.5.1(vite@5.4.10(@types/node@22.8.4))
     devDependencies:
       '@sveltejs/kit':
-        specifier: ^2.0.0
+        specifier: ^2.7.3
         version: 2.7.3(@sveltejs/vite-plugin-svelte@4.0.0(svelte@5.1.4)(vite@5.4.10(@types/node@22.8.4)))(svelte@5.1.4)(vite@5.4.10(@types/node@22.8.4))
       '@sveltejs/vite-plugin-svelte':
-        specifier: ^4.0.0-next.6
+        specifier: ^4.0.0
         version: 4.0.0(svelte@5.1.4)(vite@5.4.10(@types/node@22.8.4))
       '@types/eslint':
-        specifier: ^9.6.0
+        specifier: ^9.6.1
         version: 9.6.1
       autoprefixer:
         specifier: ^10.4.20
@@ -79,16 +79,16 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       eslint:
-        specifier: ^9.0.0
+        specifier: ^9.13.0
         version: 9.13.0(jiti@1.21.6)
       eslint-config-prettier:
         specifier: ^9.1.0
         version: 9.1.0(eslint@9.13.0(jiti@1.21.6))
       eslint-plugin-svelte:
-        specifier: ^2.36.0
+        specifier: ^2.46.0
         version: 2.46.0(eslint@9.13.0(jiti@1.21.6))(svelte@5.1.4)
       globals:
-        specifier: ^15.0.0
+        specifier: ^15.11.0
         version: 15.11.0
       postcss:
         specifier: ^8.4.47
@@ -97,19 +97,19 @@ importers:
         specifier: ^3.3.3
         version: 3.3.3
       prettier-plugin-svelte:
-        specifier: ^3.1.2
+        specifier: ^3.2.7
         version: 3.2.7(prettier@3.3.3)(svelte@5.1.4)
       prettier-plugin-tailwindcss:
         specifier: ^0.6.8
         version: 0.6.8(prettier-plugin-svelte@3.2.7(prettier@3.3.3)(svelte@5.1.4))(prettier@3.3.3)
       svelte:
-        specifier: ^5.0.0-next.1
+        specifier: ^5.1.4
         version: 5.1.4
       tailwindcss:
         specifier: ^3.4.14
         version: 3.4.14
       vite:
-        specifier: ^5.0.3
+        specifier: ^5.4.10
         version: 5.4.10(@types/node@22.8.4)
 
 packages:
@@ -1592,8 +1592,8 @@ packages:
     resolution: {integrity: sha512-FbAj6lXil6t8z4z3j0E5mfRlPzxkySotzUHwRXjlpRh10vc6AI6WN62ehZj82VG7M20rqogJ0GLwar2Xa05a8Q==}
     engines: {bun: '>=1.0.0', deno: '>=1.30.0', node: '>=8.0.0'}
 
-  lucide-svelte@0.453.0:
-    resolution: {integrity: sha512-K+eE2ZeE00ThIEbAmZB3Hq0sVS+1ZLj+7nqtJvN0Xrh/KZnfnEChG+do80sctqXQEE+iG1dA2T+5fVcJS1awfA==}
+  lucide-svelte@0.454.0:
+    resolution: {integrity: sha512-TgW17HI7M8LeFZ3NpaDp1LwPGBGMVjx/x81TtK+AacEQvmJcqetqeJNeBT18NMEJP9+zi/Wt+Zc8mo44K5Uszw==}
     peerDependencies:
       svelte: ^3 || ^4 || ^5.0.0-next.42
 
@@ -4031,7 +4031,7 @@ snapshots:
 
   lru.min@1.1.1: {}
 
-  lucide-svelte@0.453.0(svelte@5.1.4):
+  lucide-svelte@0.454.0(svelte@5.1.4):
     dependencies:
       svelte: 5.1.4
 

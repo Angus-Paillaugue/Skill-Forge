@@ -118,7 +118,7 @@
     {/each}
   </div>
 {/if} -->
-<p>IT WORKS</p>
+
 <!-- Hero -->
 <section
 	class="mx-auto grid min-h-screen w-full max-w-screen-xl grid-cols-1 gap-16 px-4 py-10 lg:grid-cols-5"
