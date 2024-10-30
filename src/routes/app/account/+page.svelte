@@ -64,7 +64,7 @@
 	<!-- Hero -->
 	<div class="grid w-full grid-cols-1 gap-4 md:grid-cols-3">
 		<div
-			class="rounded-xl border border-neutral-700/50 bg-neutral-800/50 text-neutral-100 md:col-span-2"
+			class="user-info-card rounded-xl border border-neutral-700/50 bg-neutral-800/50 text-neutral-100 md:col-span-2"
 		>
 			<div class="flex flex-row gap-4 p-6 pb-3">
 				<img src="/default_avatar.jpg" class="size-20 rounded-xl object-cover" alt="Avatar" />

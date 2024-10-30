@@ -216,7 +216,7 @@
 				style="left: {$formIndicatorPos}px;"
 			></div>
 			<!-- Buttons -->
-			<div class="relative grid w-full grid-cols-2">
+			<div class="relative grid w-full grid-cols-2" id="formSelectors">
 				<button
 					aria-label="Change form to Sign up"
 					disabled={isSendingForm}

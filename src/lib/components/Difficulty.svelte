@@ -1,6 +1,6 @@
 <script>
 	import { cn } from '$lib/utils';
-	const { difficulty = 'easy', class: className } = $props();
+	const { difficulty = 'easy', class: className, ...props } = $props();
 
 	const difficultyClasses = {
 		easy: 'text-green-600',
@@ -9,6 +9,13 @@
 	};
 </script>
 
-<span class={cn(difficultyClasses[difficulty], 'inline-block text-sm font-bold', className)}>
-	{difficulty}
-</span>
+{#if difficulty in difficultyClasses}
+	<span
+		class={cn(difficultyClasses[difficulty], 'inline-block text-sm font-bold', className)}
+		{...props}
+	>
+		{difficulty}
+	</span>
+{:else}
+	<span>Unknown difficulty {difficulty}</span>
+{/if}

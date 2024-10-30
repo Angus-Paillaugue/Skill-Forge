@@ -31,7 +31,7 @@ export const handle = async ({ event, resolve }) => {
 		} else {
 			cookies.delete('token', { path: '/' });
 			locals.user = undefined;
-			if(!url.pathname === '/') throw redirect(307, '/');
+			if (!url.pathname === '/') throw redirect(307, '/');
 		}
 	}
 	// User is not logged in and trying to access a protected route

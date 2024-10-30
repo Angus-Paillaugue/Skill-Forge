@@ -22,3 +22,8 @@ vite.config.ts.timestamp-*
 
 /static/sitemap.xml
 /bin
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/tests/e2e/.auth/

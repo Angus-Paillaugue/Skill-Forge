@@ -46,7 +46,7 @@
 		{#if path.solved_exercises > 0}
 			<div class="mt-4 flex flex-col gap-1">
 				<!-- Progress bar -->
-				<div class="relative h-2 overflow-hidden rounded-full bg-neutral-700/50">
+				<div class="progress-bar relative h-2 overflow-hidden rounded-full bg-neutral-700/50">
 					<div class="h-full bg-neutral-100" style="width: {solvedPercentage}%;"></div>
 				</div>
 				<!-- Textual progress -->
@@ -63,17 +63,21 @@
 {/snippet}
 
 <div class="mx-auto mt-10 flex w-full max-w-screen-lg flex-col gap-2">
-	<h1 class="text-2xl font-bold capitalize">Continue Learning</h1>
-	<div class="relative grid w-full grid-cols-1 gap-4 rounded-lg lg:grid-cols-2 xl:grid-cols-3">
-		{#each startedPaths as path}
-			{@render card(path)}
-		{/each}
-	</div>
+	{#if startedPaths.length > 0}
+		<h1 class="text-2xl font-bold capitalize">Continue Learning</h1>
+		<div class="relative grid w-full grid-cols-1 gap-4 rounded-lg lg:grid-cols-2 xl:grid-cols-3">
+			{#each startedPaths as path}
+				{@render card(path)}
+			{/each}
+		</div>
+	{/if}
 
-	<h1 class="mt-10 text-2xl font-bold capitalize">Start Today</h1>
-	<div class="relative grid w-full grid-cols-1 gap-4 rounded-lg lg:grid-cols-2 xl:grid-cols-3">
-		{#each notStartedPaths as path}
-			{@render card(path)}
-		{/each}
-	</div>
+	{#if notStartedPaths.length > 0}
+		<h1 class="mt-10 text-2xl font-bold capitalize">Start Today</h1>
+		<div class="relative grid w-full grid-cols-1 gap-4 rounded-lg lg:grid-cols-2 xl:grid-cols-3">
+			{#each notStartedPaths as path}
+				{@render card(path)}
+			{/each}
+		</div>
+	{/if}
 </div>
