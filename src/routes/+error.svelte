@@ -28,11 +28,16 @@
 				src="https://leetcode.com/static/images/404_face.png"
 				alt={$page.status}
 			/>
-			<div class="text-center md:text-left">
-				<h1 class="text-xl font-bold text-neutral-100">{$page.error.message}</h1>
-				<p class="mt-2 max-w-[300px] text-sm text-neutral-400">
+			<div class="flex flex-col gap-2">
+				<h1 class="text-2xl font-bold text-neutral-100">{$page.error.message}</h1>
+				<p class="max-w-[300px] text-sm text-neutral-400">
 					Sorry, but we can't find the page you are looking for...
 				</p>
+				<a
+					href="/"
+					class="w-fit rounded-xl bg-neutral-700 px-3 py-1 text-base font-medium transition-colors hover:bg-neutral-700/50"
+					>Go home</a
+				>
 			</div>
 		</div>
 	</div>
@@ -40,9 +45,14 @@
 	<div class="mx-auto w-full grow p-4 md:max-w-[888px] md:p-6 lg:max-w-screen-xl">
 		<div class="mt-40 flex w-full flex-col items-center justify-center space-y-2">
 			<h1 class="text-8xl font-black">{$page.status}</h1>
-			<p class="max-w-[300px] text-lg font-medium text-neutral-100">
+			<p class="max-w-[300px] text-sm text-neutral-400">
 				{$page.error.message}
 			</p>
+			<a
+				href="/"
+				class="w-fit rounded-xl bg-neutral-700 px-3 py-1 text-base font-medium transition-colors hover:bg-neutral-700/50"
+				>Go home</a
+			>
 		</div>
 	</div>
 {/if}

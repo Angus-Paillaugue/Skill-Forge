@@ -42,7 +42,7 @@
 			style="background-size:20px 20px"
 		></div>
 	</div>
-	<div class="relative mx-auto flex h-full max-w-screen-xl flex-col items-center gap-8 px-4 py-10">
+	<div class="relative mx-auto flex h-full max-w-screen-lg flex-col items-center gap-8 px-4 py-10">
 		<!-- Go back button -->
 		<Tooltip class="absolute left-4 top-10" content="Go to paths list">
 			<a
@@ -69,7 +69,7 @@
 	</div>
 </div>
 
-<div class="mx-auto flex w-full max-w-screen-xl flex-col gap-10 p-4 md:gap-8">
+<div class="mx-auto flex w-full max-w-screen-lg flex-col gap-10 p-4 md:gap-8">
 	<div class="overflow-hidden rounded-xl border border-neutral-700">
 		<div class="flex flex-row items-center gap-4 bg-neutral-800 p-6 px-7">
 			<TestTubeDiagonal class="size-6" />

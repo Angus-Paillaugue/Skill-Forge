@@ -72,7 +72,7 @@
 				<div
 					class="flex flex-col gap-4 rounded-xl border border-neutral-700/50 bg-neutral-800/50 p-6 sm:col-span-2"
 				>
-					<h1 class="text-3xl font-semibold">Welcome, Angus</h1>
+					<h1 class="text-3xl font-semibold">Welcome, {user.username}</h1>
 					<div class="flex flex-row flex-wrap gap-4">
 						<a
 							href="/app/account/admin/addExercise"

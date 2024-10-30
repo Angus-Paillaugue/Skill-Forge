@@ -10,7 +10,7 @@ export const load = async ({ params, locals }) => {
 	// Isolate the identifier at the end of the URL
 	const identifier = urlHealer.identifier.separate(urlSlug);
 	if (!identifier) {
-		error(404, 'Exercise not found');
+		throw new error(404, 'Exercise not found');
 	}
 	const db = await createConnection();
 
@@ -123,7 +123,7 @@ export const load = async ({ params, locals }) => {
 			// Parse the exercise description from MD into html
 			exercise.description = await compileMarkdown(exercise.description);
 		} else {
-			error(404, 'Exercise not found');
+			throw new error(404, 'Exercise not found');
 		}
 	}
 
