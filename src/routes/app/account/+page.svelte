@@ -1,7 +1,7 @@
 <script>
 	import { formatDate, cn, urlHealer } from '$lib/utils';
 	import { LogOut, Shield, Settings } from 'lucide-svelte';
-	import { Tooltip } from '$lib/components';
+	import { Tooltip, Button, Card } from '$lib/components';
 
 	const { data } = $props();
 	const { user, rank, recentActivity, contributions } = data;
@@ -63,10 +63,8 @@
 <main class="mx-auto flex w-full max-w-screen-lg flex-1 flex-col items-start gap-4 md:gap-8">
 	<!-- Hero -->
 	<div class="grid w-full grid-cols-1 gap-4 md:grid-cols-3">
-		<div
-			class="user-info-card rounded-xl border border-neutral-700/50 bg-neutral-800/50 text-neutral-100 md:col-span-2"
-		>
-			<div class="flex flex-row gap-4 p-6 pb-3">
+		<Card class="user-info-card md:col-span-2">
+			<div class="flex flex-row gap-4">
 				<img src="/default_avatar.jpg" class="size-20 rounded-xl object-cover" alt="Avatar" />
 				<div class="flex flex-col space-y-1.5">
 					<h3 class="text-lg font-semibold leading-none tracking-tight">{user.username}</h3>
@@ -85,35 +83,27 @@
 				</div>
 			</div>
 
-			<div class="flex flex-row flex-wrap items-center gap-4 p-6 pt-0">
-				<a
-					href="/app/account/log-out"
-					class="flex flex-row items-center gap-2 rounded-xl bg-neutral-700 px-3 py-1 text-base font-medium transition-colors hover:bg-neutral-700/50"
-				>
+			<div class="flex flex-row flex-wrap items-center gap-4">
+				<Button variant="secondary" href="/app/account/log-out">
 					<LogOut class="size-4" />
 					Log out
-				</a>
-				<a
-					href="/app/account/settings"
-					class="flex flex-row items-center gap-2 rounded-xl bg-neutral-700 px-3 py-1 text-base font-medium transition-colors hover:bg-neutral-700/50"
-				>
+				</Button>
+				<Button variant="secondary" href="/app/account/settings">
 					<Settings class="size-4" />
 					Settings
-				</a>
+				</Button>
 				{#if user.admin}
-					<a
-						href="/app/account/admin"
-						class="flex flex-row items-center gap-2 rounded-xl bg-neutral-700 px-3 py-1 text-base font-medium transition-colors hover:bg-neutral-700/50"
-					>
+					<Button variant="secondary" href="/app/account/admin">
 						<Shield class="size-4" />
 						Admin dashboard
-					</a>
+					</Button>
 				{/if}
 			</div>
-		</div>
+		</Card>
 
-		<div class="rounded-xl border border-neutral-700/50 bg-neutral-800/50 text-neutral-100">
-			<div class="flex flex-col space-y-1.5 p-6 pb-2">
+		<!-- Solved exercises -->
+		<Card>
+			<div class="flex flex-col space-y-1.5">
 				<p class="text-lg font-semibold leading-none tracking-tight">Solved problems</p>
 
 				<h3 class="text-4xl font-semibold tracking-tight">
@@ -124,19 +114,15 @@
 			</div>
 
 			{#if rank.distinct_exercise_count === rank.no_exercises}
-				<div class="p-6 pt-0">
-					<div class="text-sm text-neutral-400">
-						Wow, you solved all of the problems on the site ! Congratulation, you have no life.
-					</div>
+				<div class="text-sm text-neutral-400">
+					Wow, you solved all of the problems on the site ! Congratulation, you have no life.
 				</div>
 			{/if}
-		</div>
+		</Card>
 	</div>
 
 	<!-- Contribution grid -->
-	<div
-		class="flex w-full flex-col gap-4 rounded-xl border border-neutral-700/50 bg-neutral-800/50 p-6"
-	>
+	<Card class="w-full">
 		<h3 class="text-lg font-semibold leading-none tracking-tight">Contributions</h3>
 		<div class="h-full w-full overflow-x-auto">
 			<div class="flex w-full flex-row flex-nowrap gap-1">
@@ -158,7 +144,7 @@
 										.filter((key) => key <= contrib?.submission_count || 0)
 										.sort((a, b) => b - a)[0] || Object.keys(activityThresholds)[0]}
 								<Tooltip
-									class="size-[0.85rem] shrink-0"
+									class="size-[0.9rem] shrink-0"
 									delay={0}
 									content="{contrib?.submission_count ??
 										'No'} contribution{contrib?.submission_count > 1
@@ -167,6 +153,8 @@
 								>
 									<button
 										aria-label="Activity for {formattedDate}"
+										title="Activity for {formattedDate}"
+										tabindex={contrib ? 0 : -1}
 										class={cn('block aspect-square size-full rounded', activityThresholds[bg])}
 									></button>
 								</Tooltip>
@@ -179,59 +167,55 @@
 		<div class="font-base flex flex-row items-center gap-1 text-xs text-neutral-400">
 			Less
 			{#each Object.keys(activityThresholds) as key}
-				<div class={cn('size-[0.85rem] rounded', activityThresholds[key])}></div>
+				<div class={cn('size-[0.9rem] rounded', activityThresholds[key])}></div>
 			{/each}
 			More
 		</div>
-	</div>
+	</Card>
 
 	<!-- Recent activity -->
-	<div class="w-full rounded-xl border border-neutral-700/50 bg-neutral-800/50">
-		<div class="flex flex-col space-y-1.5 p-6 px-7">
+	<Card class="w-full">
+		<div class="flex flex-col space-y-1.5">
 			<h3 class="text-lg font-semibold leading-none tracking-tight">Activity</h3>
-
 			<p class="text-sm text-neutral-400">Recent activity.</p>
 		</div>
 
-		<div class="p-6 pt-0">
-			<div class="relative max-h-[300px] w-full overflow-auto rounded-xl">
-				{#if recentActivity.length === 0}
-					<div class="grow rounded-lg bg-neutral-700 p-4">
-						<h2 class="text-base font-medium">You have no recent activity!</h2>
-					</div>
-				{:else}
-					<table class="w-full table-auto text-sm">
-						<thead class="sticky top-0 border-b border-neutral-700 bg-neutral-800"
-							><tr
-								><th class="h-12 px-4 text-left align-middle font-medium text-neutral-400">Name</th>
-								<th class="h-12 px-4 text-right align-middle font-medium text-neutral-400">Date</th
-								></tr
-							></thead
-						>
-						<tbody class="[&amp;_tr:last-child]:border-0">
-							{#each recentActivity as activity}
-								<tr class="border-b border-neutral-700 transition-colors odd:bg-neutral-800"
-									><td class="p-4 align-middle">
-										<a
-											href="/app/exercises/{urlHealer.identifier.join(
-												activity.slug,
-												activity.exercise_id
-											)}"
-										>
-											<div class="font-medium">{activity.title}</div>
-											<div class="hidden text-sm text-neutral-400 md:inline">
-												{activity.exercise_difficulty}
-											</div>
-										</a>
-									</td>
-									<td class="p-4 text-right align-middle">{formatDate(activity.completed_at)}</td
-									></tr
-								>
-							{/each}
-						</tbody>
-					</table>
-				{/if}
-			</div>
+		<div class="no-scrollbar relative max-h-[300px] w-full overflow-auto rounded-xl">
+			{#if recentActivity.length === 0}
+				<div class="grow rounded-lg bg-neutral-700 p-4">
+					<h2 class="text-base font-medium">You have no recent activity!</h2>
+				</div>
+			{:else}
+				<table class="w-full table-auto text-sm">
+					<thead class="sticky top-0 bg-neutral-800"
+						><tr
+							><th class="h-12 px-4 text-left align-middle font-medium text-neutral-400">Name</th>
+							<th class="h-12 px-4 text-right align-middle font-medium text-neutral-400">Date</th
+							></tr
+						></thead
+					>
+					<tbody class="[&amp;_tr:last-child]:border-0">
+						{#each recentActivity as activity}
+							<tr class="border-b border-neutral-700 transition-colors even:bg-neutral-800/50"
+								><td class="p-4 align-middle">
+									<a
+										href="/app/exercises/{urlHealer.identifier.join(
+											activity.slug,
+											activity.exercise_id
+										)}"
+									>
+										<div class="font-medium">{activity.title}</div>
+										<div class="hidden text-sm text-neutral-400 md:inline">
+											{activity.exercise_difficulty}
+										</div>
+									</a>
+								</td>
+								<td class="p-4 text-right align-middle">{formatDate(activity.completed_at)}</td></tr
+							>
+						{/each}
+					</tbody>
+				</table>
+			{/if}
 		</div>
-	</div>
+	</Card>
 </main>

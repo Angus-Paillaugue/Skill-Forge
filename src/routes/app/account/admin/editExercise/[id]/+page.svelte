@@ -3,7 +3,7 @@
 	import { Spinner, Editor, Input } from '$lib/components';
 	import { scale } from 'svelte/transition';
 	import { PaneGroup, Pane, PaneResizer } from 'paneforge';
-	import { newToast } from '$lib/stores';
+	import { toast } from '$lib/component/Toast';
 	import { Save, Plus, Text, ScanEye, Code, X } from 'lucide-svelte';
 
 	const { data } = $props();
@@ -44,7 +44,7 @@
 		});
 		const data = await res.json();
 		if (!res.ok) {
-			newToast({ type: 'red', message: data.message });
+			toast.error({ message: data.message });
 			isSaving = false;
 			return;
 		}
@@ -80,7 +80,7 @@
 			const data = await res.text();
 			return data;
 		} catch (error) {
-			newToast({ type: 'red', message: error.message });
+			toast.error({ message: error.message });
 		}
 	}
 </script>
@@ -255,7 +255,7 @@
 							onclick={(e) => {
 								e.stopPropagation();
 								if (tests.length === 1) {
-									newToast({ type: 'red', message: 'You must have at least one test case' });
+									toast.error({ message: 'You must have at least one test case' });
 									return;
 								}
 								tests.splice(index, 1);

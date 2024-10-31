@@ -3,6 +3,7 @@
 	import { cn } from '$lib/utils';
 	import { fly } from 'svelte/transition';
 	import { afterNavigate } from '$app/navigation';
+	import { Button } from '$lib/components';
 
 	const { children } = $props();
 
@@ -61,19 +62,24 @@
 		)}
 	>
 		<!-- Toggle side bar on mobile button -->
-		<button class="block p-2 md:hidden" onclick={() => (mobileMenuOpened = !mobileMenuOpened)}>
+		<Button
+			variant="ghost"
+			class="block w-fit p-2 md:hidden"
+			onclick={() => (mobileMenuOpened = !mobileMenuOpened)}
+		>
 			<MenuIcon class="size-5" />
-		</button>
+		</Button>
 		<!-- Left part : home and problem list links -->
 		<div class="hidden flex-row items-center gap-4 md:flex">
 			<!-- Website logo placeholder -->
-			<a
+			<Button
 				href="/app"
 				aria-label="Go home"
-				class="group flex size-10 flex-col items-center justify-center rounded-full bg-neutral-700/50"
+				variant="primary square"
+				class="group flex w-fit flex-col items-center justify-center"
 			>
 				<Home class="size-6 text-neutral-400 transition-colors group-hover:text-neutral-100" />
-			</a>
+			</Button>
 			<!-- Vertical separator -->
 			<div class="h-5 w-px bg-neutral-800"></div>
 

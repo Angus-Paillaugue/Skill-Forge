@@ -43,7 +43,7 @@
 	</div>
 {:else}
 	<div class="mx-auto w-full grow p-4 md:max-w-[888px] md:p-6 lg:max-w-screen-xl">
-		<div class="mt-40 flex w-full flex-col items-center justify-center space-y-2">
+		<div class="mt-40 flex w-full flex-col items-center justify-center space-y-2 text-center">
 			<h1 class="text-8xl font-black">{$page.status}</h1>
 			<p class="max-w-[300px] text-sm text-neutral-400">
 				{$page.error.message}

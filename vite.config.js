@@ -1,9 +1,10 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
+import { svelteTesting } from '@testing-library/svelte/vite';
 import viteCompression from 'vite-plugin-compression';
 
 export default defineConfig({
-	plugins: [sveltekit(), viteCompression()],
+	plugins: [sveltekit(), viteCompression(), svelteTesting()],
 	test: {
 		environment: 'jsdom',
 		include: ['tests/unit/**/*.test.js']

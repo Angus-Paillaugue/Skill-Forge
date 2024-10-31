@@ -1,9 +1,10 @@
 <script>
 	import { User, TestTubeDiagonal, Plus, Pencil, Undo2 } from 'lucide-svelte';
 	import { fade, fly } from 'svelte/transition';
+	import { Button } from '$lib/components';
 
 	const { data } = $props();
-	const { noUsers, noExercises, allExercises } = data;
+	const { noUsers, noExercises, allExercises, user } = data;
 
 	let editExerciseModalVisible = $state(false);
 </script>
@@ -57,10 +58,8 @@
 >
 	<div class="rounded-xl border border-neutral-700/50 bg-neutral-800/50 p-4">
 		<div class="flex flex-row gap-4">
-			<a
-				href="/app/account"
-				class="flex flex-row items-center gap-2 rounded-full bg-neutral-700 p-2 text-base font-medium transition-colors hover:bg-neutral-700/50"
-				arial-label="Go back"><Undo2 class="size-5" /></a
+			<Button variant="backButton" href="/app/account" arial-label="Go back"
+				><Undo2 class="size-5" /></Button
 			>
 			<h1 class="text-3xl font-bold">Admin dashboard</h1>
 		</div>
@@ -74,20 +73,14 @@
 				>
 					<h1 class="text-3xl font-semibold">Welcome, {user.username}</h1>
 					<div class="flex flex-row flex-wrap gap-4">
-						<a
-							href="/app/account/admin/addExercise"
-							class="flex flex-row items-center gap-2 rounded-xl bg-neutral-700 px-3 py-1 text-base font-medium transition-colors hover:bg-neutral-700/50"
-						>
+						<Button variant="secondary" href="/app/account/admin/addExercise">
 							<Plus class="size-5" />
 							Add exercise
-						</a>
-						<button
-							onclick={() => (editExerciseModalVisible = true)}
-							class="flex flex-row items-center gap-2 rounded-xl bg-neutral-700 px-3 py-1 text-base font-medium transition-colors hover:bg-neutral-700/50"
-						>
+						</Button>
+						<Button variant="secondary" onclick={() => (editExerciseModalVisible = true)}>
 							<Pencil class="size-5" />
 							Edit exercise
-						</button>
+						</Button>
 					</div>
 				</div>
 
