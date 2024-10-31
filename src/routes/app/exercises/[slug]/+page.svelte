@@ -157,9 +157,9 @@
 				// Check if all tests passed
 				const isSolutionAccepted = data.results.every((test) => test.passed);
 				if (isSolutionAccepted) {
-					toast.success({ message: 'All tests passed!', timeout: 1500 });
+					toast.success({ message: 'All tests passed!', timeout: 2500 });
 				} else {
-					toast.error({ message: 'Some tests failed!', timeout: 1500 });
+					toast.error({ message: 'Some tests failed!', timeout: 2500 });
 				}
 			}
 		} catch (error) {
@@ -173,6 +173,11 @@
 			rateLimiting = false;
 			hasBeenWarnedRateLimiting = false;
 		}, RATE_LIMITING_TIMEOUT);
+	}
+
+	function loadSubmission(submission) {
+		editor.loadCode(submission.submission);
+		mobileActiveTabIndex = 1;
 	}
 
 	/**
@@ -377,7 +382,7 @@
 		style="transform: translateX(-{(mobileActiveTabIndex * 100) / 2.974}%);"
 	>
 		<div class="flex flex-col overflow-y-auto">
-			<LeftPane {exercise} bind:leftPaneActiveIndex bind:value bind:editor bind:submissions />
+			<LeftPane {exercise} {loadSubmission} bind:leftPaneActiveIndex bind:submissions />
 		</div>
 		<div class="flex grow flex-col">
 			<Editor {exercise} bind:editor bind:value {runCode} />
@@ -397,7 +402,7 @@
 >
 	<!-- Left part -->
 	<Pane defaultSize={50} class="flex flex-col">
-		<LeftPane {exercise} bind:leftPaneActiveIndex bind:value bind:editor bind:submissions />
+		<LeftPane {exercise} {loadSubmission} bind:leftPaneActiveIndex bind:submissions />
 	</Pane>
 	<PaneResizer class="group relative flex w-2 items-center justify-center">
 		<div class="flex h-7 w-[2px] items-center justify-center rounded-sm bg-neutral-700"></div>

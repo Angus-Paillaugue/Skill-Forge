@@ -25,6 +25,7 @@ export function formatDate(date, dateStyle = 'medium', locales = 'en') {
 export function accordion(node, isOpen) {
 	node.style.overflow = 'hidden';
 	node.style.height = isOpen ? 'auto' : '0';
+	node.style.border = isOpen ? '' : 'none';
 	node.classList.add('accordion');
 	return {
 		update(isOpen) {
@@ -43,12 +44,14 @@ export function accordion(node, isOpen) {
 			if (!isOpen) {
 				animation.play();
 			} else {
+				node.style.border = isOpen ? '' : 'none';
 				animation.reverse();
 			}
 			// Used for nested accordions
 			animation.onfinish = () => {
 				animation.cancel();
 				node.style.height = isOpen ? 'auto' : '0';
+				node.style.border = isOpen ? '' : 'none';
 			};
 		}
 	};
@@ -78,65 +81,6 @@ export function formatBytes(bytes, decimals = 2) {
 		sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
 		i = Math.floor(Math.log(bytes) / Math.log(k));
 	return parseFloat((bytes / Math.pow(k, i)).toFixed(decimals)) + ' ' + sizes[i];
-}
-
-/**
- * Strips various Markdown elements from a given string.
- *
- * @param {string} markdown - The Markdown string to be stripped.
- * @returns {string} - The cleaned text with Markdown elements removed.
- *
- * The function performs the following operations:
- * - Strips headers
- * - Strips emphasis (bold, italic, etc.)
- * - Strips strikethrough
- * - Strips inline code
- * - Strips blockquotes
- * - Strips links (keeps the link text)
- * - Strips images (keeps the alt text)
- * - Strips unordered lists
- * - Strips ordered lists
- * - Strips horizontal rules
- * - Strips code blocks
- */
-export function stripMD(markdown) {
-	// Strip headers
-	let text = markdown.replace(/^#{1,6}\s+/gm, '');
-
-	// Strip emphasis (bold, italic, etc.)
-	text = text
-		.replace(/(\*\*|__)(.*?)\1/g, '$2') // bold
-		.replace(/(\*|_)(.*?)\1/g, '$2'); // italic
-
-	// Strip strikethrough
-	text = text.replace(/~~(.*?)~~/g, '$1');
-
-	// Strip inline code
-	text = text.replace(/`([^`]+)`/g, '$1');
-
-	// Strip blockquotes
-	text = text.replace(/^\s*>+/gm, '');
-
-	// Strip links (keep the link text)
-	text = text.replace(/\[([^\]]+)]\([^)]+\)/g, '$1');
-
-	// Strip images (keep the alt text)
-	text = text.replace(/!\[([^\]]*)]\([^)]+\)/g, '$1');
-
-	// Strip unordered lists
-	text = text.replace(/^\s*[*+-]\s+/gm, '');
-
-	// Strip ordered lists
-	text = text.replace(/^\d+\.\s+/gm, '');
-
-	// Strip horizontal rules
-	text = text.replace(/^-{3,}$/gm, '');
-
-	// Strip code blocks
-	text = text.replace(/```[\s\S]*?```/g, '');
-
-	// Return the cleaned text
-	return text.trim();
 }
 
 /**

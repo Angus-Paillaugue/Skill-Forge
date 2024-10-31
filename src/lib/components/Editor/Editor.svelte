@@ -1,8 +1,17 @@
 <script>
 	import { onDestroy, onMount } from 'svelte';
-	import { Tooltip } from '$lib/components';
-	import { scale } from 'svelte/transition';
-	import { Check, AlignLeft, RotateCcw, Plus, Minus, WrapText, Save } from 'lucide-svelte';
+	import { Dropdown } from '$lib/components';
+	import { fly, scale, slide } from 'svelte/transition';
+	import {
+		Check,
+		AlignLeft,
+		RotateCcw,
+		Plus,
+		Minus,
+		WrapText,
+		Save,
+		AlignJustify
+	} from 'lucide-svelte';
 
 	let {
 		value = $bindable(''),
@@ -212,67 +221,73 @@
 	<div
 		class="flex h-10 shrink-0 flex-row items-center border-b border-neutral-700 bg-neutral-800 p-2 text-neutral-400"
 	>
-		<!-- Save button -->
-		<Tooltip content="Save <kbd>Ctrl</kbd> <kbd>S</kbd>" position="bottom">
-			<button
-				onclick={saveTryValue}
-				class="flex flex-row items-center gap-2 rounded p-1 transition-colors hover:bg-neutral-700/50"
-				aria-label="Save"
+		<!-- File dropdown -->
+		<Dropdown align="start">
+			<Dropdown.Trigger
+				variant="none"
+				class="w-fit gap-2 rounded-lg px-3 py-1 text-base text-neutral-100 hover:bg-neutral-700/50"
+				>File</Dropdown.Trigger
 			>
-				{#if saved}
-					<span in:scale>
-						<Check class="size-5" />
-					</span>
-				{:else}
-					<span in:scale>
-						<Save class="size-5" />
-					</span>
+			{#snippet items()}
+				<!-- Save -->
+				<Dropdown.Item aria-label="Save" onclick={saveTryValue}>
+					{#if saved}
+						<span in:scale>
+							<Check class="size-5" />
+						</span>
+					{:else}
+						<span in:scale>
+							<Save class="size-5" />
+						</span>
+					{/if}
+					Save
+					<div class="ml-auto">
+						<kbd class="px-1 py-0.5 text-xs">Ctrl</kbd>
+						<kbd class="px-1 py-0.5 text-xs">S</kbd>
+					</div>
+				</Dropdown.Item>
+				<!-- Format -->
+				<Dropdown.Item onclick={formatCode} aria-label="Format code" disabled={formatted}>
+					{#if formatted}
+						<span in:scale>
+							<Check class="size-5" />
+						</span>
+					{:else}
+						<span in:scale>
+							<AlignLeft class="size-5" />
+						</span>
+					{/if}
+					Format
+					<div class="ml-auto">
+						<kbd class="px-1 py-0.5 text-xs">Alt</kbd>
+						<kbd class="px-1 py-0.5 text-xs">Shift</kbd>
+						<kbd class="px-1 py-0.5 text-xs">F</kbd>
+					</div>
+				</Dropdown.Item>
+				<!-- Word wrap -->
+				<Dropdown.Item aria-label="Toggle word wrap" onclick={() => (wordWrap = !wordWrap)}>
+					{#if wordWrap}
+						<WrapText class="size-5" />
+					{:else}
+						<AlignJustify class="size-5" />
+					{/if}
+					<p>Turn {wordWrap ? 'off' : 'on'} word wrap</p>
+					<div class="ml-auto">
+						<kbd class="px-1 py-0.5 text-xs">Alt</kbd>
+						<kbd class="px-1 py-0.5 text-xs">Z</kbd>
+					</div>
+				</Dropdown.Item>
+				<!-- Reset -->
+				{#if defaultValue}
+					<Dropdown.Item onclick={resetEditor} aria-label="Reset to default configuration">
+						<RotateCcw class="size-5" />
+						Reset
+					</Dropdown.Item>
 				{/if}
-			</button>
-		</Tooltip>
-		<!-- Format code button -->
-		<Tooltip content="Format <kbd>Alt</kbd> <kbd>Shift</kbd> <kbd>F</kbd>" position="bottom">
-			<button
-				onclick={formatCode}
-				class="flex flex-row items-center gap-2 rounded p-1 transition-colors hover:bg-neutral-700/50"
-				aria-label="Format code"
-				disabled={formatted}
-			>
-				{#if formatted}
-					<span in:scale>
-						<Check class="size-5" />
-					</span>
-				{:else}
-					<span in:scale>
-						<AlignLeft class="size-5" />
-					</span>
-				{/if}
-			</button>
-		</Tooltip>
-		<!-- Word wrap button -->
-		<Tooltip content="Toggle word wrap <kbd>Alt</kbd> <kbd>Z</kbd>" position="bottom">
-			<button
-				onclick={() => (wordWrap = !wordWrap)}
-				class="flex flex-row items-center gap-2 rounded p-1 transition-colors hover:bg-neutral-700/50"
-				aria-label="Toggle word wrap"
-			>
-				<WrapText class="size-5" />
-			</button>
-		</Tooltip>
+			{/snippet}
+		</Dropdown>
 
-		{#if defaultValue}
-			<!-- Reset to default configuration button -->
-			<Tooltip content="Reset to default configuration" position="bottom">
-				<button
-					onclick={resetEditor}
-					class="flex flex-row items-center gap-2 rounded p-1 transition-colors hover:bg-neutral-700/50"
-					aria-label="Reset to default configuration"
-				>
-					<RotateCcw class="size-5" />
-				</button>
-			</Tooltip>
-		{/if}
-
+		<!-- Font size selector -->
 		<div class="ml-auto flex h-full flex-row gap-px overflow-hidden rounded">
 			<button
 				class="flex aspect-square h-full shrink-0 flex-col items-center justify-center bg-neutral-700 text-neutral-400"

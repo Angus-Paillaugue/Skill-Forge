@@ -3,7 +3,7 @@
 	import { Spinner, Editor, Input } from '$lib/components';
 	import { scale } from 'svelte/transition';
 	import { PaneGroup, Pane, PaneResizer } from 'paneforge';
-	import { toast } from '$lib/component/Toast';
+	import { toast } from '$lib/components/Toast';
 	import { Pickaxe, Plus, Text, ScanEye, Code, X } from 'lucide-svelte';
 
 	const DIFFICULTIES = ['easy', 'medium', 'hard'];
