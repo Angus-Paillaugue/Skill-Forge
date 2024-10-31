@@ -5,7 +5,7 @@
 	import { Spinner, Tooltip } from '$lib/components';
 	import { cn } from '$lib/utils';
 	import { onMount } from 'svelte';
-	import { newToast } from '$lib/stores';
+	import { toast } from '$lib/components/Toast';
 	import { PaneGroup, Pane, PaneResizer } from 'paneforge';
 	import JSConfetti from 'js-confetti';
 	import { Play, CloudDownload, AlarmClock, AlarmClockOff, Pause } from 'lucide-svelte';
@@ -60,8 +60,7 @@
 		if (hasBeenWarnedRateLimiting || isSubmitting) return;
 		if (rateLimiting) {
 			hasBeenWarnedRateLimiting = true;
-			newToast({
-				type: 'red',
+			toast.error({
 				message: 'Please wait a moment before submitting again.',
 				timeout: RATE_LIMITING_TIMEOUT
 			});
@@ -85,14 +84,14 @@
 			const data = await res.json();
 			latestRunnedTestsResults = data.results;
 			if (data.error) {
-				newToast({ type: 'red', message: data.error });
+				toast.error({ message: data.error });
 				editor.resetEditorLayout();
 				isSubmitting = false;
 				return;
 			}
 
 			if (!data.passed) {
-				newToast({ type: 'red', message: data.error });
+				toast.error({ message: data.error });
 			} else {
 				exercise.completed_at = data.submission.completed_at;
 				if (!exercise?.submissions) exercise.submissions = [];
@@ -103,7 +102,7 @@
 				leftPaneActiveIndex = 1;
 			}
 		} catch (error) {
-			newToast({ type: 'red', message: error.message });
+			toast.error({ message: error.message });
 		} finally {
 			editor.resetEditorLayout();
 			isSubmitting = false;
@@ -124,8 +123,7 @@
 		if (hasBeenWarnedRateLimiting || isRunning) return;
 		if (rateLimiting) {
 			hasBeenWarnedRateLimiting = true;
-			newToast({
-				type: 'red',
+			toast.error({
 				message: 'Please wait a moment before submitting again.',
 				timeout: RATE_LIMITING_TIMEOUT
 			});
@@ -147,8 +145,7 @@
 			});
 			const data = await res.json();
 			if (!data.ok) {
-				newToast({
-					type: 'red',
+				toast.error({
 					message: data.message
 				});
 				isRunning = false;
@@ -160,14 +157,13 @@
 				// Check if all tests passed
 				const isSolutionAccepted = data.results.every((test) => test.passed);
 				if (isSolutionAccepted) {
-					newToast({ type: 'green', message: 'All tests passed!', timeout: 1500 });
+					toast.success({ message: 'All tests passed!', timeout: 1500 });
 				} else {
-					newToast({ type: 'red', message: 'Some tests failed!', timeout: 1500 });
+					toast.error({ message: 'Some tests failed!', timeout: 1500 });
 				}
 			}
 		} catch (error) {
-			newToast({
-				type: 'red',
+			toast.error({
 				message: error
 			});
 		}

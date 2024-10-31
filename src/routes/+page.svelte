@@ -1,7 +1,7 @@
 <script>
 	import { enhance } from '$app/forms';
-	import { Spinner, Input } from '$lib/components';
-	import { newToast } from '$lib/stores';
+	import { Input, Button } from '$lib/components';
+	import { toast } from '$lib/components/Toast';
 	import { cn } from '$lib/utils';
 	import { spring } from 'svelte/motion';
 	import {
@@ -44,7 +44,7 @@
 	let formPos = $state(0);
 
 	$effect(() => {
-		if (form?.error) newToast({ type: 'red', title: 'Error', message: form.error });
+		if (form?.error) toast.error({ title: 'Error', message: form.error });
 	});
 
 	$effect(() => {
@@ -272,17 +272,14 @@
 						tabindex={formIndex === 0 ? 0 : -1}
 					/>
 
-					<button
+					<Button
 						disabled={isSendingForm}
 						type="submit"
-						class="flex w-full flex-row items-center justify-center gap-2 rounded-xl bg-neutral-800 px-4 py-2 text-lg font-medium text-neutral-100 transition-all disabled:cursor-not-allowed disabled:opacity-50"
 						tabindex={formIndex === 0 ? 0 : -1}
+						loading={isSendingForm}
 					>
-						{#if isSendingForm}
-							<Spinner />
-						{/if}
 						Sign up
-					</button>
+					</Button>
 				</form>
 
 				<!-- Log in form -->
@@ -313,17 +310,14 @@
 						tabindex={formIndex === 1 ? 0 : -1}
 					/>
 
-					<button
+					<Button
 						disabled={isSendingForm}
 						tabindex={formIndex === 1 ? 0 : -1}
 						type="submit"
-						class="flex w-full flex-row items-center justify-center gap-2 rounded-xl bg-neutral-800 px-4 py-2 text-lg font-medium text-neutral-100 transition-all disabled:cursor-not-allowed disabled:opacity-50"
+						loading={isSendingForm}
 					>
-						{#if isSendingForm}
-							<Spinner />
-						{/if}
 						Log in
-					</button>
+					</Button>
 				</form>
 			</div>
 		</div>

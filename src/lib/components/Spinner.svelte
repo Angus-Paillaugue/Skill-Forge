@@ -1,13 +1,14 @@
 <script>
 	import { cn } from '$lib/utils';
 
-	const { class: className } = $props();
+	const { class: className, ...restProps } = $props();
 </script>
 
 <svg
 	xmlns="http://www.w3.org/2000/svg"
 	class={cn('size-4 animate-spin', className)}
 	viewBox="0 0 24 24"
+	{...restProps}
 	><path
 		fill="none"
 		stroke="currentColor"

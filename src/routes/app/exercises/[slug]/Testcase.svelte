@@ -2,7 +2,7 @@
 	import { cn, formatBytes } from '$lib/utils';
 	import { slide } from 'svelte/transition';
 	import { TestTubeDiagonal, MemoryStick, Terminal, ChevronDown } from 'lucide-svelte';
-	import { Tooltip } from '$lib/components';
+	import { Tooltip, Button } from '$lib/components';
 
 	let { exercise, latestRunnedTestsResults = $bindable() } = $props();
 
@@ -38,11 +38,9 @@
 	<div class="flex flex-col bg-neutral-800 p-4 max-lg:grow">
 		<div class="flex-no-wrap flex flex-row gap-2 overflow-x-auto">
 			{#each exercise.tests as _test, index}
-				<button
-					class={cn(
-						'flex shrink-0 flex-row items-center gap-2 rounded-xl px-3 py-1 transition-colors',
-						index === selectedTestIndex && 'bg-neutral-700'
-					)}
+				<Button
+					variant={index === selectedTestIndex ? 'secondary' : 'ghost small'}
+					class={cn('w-fit ', index === selectedTestIndex && 'hover:bg-neutral-700')}
 					onclick={() => (selectedTestIndex = index)}
 				>
 					{#if latestRunnedTestsResults}
@@ -55,7 +53,7 @@
 						></div>
 					{/if}
 					Case {index + 1}
-				</button>
+				</Button>
 			{/each}
 		</div>
 		{#if latestRunnedTestsResults}
@@ -88,7 +86,7 @@
 				{exercise.tests[selectedTestIndex].expected_output}
 			</div>
 
-			{#if latestRunnedTestsResults && !latestRunnedTestsResults.results[selectedTestIndex].passed}
+			{#if latestRunnedTestsResults && !latestRunnedTestsResults.results[selectedTestIndex].passed && latestRunnedTestsResults.results[selectedTestIndex].actual_output}
 				<div class="block" transition:slide={{ axis: 'y' }}>
 					<p class="mt-4 text-base font-medium">Actual Output</p>
 					<div class="mt-1 h-10 w-full whitespace-pre-wrap rounded-xl bg-neutral-700 p-2 font-mono">

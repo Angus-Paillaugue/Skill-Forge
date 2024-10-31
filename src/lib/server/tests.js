@@ -101,7 +101,7 @@ async function runJavaScriptTests(tests, user_input) {
 				results.push({
 					input,
 					expected_output,
-					actual_output: ' ',
+					actual_output: null,
 					error: error.message,
 					passed: false,
 					memUsage: null

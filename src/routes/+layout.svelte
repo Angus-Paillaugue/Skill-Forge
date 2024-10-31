@@ -1,7 +1,7 @@
 <script>
 	import '../app.css';
 	import '../code.css';
-	import { Toasts } from '$lib/components';
+	import Toaster from '$lib/components/Toast';
 	import { page } from '$app/stores';
 
 	const { children } = $props();
@@ -17,6 +17,6 @@
 	<meta property="og:site_name" content="Skill-Forge" />
 </svelte:head>
 
-<Toasts />
+<Toaster />
 
 {@render children()}

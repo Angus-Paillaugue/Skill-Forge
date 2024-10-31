@@ -1,8 +1,8 @@
 <script>
 	import { enhance } from '$app/forms';
-	import { newToast } from '$lib/stores';
+	import { toast } from '$lib/components/Toast';
 	import { Undo2 } from 'lucide-svelte';
-	import { Spinner, Input } from '$lib/components';
+	import { Input, Button, Card } from '$lib/components';
 
 	const { data, form } = $props();
 	const { user } = data;
@@ -18,9 +18,9 @@
 
 	$effect(() => {
 		if (form?.error) {
-			newToast({ type: 'red', title: 'Error', message: form.error, timeout: 2000 });
+			toast.error({ title: 'Error', message: form.error, timeout: 2000 });
 		} else if (form?.success) {
-			newToast({ type: 'green', title: 'Success', message: form.success, timeout: 2000 });
+			toast.success({ title: 'Success', message: form.success, timeout: 2000 });
 		}
 	});
 </script>
@@ -41,15 +41,13 @@
 </svelte:head>
 
 <main class="mx-auto flex w-full max-w-screen-lg flex-col gap-10 md:gap-8">
-	<div class="rounded-xl border border-neutral-700/50 bg-neutral-800/50 p-4">
-		<div class="flex flex-row gap-4">
-			<a href="/app/account" class="rounded-full bg-neutral-900 p-2" arial-label="Go back"
-				><Undo2 class="size-5" /></a
-			>
-			<h1 class="text-3xl font-bold">Settings</h1>
-		</div>
-	</div>
-	<div class="rounded-xl border border-neutral-700/50 bg-neutral-800/50 p-4">
+	<Card class="flex flex-row gap-4 space-y-0">
+		<Button href="/app/account" variant="backButton" arial-label="Go back"
+			><Undo2 class="size-5" /></Button
+		>
+		<h1 class="text-3xl font-bold">Settings</h1>
+	</Card>
+	<Card>
 		<form
 			method="POST"
 			action="?/saveInfos"
@@ -71,18 +69,12 @@
 				class="h-12"
 			/>
 
-			<button
-				class="mt-4 flex w-full flex-row items-center justify-center gap-2 rounded-xl bg-neutral-700 p-2 text-base font-semibold transition-all hover:bg-neutral-700/50 disabled:cursor-not-allowed disabled:bg-neutral-700/50"
-				disabled={!hasChangedInfos}
-			>
-				{#if isSavingInfos}
-					<Spinner class="size-5" />
-				{/if}
+			<Button class="mt-4" variant="primary" disabled={!hasChangedInfos} loading={isSavingInfos}>
 				Save
-			</button>
+			</Button>
 		</form>
-	</div>
-	<div class="rounded-xl border border-neutral-700/50 bg-neutral-800/50 p-4">
+	</Card>
+	<Card>
 		<form
 			method="POST"
 			action="?/changePassword"
@@ -119,14 +111,7 @@
 				class="h-12"
 			/>
 
-			<button
-				class="mt-4 flex w-full flex-row items-center justify-center gap-2 rounded-xl bg-neutral-700 p-2 text-base font-semibold hover:bg-neutral-700/50"
-			>
-				{#if isChangingPassword}
-					<Spinner class="size-5" />
-				{/if}
-				Change
-			</button>
+			<Button class="mt-4" loading={isChangingPassword} variant="primary">Change</Button>
 		</form>
-	</div>
+	</Card>
 </main>

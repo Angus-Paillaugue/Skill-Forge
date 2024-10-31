@@ -1,5 +1,5 @@
 <script>
-	import { Difficulty } from '$lib/components';
+	import { Difficulty, Button } from '$lib/components';
 	import { cn, formatDate, formatBytes } from '$lib/utils';
 	import { FlaskConical, BookOpen, CircleCheckBig } from 'lucide-svelte';
 
@@ -15,27 +15,29 @@
 <div class="flex grow flex-col justify-center overflow-hidden rounded-xl bg-neutral-800">
 	<!-- Tab selection buttons -->
 	<div class="flex h-10 shrink-0 flex-row flex-nowrap overflow-x-auto bg-neutral-700 p-1">
-		<button
+		<Button
+			variant="secondaryInverted"
 			class={cn(
-				'flex shrink-0 flex-row  items-center gap-2 rounded-lg px-3 py-1 transition-all',
-				leftPaneActiveIndex != 0 && 'text-neutral-400 hover:bg-neutral-900/50'
+				'shrink-0',
+				leftPaneActiveIndex === 0 ? 'hover:bg-neutral-700' : 'text-neutral-400'
 			)}
 			onclick={() => (leftPaneActiveIndex = 0)}
 		>
 			<BookOpen class="size-5" />
 
 			Description
-		</button>
-		<button
+		</Button>
+		<Button
+			variant="secondaryInverted"
 			class={cn(
-				'flex shrink-0 flex-row items-center gap-2 rounded-lg px-3 py-1 transition-all',
-				leftPaneActiveIndex != 1 && 'text-neutral-400 hover:bg-neutral-900/50'
+				'shrink-0',
+				leftPaneActiveIndex === 1 ? 'hover:bg-neutral-700' : 'text-neutral-400'
 			)}
 			onclick={() => (leftPaneActiveIndex = 1)}
 		>
 			<FlaskConical class="size-5" />
 			Solutions
-		</button>
+		</Button>
 	</div>
 	<!-- Exercise infos (title, description) -->
 	<div class={cn('grow overflow-y-auto', leftPaneActiveIndex === 0 && 'p-4')}>

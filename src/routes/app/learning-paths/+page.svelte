@@ -1,4 +1,6 @@
 <script>
+	import { Card } from '$lib/components';
+
 	const { data } = $props();
 	const { paths } = data;
 
@@ -32,9 +34,9 @@
 
 {#snippet card(path)}
 	{@const solvedPercentage = (path.solved_exercises / path.total_exercises) * 100}
-	<a
+	<Card
 		href="/app/learning-paths/{path.id}"
-		class="flex flex-col gap-2 rounded-xl border border-neutral-700/50 bg-neutral-800 p-6 transition-colors hover:bg-neutral-800/50"
+		class="flex flex-col gap-2 transition-colors hover:bg-neutral-800"
 	>
 		<h1 class="text-base font-bold md:text-2xl">
 			{path.name}
@@ -59,7 +61,7 @@
 				</div>
 			</div>
 		{/if}
-	</a>
+	</Card>
 {/snippet}
 
 <div class="mx-auto mt-10 flex w-full max-w-screen-lg flex-col gap-2">
