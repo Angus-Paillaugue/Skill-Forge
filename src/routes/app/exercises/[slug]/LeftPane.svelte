@@ -5,8 +5,7 @@
 
 	let {
 		exercise,
-		value = $bindable(),
-		editor = $bindable(),
+		loadSubmission,
 		submissions = $bindable(),
 		leftPaneActiveIndex = $bindable()
 	} = $props();
@@ -82,8 +81,7 @@
 									<tr
 										class="border-b border-neutral-700 odd:bg-neutral-700/50 even:bg-neutral-800"
 										onclick={() => {
-											value = submission.submission;
-											editor.loadCode(value);
+											loadSubmission(submission);
 										}}
 									>
 										<td class="px-6 py-4">

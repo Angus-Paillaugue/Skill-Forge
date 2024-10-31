@@ -46,25 +46,33 @@
 	 * Sorts the items based on the specified order and direction.
 	 *
 	 * @param {string} order - The order in which to sort the items (e.g., 'asc' for ascending, 'desc' for descending).
-	 * @param {string} way - The way to sort the items (e.g., 'alphabetical', 'numerical').
+	 * @param {string} way - The key to sort the items (e.g., 'language', 'solved', 'title', 'difficulty' or 'created_at').
 	 */
 	function sort(order, way) {
 		// Sort the exercises based on the specified order
 		// If the order is 'solved' or 'title', use the localeCompare method to sort the items alphabetically
 		// If the order is 'created_at', sort the items based on the date
 		// If the order is 'difficulty', sort the items based on the difficulty level (easy, medium, hard) using the DIFFICULTY_MAP to get their weight
-		let exercises = filteredExercises.sort((a, b) =>
-			order === 'title' || order === 'language'
-				? a[order].localeCompare(b[order])
-				: order === 'created_at'
-					? new Date(a[order]) - new Date(b[order])
-					: order === 'solved'
-						? a[order] - b[order]
-						: DIFFICULTY_MAP.get(a[order]) - DIFFICULTY_MAP.get(b[order])
-		);
-		if (way === 'DESC') exercises = exercises.reverse();
-
-		sortedExercises = exercises;
+		// If the order is 'language', sort the items based on the language
+		sortedExercises = filteredExercises.sort((a, b) => {
+			if (order === 'solved') {
+				return way === 'ASC' ? a.solved - b.solved : b.solved - a.solved;
+			} else if (order === 'title') {
+				return way === 'ASC' ? a.title.localeCompare(b.title) : b.title.localeCompare(a.title);
+			} else if (order === 'created_at') {
+				return way === 'ASC'
+					? new Date(a.created_at) - new Date(b.created_at)
+					: new Date(b.created_at) - new Date(a.created_at);
+			} else if (order === 'difficulty') {
+				return way === 'ASC'
+					? DIFFICULTY_MAP.get(a.difficulty) - DIFFICULTY_MAP.get(b.difficulty)
+					: DIFFICULTY_MAP.get(b.difficulty) - DIFFICULTY_MAP.get(a.difficulty);
+			} else if (order === 'language') {
+				return way === 'ASC'
+					? a.language.localeCompare(b.language)
+					: b.language.localeCompare(a.language);
+			}
+		});
 	}
 
 	/**

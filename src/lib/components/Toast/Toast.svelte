@@ -37,7 +37,7 @@
 	});
 </script>
 
-<div role="alert" class={baseToastClasses} transition:slide={{ duration: 300, axis:'y' }}>
+<div role="alert" class={baseToastClasses} transition:slide={{ duration: 300, axis: 'y' }}>
 	<!-- Progress -->
 	{#if progress}
 		<div class="absolute left-0 right-2 top-0 h-[3px]">

@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
-import { formatDate, cn, formatBytes, stripMD, urlHealer } from '../../src/lib/utils.js';
+import { formatDate, cn, formatBytes, urlHealer } from '../../src/lib/utils.js';
 
 // formatDate
 test('Date formatting', () => {
@@ -59,50 +59,6 @@ test('Byte to 2.1MB formatting', () => {
 
 	expect(formattedBytes).toEqual('2.1 MB');
 });
-
-// stripMD
-test('Markdown stripping', () => {
-	const strippedText = stripMD(`# Header 1
-## Header 2
-### Header 3
-#### Header 4
-##### Header 5
-###### Header 6
-
-**Bold text**
-__Bold text__
-*Italic text*
-_Italic text_
-
-~~Strikethrough text~~
-
-\`Inline code\`
-
-[Link](https://example.com)
-[Image](https://example.com/image.jpg)
-
----`);
-
-	expect(strippedText).toEqual(`Header 1
-Header 2
-Header 3
-Header 4
-Header 5
-Header 6
-
-Bold text
-Bold text
-Italic text
-Italic text
-
-Strikethrough text
-
-Inline code
-
-Link
-Image`);
-});
-
 // urlHealer
 test('Separate slug and identifier', () => {
 	const { id, slug } = urlHealer.identifier.separate('slug-text-23');
