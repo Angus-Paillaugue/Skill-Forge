@@ -157,9 +157,9 @@
 				// Check if all tests passed
 				const isSolutionAccepted = data.results.every((test) => test.passed);
 				if (isSolutionAccepted) {
-					toast.success({ message: 'All tests passed!', timeout: 1500 });
+					toast.success({ message: 'All tests passed!', timeout: 2500 });
 				} else {
-					toast.error({ message: 'Some tests failed!', timeout: 1500 });
+					toast.error({ message: 'Some tests failed!', timeout: 2500 });
 				}
 			}
 		} catch (error) {

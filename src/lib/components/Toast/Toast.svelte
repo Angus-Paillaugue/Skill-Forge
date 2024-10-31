@@ -2,7 +2,7 @@
 	import { toast } from './index.js';
 	import { cn } from '$lib/utils';
 	import { CircleCheck, CircleX, TriangleAlert, X, Info } from 'lucide-svelte';
-	import { scale } from 'svelte/transition';
+	import { slide } from 'svelte/transition';
 	import { tweened } from 'svelte/motion';
 	import { onMount } from 'svelte';
 
@@ -37,7 +37,7 @@
 	});
 </script>
 
-<div role="alert" class={baseToastClasses} transition:scale={{ duration: 300 }}>
+<div role="alert" class={baseToastClasses} transition:slide={{ duration: 300, axis:'y' }}>
 	<!-- Progress -->
 	{#if progress}
 		<div class="absolute left-0 right-2 top-0 h-[3px]">
