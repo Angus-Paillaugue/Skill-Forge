@@ -53,9 +53,7 @@
 	</div>
 {/if}
 
-<main
-	class="mx-auto w-full max-w-screen-lg space-y-4 md:space-y-8"
->
+<main class="mx-auto w-full max-w-screen-lg space-y-4 md:space-y-8">
 	<div class="rounded-xl border border-neutral-700/50 bg-neutral-800/50 p-4">
 		<div class="flex flex-row gap-4">
 			<Button variant="backButton" href="/app/account" arial-label="Go back"

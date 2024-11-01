@@ -329,11 +329,11 @@
 			</button>
 		</div>
 	</div>
-	<div class="h-full grow overflow-hidden rounded-b-xl bg-neutral-800 pt-2 relative">
+	<div class="relative h-full grow overflow-hidden rounded-b-xl bg-neutral-800 pt-2">
 		{#if loaded}
 			<div class="h-full" bind:this={editorElement}></div>
 		{:else}
-			<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+			<div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
 				<Spinner class="size-10" />
 			</div>
 		{/if}

@@ -3,6 +3,8 @@
 	import { toast } from '$lib/components/Toast';
 	import { Undo2, Upload } from 'lucide-svelte';
 	import { Input, Button, Card } from '$lib/components';
+	import { scale } from 'svelte/transition';
+	import { backIn } from 'svelte/easing';
 
 	const { data, form } = $props();
 	const { IMAGE_EXTENSIONS } = data;
@@ -25,7 +27,7 @@
 			toast.error({ title: 'Error', message: form.error, timeout: 2000 });
 		} else if (form?.success) {
 			toast.success({ title: 'Success', message: form.success, timeout: 2000 });
-			if(form.type === 'saveProfilePicture') {
+			if (form.type === 'saveProfilePicture') {
 				hasUploadedProfilePicture = false;
 				updatedUser.profile_picture = form.profile_picture;
 			}
@@ -96,24 +98,42 @@
 			}}
 		>
 			<h2 class="text-2xl font-semibold">Profile picture</h2>
-			<div class="flex flex-row gap-4 items-center">
-				<label for="uploadProfilePicture" class="size-20 rounded-full relative overflow-hidden group block">
+			<div class="flex flex-row items-center gap-4">
+				<label
+					for="uploadProfilePicture"
+					class="group relative block size-20 overflow-hidden rounded-xl"
+				>
 					<!-- svelte-ignore a11y_img_redundant_alt -->
-					<img src={updatedUser.profile_picture} alt="Your profile picture" class="size-full object-cover">
-					<div class="absolute inset-0 opacity-0 bg-neutral-900/70 flex flex-col items-center justify-center group-hover:opacity-100 transition-opacity">
+					<img
+						src={updatedUser.profile_picture}
+						alt="Your profile picture"
+						class="size-full object-cover"
+					/>
+					<div
+						class="absolute inset-0 flex flex-col items-center justify-center bg-neutral-900/70 opacity-0 transition-opacity group-hover:opacity-100"
+					>
 						<Upload class="size-8 text-neutral-100" />
 					</div>
 				</label>
-				<input type="file" accept={IMAGE_EXTENSIONS.map(e => "image/"+e).join(',')} id="uploadProfilePicture" name="uploadProfilePicture" class="hidden" onchange={() => (hasUploadedProfilePicture = true)}>
+				<input
+					type="file"
+					accept={IMAGE_EXTENSIONS.map((e) => 'image/' + e).join(',')}
+					id="uploadProfilePicture"
+					name="uploadProfilePicture"
+					class="hidden"
+					onchange={() => (hasUploadedProfilePicture = true)}
+				/>
 				{#if hasUploadedProfilePicture}
-					<Button
-						variant="secondary"
-						class="w-fit"
-						disabled={isSavingProfilePicture}
-						loading={isSavingProfilePicture}
-					>
-						Save
-					</Button>
+					<div transition:scale={{ start: 0.5, easing: backIn, duration: 400 }}>
+						<Button
+							variant="secondary"
+							class="w-fit"
+							disabled={isSavingProfilePicture}
+							loading={isSavingProfilePicture}
+						>
+							Save
+						</Button>
+					</div>
 				{/if}
 			</div>
 		</form>

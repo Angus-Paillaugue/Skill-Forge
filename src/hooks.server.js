@@ -40,7 +40,12 @@ export const handle = async ({ event, resolve }) => {
 		throw redirect(307, '/');
 	}
 	// User is logged in and trying to access a public route
-	if (!url.pathname.startsWith('/app') && !url.pathname.startsWith('/api') && locals.user) {
+	if (
+		!url.pathname.startsWith('/app') &&
+		!url.pathname.startsWith('/api') &&
+		!url.pathname.startsWith('/profile_picture/') &&
+		locals.user
+	) {
 		throw redirect(307, '/app');
 	}
 	// User is logged in and trying to access an admin route without admin privileges

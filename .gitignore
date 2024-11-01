@@ -28,5 +28,5 @@ vite.config.ts.timestamp-*
 /playwright/.cache/
 /tests/e2e/.auth/
 
-/static/profile_pictures/*
-!/static/profile_pictures/default_avatar.jpg
+/uploads/profile_pictures/*
+!/uploads/profile_pictures/default_avatar.jpg
