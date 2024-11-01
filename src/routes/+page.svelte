@@ -212,6 +212,7 @@
 		<div class="relative flex w-full flex-col" bind:this={formSelectContainer}>
 			<!-- Indicator -->
 			<div
+				id="formIndicator"
 				class="absolute bottom-0 top-0 w-1/2 rounded-full bg-neutral-50"
 				style="left: {$formIndicatorPos}px;"
 			></div>

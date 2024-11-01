@@ -1,9 +1,13 @@
+import { json } from '@sveltejs/kit';
 import { createConnection } from '$lib/server/db';
 
-/** @type {import('./$types').PageServerLoad} */
-export async function load({ params, locals }) {
+export async function POST({ request, locals }) {
 	const { user } = locals;
-	const { id } = params;
+	const { id } = await request.json();
+	if (!id) {
+		return json({ error: 'Invalid path id' }, { status: 400 });
+	}
+
 	const db = await createConnection();
 	try {
 		const [path] = await db.query(
@@ -50,7 +54,9 @@ export async function load({ params, locals }) {
       `,
 			[user.id, id]
 		);
-		return { path: path[0] };
+		return json({ path: path[0] });
+	} catch (err) {
+		return json({ error: err.message }, { status: 500 });
 	} finally {
 		db.end();
 	}

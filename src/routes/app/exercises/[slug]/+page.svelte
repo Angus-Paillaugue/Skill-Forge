@@ -175,6 +175,11 @@
 		}, RATE_LIMITING_TIMEOUT);
 	}
 
+	/**
+	 * Loads the submission data.
+	 *
+	 * @param {Object} submission - The submission object containing the data to be loaded.
+	 */
 	function loadSubmission(submission) {
 		editor.loadCode(submission.submission);
 		mobileActiveTabIndex = 1;
