@@ -118,8 +118,7 @@ async function runJavaScriptTests(tests, user_input) {
 			consoleOutput
 		};
 	} catch (error) {
-		console.error(error);
-		return { message: 'Failed to run tests', ok: false };
+		return { message: error, ok: false };
 	} finally {
 		// Clean up
 		isolate.dispose();
