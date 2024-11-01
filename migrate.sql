@@ -1,3 +1,3 @@
 USE skillforge;
 
-ALTER TABLE `users` ADD `profile_picture` VARCHAR(255) NOT NULL DEFAULT '/profile_pictures/default_avatar.jpg' AFTER `username`;
+ALTER TABLE `users` CHANGE `profile_picture` `profile_picture` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '/profile_picture/default_avatar.jpg';

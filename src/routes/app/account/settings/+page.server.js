@@ -3,8 +3,9 @@ import { createConnection } from '$lib/server/db';
 import bcrypt from 'bcrypt';
 import { generateAccessToken } from '$lib/server/auth';
 import { randomBytes } from 'crypto';
-import { extname } from 'path';
+import { extname, basename } from 'path';
 import { writeFile, unlink } from 'node:fs/promises';
+import { env } from '$env/dynamic/private';
 
 const IMAGE_EXTENSIONS = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
 
@@ -95,8 +96,7 @@ export const actions = {
 			return fail(400, { error: 'Invalid image extension!' });
 
 		// Check if image is too large (1MB)
-		if(picture.size > 1024 * 1024) return fail(400, { error: 'Image is too large!' });
-
+		if (picture.size > 1024 * 1024) return fail(400, { error: 'Image is too large!' });
 
 		const db = await createConnection();
 		try {
@@ -107,13 +107,16 @@ export const actions = {
 
 			// Delete old picture if it's not the default one
 			if (user.profile_picture !== defaultProfilePicturePath[0].default_path) {
-				const oldPicturePath = `static${user.profile_picture}`;
+				const oldPicturePath = `${env.PWD}/uploads/profile_pictures/${basename(user.profile_picture)}`;
 				await unlink(oldPicturePath);
 			}
 
-			const publicPicturePath = `/profile_pictures/${pictureId}${imageExtension}`;
+			const publicPicturePath = `/profile_picture/${pictureId}${imageExtension}`;
 			// Save picture
-			await writeFile(`static${publicPicturePath}`, Buffer.from(await picture?.arrayBuffer()));
+			await writeFile(
+				`${env.PWD}/uploads/profile_pictures/${pictureId}${imageExtension}`,
+				Buffer.from(await picture?.arrayBuffer())
+			);
 
 			// Update user
 			await db.query('UPDATE users SET profile_picture = ? WHERE id = ?', [
