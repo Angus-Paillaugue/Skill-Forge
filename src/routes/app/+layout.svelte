@@ -5,7 +5,8 @@
 	import { afterNavigate } from '$app/navigation';
 	import { Button } from '$lib/components';
 
-	const { children } = $props();
+	const { children, data } = $props();
+	const { user } = data;
 
 	let mobileMenuOpened = $state(false);
 
@@ -116,7 +117,7 @@
 
 		<!-- Account button -->
 		<a href="/app/account" aria-label="Got to account dashboard">
-			<img src="/default_avatar.jpg" alt="" class="size-8 rounded-full object-cover" />
+			<img src={user.profile_picture} alt="" class="size-8 rounded-full object-cover" />
 		</a>
 	</nav>
 

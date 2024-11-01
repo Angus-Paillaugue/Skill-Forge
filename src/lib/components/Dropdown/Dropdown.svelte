@@ -102,6 +102,7 @@
 			positionClasses[position].pos,
 			positionClasses[position].align[align]
 		)}
+		style="height: 0; overflow: hidden; border: 0px;"
 		use:accordion={open}
 	>
 		<div class="flex flex-col">

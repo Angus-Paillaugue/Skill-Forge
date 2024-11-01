@@ -54,7 +54,7 @@
 {/if}
 
 <main
-	class="mx-auto flex w-full max-w-screen-lg flex-1 flex-col gap-10 p-4 sm:px-6 sm:py-0 md:gap-8"
+	class="mx-auto w-full max-w-screen-lg space-y-4 md:space-y-8"
 >
 	<div class="rounded-xl border border-neutral-700/50 bg-neutral-800/50 p-4">
 		<div class="flex flex-row gap-4">

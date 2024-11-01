@@ -27,3 +27,6 @@ vite.config.ts.timestamp-*
 /blob-report/
 /playwright/.cache/
 /tests/e2e/.auth/
+
+/static/profile_pictures/*
+!/static/profile_pictures/default_avatar.jpg

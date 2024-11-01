@@ -1,7 +1,7 @@
 <script>
 	import { onDestroy, onMount } from 'svelte';
-	import { Dropdown } from '$lib/components';
-	import { fly, scale, slide } from 'svelte/transition';
+	import { Dropdown, Spinner } from '$lib/components';
+	import { scale } from 'svelte/transition';
 	import {
 		Check,
 		AlignLeft,
@@ -24,6 +24,7 @@
 	let editorElement = $state();
 	let editor = $state();
 	let monaco = $state();
+	let loaded = $state(false);
 	let formatted = $state(false);
 	let fontSize = $state(16);
 	let wordWrap = $state(true);
@@ -85,6 +86,10 @@
 		}, 1500);
 	};
 
+	/**
+	 * Saves the current value being edited.
+	 * This function is typically called when the user attempts to save their changes.
+	 */
 	function saveTryValue() {
 		if (saved) return;
 		localStorage.setItem(saveId, value);
@@ -94,11 +99,18 @@
 		}, 1500);
 	}
 
+	/**
+	 * Retrieves the value from the last attempt or try.
+	 * This function is used to fetch and return the value that was last attempted.
+	 *
+	 * @returns {any} The value from the last try.
+	 */
 	function getLastTryValue() {
 		return localStorage.getItem(saveId);
 	}
 
 	onMount(async () => {
+		loaded = true;
 		monaco = (await import('./monaco')).default;
 
 		const localStorageFontSize = localStorage.getItem('font-size');
@@ -195,10 +207,17 @@
 		editor?.dispose();
 	});
 
+	/**
+	 * Reduces the font size of the editor content.
+	 */
 	const reduceFontSize = () => {
 		fontSize = Math.max(8, fontSize - 1);
 		localStorage.setItem('font-size', fontSize);
 	};
+
+	/**
+	 * Increases the font size of the editor content.
+	 */
 	const increaseFontSize = () => {
 		fontSize = Math.min(25, fontSize + 1);
 		localStorage.setItem('font-size', fontSize);
@@ -310,7 +329,13 @@
 			</button>
 		</div>
 	</div>
-	<div class="h-full grow overflow-hidden rounded-b-xl bg-neutral-800 pt-2">
-		<div class="h-full" bind:this={editorElement}></div>
+	<div class="h-full grow overflow-hidden rounded-b-xl bg-neutral-800 pt-2 relative">
+		{#if loaded}
+			<div class="h-full" bind:this={editorElement}></div>
+		{:else}
+			<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+				<Spinner class="size-10" />
+			</div>
+		{/if}
 	</div>
 </div>

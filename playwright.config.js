@@ -9,7 +9,7 @@ export default defineConfig({
 	testDir: 'tests/e2e',
 	projects: [
 		// Setup project
-		{ name: 'setup', testMatch: /.*\.setup\.js/ },
+		{ name: 'setup', testMatch: /tests\/e2e\/.*\.setup\.js/ },
 
 		{
 			name: 'requiresAuth',

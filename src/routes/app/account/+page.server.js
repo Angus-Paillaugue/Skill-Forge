@@ -70,7 +70,7 @@ export async function load({ locals }) {
     `,
 			[user.id]
 		);
-		return { rank: rank[0], user, recentActivity, contributions };
+		return { rank: rank[0], recentActivity, contributions };
 	} finally {
 		db.end();
 	}
