@@ -448,11 +448,13 @@
 </section>
 
 <!-- Footer -->
-<footer
-	class="mx-auto mb-6 flex w-full max-w-screen-2xl flex-row gap-12 rounded-2xl bg-neutral-50 px-6 py-12 text-neutral-900"
->
-	<p class="font-mono text-sm">© {new Date().getFullYear()} Skill Forge. All rights reserved.</p>
-</footer>
+<div class="px-4 mx-auto w-full max-w-screen-2xl mb-6">
+	<footer
+		class="flex flex-row gap-12 rounded-2xl bg-neutral-50 px-6 py-12 text-neutral-900"
+	>
+		<p class="font-mono text-sm">© {new Date().getFullYear()} Skill Forge. All rights reserved.</p>
+	</footer>
+</div>
 
 <style>
 	@keyframes -global-starlight-right {

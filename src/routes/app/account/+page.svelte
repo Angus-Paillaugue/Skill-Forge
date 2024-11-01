@@ -60,12 +60,12 @@
 	</style>
 </svelte:head>
 
-<main class="mx-auto flex w-full max-w-screen-lg flex-1 flex-col items-start gap-4 md:gap-8">
+<main class="mx-auto w-full max-w-screen-lg space-y-4 md:space-y-8">
 	<!-- Hero -->
 	<div class="grid w-full grid-cols-1 gap-4 md:grid-cols-3">
 		<Card class="user-info-card md:col-span-2">
 			<div class="flex flex-row gap-4">
-				<img src="/default_avatar.jpg" class="size-20 rounded-xl object-cover" alt="Avatar" />
+				<img src={user.profile_picture} class="size-20 rounded-xl object-cover" alt="Avatar" />
 				<div class="flex flex-col space-y-1.5">
 					<h3 class="text-lg font-semibold leading-none tracking-tight">{user.username}</h3>
 
