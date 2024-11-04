@@ -1,4 +1,4 @@
-import { createConnection } from '$lib/server/db';
+import { getExerciseTests } from '$lib/server/db/exercises.js';
 import ivm from 'isolated-vm';
 import { exec } from 'child_process';
 import fs from 'fs/promises';
@@ -229,16 +229,7 @@ print(test_results)
  * @returns {Promise<Object>} - An object containing the results of the tests, average RAM usage, and console output.
  */
 export async function runTests(exercise_id, user_input) {
-	const db = await createConnection();
-	const [tests] = await db.query(
-		`SELECT et.input, et.expected_output, l.name as language
-		 FROM exercise_tests et
-		 JOIN exercises e ON et.exercise_id = e.id
-		 JOIN languages l ON e.language_id = l.id
-		 WHERE et.exercise_id = ?`,
-		[exercise_id]
-	);
-	db.end();
+	const tests = await getExerciseTests(exercise_id);
 
 	switch (tests[0].language) {
 		case 'JavaScript':

@@ -1,15 +1,13 @@
-import { createConnection } from '$lib/server/db';
 import { generateAccessToken } from '$lib/server/auth';
 import { redirect } from '@sveltejs/kit';
 import { fail } from '@sveltejs/kit';
 import bcrypt from 'bcrypt';
+import { createNewUser, findUserByUsername, usernameIsTaken } from '$lib/server/db/users.js';
 
 export const actions = {
 	logIn: async ({ cookies, request }) => {
 		const formData = Object.fromEntries(await request.formData());
 		const { logInUsername: username, logInPassword: password } = formData;
-
-		const db = await createConnection();
 
 		// Check if username is provided
 		if (!username) return fail(400, { error: 'Please provide a username!' });
@@ -17,39 +15,34 @@ export const actions = {
 		// Check if password is provided and is at least 6 characters long
 		if (!password || password.length < 6) return fail(400, { error: 'Incorrect password!' });
 
-		// Check if user exists
-		const [userExistsUsername] = await db.query('SELECT * FROM users WHERE BINARY username = ?', [
-			username
-		]);
+		const user = await findUserByUsername(username);
 
 		// If user does not exist, return error
-		if (userExistsUsername.length === 0)
-			return fail(400, { error: 'No account with this username!' });
+		if (!user) return fail(400, { error: 'No account with this username!' });
 
-		const user = userExistsUsername[0];
 		const compare = await bcrypt.compare(password, user.password_hash);
-		if (compare) {
-			cookies.set('token', generateAccessToken(username), {
-				path: '/',
-				maxAge: 60 * 60 * 24,
-				secure: false
-			});
-			throw redirect(307, '/app');
+
+		// If password is incorrect, return error
+		if (!compare) {
+			return fail(400, { error: 'Incorrect password!' });
 		}
-		return fail(400, { error: 'Incorrect password!' });
+
+		cookies.set('token', generateAccessToken(username), {
+			path: '/',
+			maxAge: 60 * 60 * 24,
+			secure: false
+		});
+
+		throw redirect(303, '/app');
 	},
 	signUp: async ({ cookies, request }) => {
 		const formData = Object.fromEntries(await request.formData());
 		const { signUpUsername: username, signUpPassword: password } = formData;
-		const db = await createConnection();
 
 		// Check if username is already used
-		const [usernameIsAlreadyUsed] = await db.query(
-			'SELECT username FROM users WHERE username = ?',
-			[username]
-		);
+		const usernameIsAlreadyUsed = await usernameIsTaken(username);
 
-		if (usernameIsAlreadyUsed.length > 0) return fail(400, { error: 'Username is taken!' });
+		if (usernameIsAlreadyUsed) return fail(400, { error: 'Username is taken!' });
 
 		// Validate username (only letters and numbers)
 		if (!/^[a-zA-Z0-9]+$/.test(username))
@@ -73,8 +66,8 @@ export const actions = {
 		const salt = await bcrypt.genSalt(10);
 		const hash = await bcrypt.hash(password, salt);
 
-		// Insert user
-		await db.query('INSERT INTO users (username, password_hash) VALUES (?, ?)', [username, hash]);
+		// Create user
+		await createNewUser(username, hash);
 
 		// Set token
 		cookies.set('token', generateAccessToken(username), {
