@@ -22,7 +22,8 @@
 		['ghost', 'bg-transparent'],
 		['small', 'px-3 py-1 text-base'],
 		['secondaryInverted', 'w-fit gap-2 rounded-lg px-3 py-1 text-base hover:bg-neutral-900/50'],
-		['none', '']
+		['none', ''],
+		['danger', 'bg-red-600 text-neutral-100']
 	]);
 
 	let variants = $derived(propVariant.split(' '));

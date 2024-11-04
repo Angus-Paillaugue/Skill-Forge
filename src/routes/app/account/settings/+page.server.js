@@ -1,11 +1,20 @@
 import { fail } from '@sveltejs/kit';
-import { createConnection } from '$lib/server/db';
+import {
+	findUserByUsername,
+	updatePassword,
+	updateUsername,
+	updateProfilePicture,
+	getDefaultProfilePicturePath,
+	usernameIsTaken,
+	deleteUser
+} from '$lib/server/db/users';
 import bcrypt from 'bcrypt';
 import { generateAccessToken } from '$lib/server/auth';
 import { randomBytes } from 'crypto';
 import { extname, basename } from 'path';
 import { writeFile, unlink } from 'node:fs/promises';
 import { env } from '$env/dynamic/private';
+import { redirect } from '@sveltejs/kit';
 
 const IMAGE_EXTENSIONS = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
 
@@ -34,36 +43,30 @@ export const actions = {
 		if (newPassword.length < 6)
 			return fail(400, { error: 'Password must be at least 6 characters long!' });
 		// Check if old password is correct
-		const db = await createConnection();
 		try {
-			const [dbUser] = await db.query('SELECT * FROM users WHERE id = ?', [user.id]);
-			if (dbUser.length === 0) return fail(400, { error: 'User not found!' });
+			const dbUser = await findUserByUsername(user.username);
+			if (!dbUser) return fail(400, { error: 'User not found!' });
 
 			const compare = await bcrypt.compare(oldPassword, dbUser[0].password_hash);
 			if (!compare) return fail(400, { error: 'Incorrect password!' });
 			// Update password
 			const salt = await bcrypt.genSalt(10);
 			const hash = await bcrypt.hash(newPassword, salt);
-			await db.query('UPDATE users SET password_hash = ? WHERE id = ?', [hash, user.id]);
+			await updatePassword(user.id, hash);
 			return { success: 'Password updated successfully' };
 		} catch (error) {
-			console.error(error);
 			return fail(400, { error });
-		} finally {
-			db.end();
 		}
 	},
 	async saveInfos({ request, locals, cookies }) {
 		const { user } = locals;
 		const formData = Object.fromEntries(await request.formData());
 		const { username } = formData;
-		const db = await createConnection();
 		try {
-			const [usernameIsTaken] = await db.query('SELECT * FROM users WHERE username = ?', [
-				username
-			]);
-			if (usernameIsTaken.length > 0) return fail(400, { error: 'Username is already taken!' });
-			await db.query('UPDATE users SET username = ? WHERE id = ?', [username, user.id]);
+			const usernameIsTakenValue = await usernameIsTaken(username);
+			if (usernameIsTakenValue) return fail(400, { error: 'Username is already taken!' });
+
+			await updateUsername(user.id, username);
 			// Update user in locals
 			locals.user.username = username;
 			// Update JWT
@@ -74,10 +77,7 @@ export const actions = {
 			});
 			return { success: 'Username updated successfully' };
 		} catch (error) {
-			console.error(error);
 			return fail(400, { error });
-		} finally {
-			db.end();
 		}
 	},
 	async saveProfilePicture({ request, locals }) {
@@ -98,15 +98,12 @@ export const actions = {
 		// Check if image is too large (1MB)
 		if (picture.size > 1024 * 1024) return fail(400, { error: 'Image is too large!' });
 
-		const db = await createConnection();
 		try {
 			// Get default profile picture path
-			const [defaultProfilePicturePath] = await db.query(
-				"SELECT Column_Default default_path FROM Information_Schema.Columns WHERE Table_Name = 'users' AND Column_Name = 'profile_picture'"
-			);
+			const defaultProfilePicturePath = await getDefaultProfilePicturePath();
 
 			// Delete old picture if it's not the default one
-			if (user.profile_picture !== defaultProfilePicturePath[0].default_path) {
+			if (user.profile_picture !== defaultProfilePicturePath) {
 				const oldPicturePath = `${env.PWD}/uploads/profile_pictures/${basename(user.profile_picture)}`;
 				await unlink(oldPicturePath);
 			}
@@ -119,10 +116,7 @@ export const actions = {
 			);
 
 			// Update user
-			await db.query('UPDATE users SET profile_picture = ? WHERE id = ?', [
-				publicPicturePath,
-				user.id
-			]);
+			await updateProfilePicture(user.id, publicPicturePath);
 
 			// Update user in locals
 			locals.user.picture = publicPicturePath;
@@ -132,10 +126,16 @@ export const actions = {
 				profile_picture: publicPicturePath
 			};
 		} catch (error) {
-			console.error(error);
 			return fail(400, { error });
-		} finally {
-			db.end();
 		}
+	},
+	async deleteAccount({ locals }) {
+		const {
+			user: { id }
+		} = locals;
+
+		await deleteUser(id);
+
+		throw redirect(303, '/');
 	}
 };

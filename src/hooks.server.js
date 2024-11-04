@@ -26,6 +26,7 @@ export const handle = async ({ event, resolve }) => {
 
 	if (token) {
 		const user = await auth(token);
+
 		if (!user.error) {
 			locals.user = user;
 		} else {

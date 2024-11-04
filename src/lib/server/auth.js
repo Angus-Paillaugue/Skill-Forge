@@ -1,6 +1,6 @@
-import { createConnection } from './db';
 import jwt from 'jsonwebtoken';
 import { AUTH_TOKEN_SECRET } from '$env/static/private';
+import { findUserByUsername } from './db/users.js';
 
 /**
  * Authenticates a user based on the provided JWT token.
@@ -16,11 +16,12 @@ async function auth(token) {
 			if (!token) reject({ error: 'jwt must be provided' });
 			jwt.verify(token, AUTH_TOKEN_SECRET, async (err, username) => {
 				if (err) return reject({ error: err });
-				const db = await createConnection();
-				const [rows] = await db.query('SELECT * FROM users WHERE username = ?', [username]);
-				db.end();
-				if (rows.length === 0) return reject({ error: 'User not found' });
-				resolve((({ password_hash, ...o }) => o)(rows[0]));
+				try {
+					const user = await findUserByUsername(username);
+					resolve(user);
+				} catch (error) {
+					return reject({ error });
+				}
 			});
 		}).catch((err) => {
 			return { error: err };

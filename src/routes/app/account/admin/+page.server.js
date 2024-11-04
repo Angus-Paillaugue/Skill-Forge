@@ -1,12 +1,8 @@
-import { createConnection } from '$lib/server/db';
+import { getAdminDashboardStats } from '$lib/server/db/users';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load() {
-	const db = await createConnection();
-	const [noUsers] = await db.query('SELECT COUNT(*) count FROM users');
-	const [noExercises] = await db.query('SELECT COUNT(*) count FROM exercises');
-	const [allExercises] = await db.query('SELECT * FROM exercises');
-	db.end();
+	const stats = await getAdminDashboardStats();
 
-	return { noUsers: noUsers[0].count, noExercises: noExercises[0].count, allExercises };
+	return { stats };
 }

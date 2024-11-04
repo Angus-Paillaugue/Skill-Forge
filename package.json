@@ -13,7 +13,11 @@
 		"depcheck": "npx depcheck --detailed",
 		"deploy": "./scripts/deploy.sh",
 		"test:unit": "vitest",
-		"test:e2e": "playwright test tests/e2e"
+		"test:e2e": "playwright test tests/e2e",
+		"db:push": "drizzle-kit push",
+		"db:migrate": "drizzle-kit migrate",
+		"db:studio": "drizzle-kit studio",
+		"db:generate": "drizzle-kit generate"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.45.3",
@@ -26,6 +30,7 @@
 		"autoprefixer": "^10.4.20",
 		"depcheck": "^1.4.7",
 		"dotenv": "^16.4.5",
+		"drizzle-kit": "^0.22.0",
 		"eslint": "^9.13.0",
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-svelte": "^2.46.0",
@@ -47,6 +52,7 @@
 		"bcrypt": "^5.1.1",
 		"clsx": "^2.1.1",
 		"directory-tree": "^3.5.2",
+		"drizzle-orm": "^0.33.0",
 		"express": "^4.21.1",
 		"fuse.js": "^7.0.0",
 		"isolated-vm": "^5.0.1",
@@ -55,7 +61,7 @@
 		"lucide-svelte": "^0.454.0",
 		"mdsvex": "^0.12.3",
 		"monaco-editor": "^0.52.0",
-		"mysql2": "^3.11.3",
+		"mysql2": "^3.11.0",
 		"paneforge": "^0.0.6",
 		"shiki": "^1.22.2",
 		"tailwind-merge": "^2.5.4",
