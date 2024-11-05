@@ -1,5 +1,5 @@
 import db from './index.js';
-import { eq, sql, count } from 'drizzle-orm';
+import { eq, sql, count, desc } from 'drizzle-orm';
 import { users, submissions, exercises } from './schema.js';
 import * as m from '$msgs';
 
@@ -73,7 +73,7 @@ export async function getProfile(userId) {
 		.from(submissions)
 		.leftJoin(exercises, eq(submissions.exercise_id, exercises.id))
 		.where(eq(submissions.user_id, userId))
-		.orderBy(submissions.completed_at, 'desc')
+		.orderBy(desc(submissions.completed_at))
 		.limit(50);
 
 	// Get contributions

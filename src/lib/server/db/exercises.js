@@ -1,5 +1,5 @@
 import db from './index';
-import { eq, sql, and } from 'drizzle-orm';
+import { eq, sql, and, desc } from 'drizzle-orm';
 import { exercises, exerciseTests, languages, submissions } from './schema';
 import { compileMarkdown } from '$lib/server/markdown';
 import * as m from '$msgs';
@@ -106,11 +106,13 @@ export async function getLatestExercises(userId) {
 			sql`${exercises.id} = ${submissions.exercise_id} AND ${submissions.user_id} = ${userId}`
 		)
 		.leftJoin(languages, eq(exercises.language_id, languages.id))
-		.orderBy(exercises.created_at, 'desc');
+		.orderBy(desc(exercises.created_at));
 
-	latestExercises.forEach((exercise) => {
-		exercise.created_at = exercise.created_at.toISOString();
-	});
+	console.log(latestExercises);
+
+	// latestExercises.forEach((exercise) => {
+	// 	exercise.created_at = exercise.created_at.toISOString();
+	// });
 
 	return latestExercises;
 }
