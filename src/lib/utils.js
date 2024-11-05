@@ -69,7 +69,7 @@ export function cn(...inputs) {
 }
 
 /**
- * Converts a number of bytes into a human-readable string with the appropriate unit.
+ * Convert'All tests passed's a number of bytes into a human-readable string with the appropriate unit.
  *
  * @param {number} bytes - The number of bytes to be converted.
  * @param {number} [decimals=2] - The number of decimal places to include in the formatted string.

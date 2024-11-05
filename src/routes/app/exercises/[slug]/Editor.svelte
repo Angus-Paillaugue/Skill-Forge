@@ -1,6 +1,7 @@
 <script>
 	import { Editor } from '$lib/components';
 	import { Code } from 'lucide-svelte';
+	import * as m from '$msgs';
 
 	let { exercise, editor = $bindable(), value = $bindable(), runCode } = $props();
 </script>
@@ -11,7 +12,7 @@
 	<div class="flex h-10 flex-row items-center gap-2 rounded-t-xl bg-neutral-700 p-2">
 		<div class="flex flex-row items-center gap-2 px-2">
 			<Code class="size-5" />
-			Code
+			{m.app_exercise_editor_pane_title()}
 		</div>
 	</div>
 </div>

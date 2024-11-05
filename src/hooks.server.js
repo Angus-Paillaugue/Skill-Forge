@@ -1,3 +1,5 @@
+import { sequence } from '@sveltejs/kit/hooks';
+import { i18n } from '$lib/i18n';
 import { auth } from '$lib/server/auth';
 import { redirect } from '@sveltejs/kit';
 
@@ -14,12 +16,12 @@ function urlStartsWith(url, path) {
 	// For the `/` path
 	if (path.length === 1) return url.at(-1) === path;
 
-	return url.startsWith(path) || url.startsWith(path + '/');
+	return url.includes(path) || url.includes(path + '/');
 }
 
 const PROTECTED_ROUTES = ['/app', '/api'];
 
-export const handle = async ({ event, resolve }) => {
+const originalHandle = async ({ event, resolve }) => {
 	const { url, cookies, locals } = event;
 
 	const token = cookies.get('token') || false;
@@ -36,21 +38,24 @@ export const handle = async ({ event, resolve }) => {
 		}
 	}
 	// User is not logged in and trying to access a protected route
-	if ((url.pathname.startsWith('/app') || url.pathname.startsWith('/api')) && !locals.user) {
+	if (
+		(urlStartsWith(url.pathname, '/app') || urlStartsWith(url.pathname, '/api')) &&
+		!locals.user
+	) {
 		cookies.delete('token', { path: '/' });
 		throw redirect(307, '/');
 	}
 	// User is logged in and trying to access a public route
 	if (
-		!url.pathname.startsWith('/app') &&
-		!url.pathname.startsWith('/api') &&
-		!url.pathname.startsWith('/profile_picture/') &&
+		!urlStartsWith(url.pathname, '/app') &&
+		!urlStartsWith(url.pathname, '/api') &&
+		!urlStartsWith(url.pathname, '/profile_picture/') &&
 		locals.user
 	) {
 		throw redirect(307, '/app');
 	}
 	// User is logged in and trying to access an admin route without admin privileges
-	if (url.pathname.startsWith('/app/account/admin') && !locals.user.admin) {
+	if (urlStartsWith(url.pathname, '/app/account/admin') && !locals.user.admin) {
 		throw redirect(307, '/app/account');
 	}
 
@@ -62,3 +67,6 @@ export const handle = async ({ event, resolve }) => {
 
 	return response;
 };
+
+const handleParaglide = i18n.handle();
+export const handle = sequence(originalHandle, handleParaglide);

@@ -2,6 +2,7 @@
 	import { Difficulty, Button } from '$lib/components';
 	import { cn, formatDate, formatBytes } from '$lib/utils';
 	import { FlaskConical, BookOpen, CircleCheckBig } from 'lucide-svelte';
+	import * as m from '$msgs';
 
 	let {
 		exercise,
@@ -23,8 +24,7 @@
 			onclick={() => (leftPaneActiveIndex = 0)}
 		>
 			<BookOpen class="size-5" />
-
-			Description
+			{m.app_exercise_left_pane_description_tab()}
 		</Button>
 		<Button
 			variant="secondaryInverted"
@@ -35,7 +35,7 @@
 			onclick={() => (leftPaneActiveIndex = 1)}
 		>
 			<FlaskConical class="size-5" />
-			Solutions
+			{m.app_exercise_left_pane_solutions_tab()}
 		</Button>
 	</div>
 	<!-- Exercise infos (title, description) -->
@@ -46,7 +46,7 @@
 				<div
 					class="mb-4 flex w-fit flex-row items-center gap-2 rounded-full bg-neutral-700 px-3 py-1 text-base font-medium"
 				>
-					Solved
+					{m.app_exercise_left_pane_has_been_solved()}
 					<CircleCheckBig class="size-5 text-green-600" />
 				</div>
 			{/if}
@@ -62,16 +62,24 @@
 			<div class="relative w-full overflow-x-auto">
 				{#if submissions.length === 0}
 					<div class="mx-4 mt-10 grow rounded-lg bg-neutral-700 p-4">
-						<h2 class="text-base font-medium">You have no submissions!</h2>
+						<h2 class="text-base font-medium">
+							{m.app_exercise_left_pane_solutions_tab_no_solutions()}
+						</h2>
 					</div>
 				{:else}
 					<table class="w-full table-auto text-left text-sm text-neutral-400 rtl:text-right">
 						<thead class="text-xs uppercase text-neutral-400">
 							<tr>
-								<th scope="col" class="px-6 py-3"> Code </th>
-								<th scope="col" class="px-6 py-3"> Date </th>
+								<th scope="col" class="px-6 py-3">
+									{m.app_exercise_left_pane_solutions_tab_table_col_code()}
+								</th>
+								<th scope="col" class="px-6 py-3">
+									{m.app_exercise_left_pane_solutions_tab_table_col_date()}
+								</th>
 								{#if !submissions.every((s) => s.ram_usage === null)}
-									<th scope="col" class="px-6 py-3"> RAM usage </th>
+									<th scope="col" class="px-6 py-3">
+										{m.app_exercise_left_pane_solutions_tab_table_col_ram_usage()}
+									</th>
 								{/if}
 							</tr>
 						</thead>

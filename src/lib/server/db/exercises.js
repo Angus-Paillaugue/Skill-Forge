@@ -2,6 +2,7 @@ import db from './index';
 import { eq, sql, and } from 'drizzle-orm';
 import { exercises, exerciseTests, languages, submissions } from './schema';
 import { compileMarkdown } from '$lib/server/markdown';
+import * as m from '$msgs';
 
 export async function getExerciseTests(exerciseId) {
 	return await db
@@ -81,7 +82,7 @@ export async function getExerciseData(exerciseId) {
 		);
 
 	if (exerciseData.length === 0) {
-		throw new Error('Exercise not found');
+		throw new Error(m.error_messages_db_exercises_get_exercise_data_no_exercise());
 	}
 
 	return exerciseData[0];

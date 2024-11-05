@@ -7,6 +7,7 @@
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
+	import * as m from '$msgs';
 
 	const { data } = $props();
 	const { paths } = data;
@@ -29,7 +30,7 @@
 			})
 		});
 		if (!res.ok) {
-			toast.error({ message: 'Failed to fetch path. Please try again later.', timeout: 3000 });
+			toast.error({ message: m.app_learning_paths_error_failed_to_fetch_path(), timeout: 3000 });
 			loadingPath = null;
 			return;
 		}
@@ -72,25 +73,16 @@
 <!-- SEO -->
 <svelte:head>
 	<!-- Normal tags -->
-	<title>Learning paths | Skill-Forge</title>
-	<meta
-		property="description"
-		content="On this page, you will find all the learning paths available on Skill-Forge."
-	/>
+	<title>{m.app_learning_paths_title()} | Skill-Forge</title>
+	<meta property="description" content={m.app_learning_paths_description()} />
 
 	<!-- Open Graph tags -->
-	<meta property="og:title" content="Learning paths | Skill-Forge" />
-	<meta
-		property="og:description"
-		content="On this page, you will find all the learning paths available on Skill-Forge."
-	/>
+	<meta property="og:title" content="{m.app_learning_paths_title()} | Skill-Forge" />
+	<meta property="og:description" content={m.app_learning_paths_description()} />
 
 	<!-- Twitter / X tags -->
-	<meta property="twitter:title" content="Learning paths | Skill-Forge" />
-	<meta
-		property="twitter:description"
-		content="On this page, you will find all the learning paths available on Skill-Forge."
-	/>
+	<meta property="twitter:title" content="{m.app_learning_paths_title()} | Skill-Forge" />
+	<meta property="twitter:description" content={m.app_learning_paths_description()} />
 </svelte:head>
 
 {#snippet card(path)}
@@ -120,7 +112,9 @@
 				</div>
 				<!-- Textual progress -->
 				<div class="flex flex-row items-center justify-between">
-					<span class="text-sm capitalize text-neutral-400">Total Progress</span>
+					<span class="text-sm capitalize text-neutral-400"
+						>{m.app_learning_paths_card_total_progress()}</span
+					>
 					<div class="block">
 						<span class="text-lg font-semibold text-neutral-100">{path.solved_exercises}</span>
 						<span class="text-sm text-neutral-400">/{path.total_exercises}</span>
@@ -142,7 +136,7 @@
 
 <div class="mx-auto mt-10 flex w-full max-w-screen-lg flex-col gap-2">
 	{#if startedPaths.length > 0}
-		<h1 class="text-2xl font-bold capitalize">Continue Learning</h1>
+		<h1 class="text-2xl font-bold capitalize">{m.app_learning_paths_sections_started_paths()}</h1>
 		<div
 			class="relative grid w-full gap-4 rounded-lg"
 			style="grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));"
@@ -154,7 +148,9 @@
 	{/if}
 
 	{#if notStartedPaths.length > 0}
-		<h1 class="mt-10 text-2xl font-bold capitalize">Start Today</h1>
+		<h1 class="mt-10 text-2xl font-bold capitalize">
+			{m.app_learning_paths_sections_not_started_paths()}
+		</h1>
 		<div class="relative grid w-full grid-cols-1 gap-4 rounded-lg lg:grid-cols-2 xl:grid-cols-3">
 			{#each notStartedPaths as path}
 				{@render card(path)}

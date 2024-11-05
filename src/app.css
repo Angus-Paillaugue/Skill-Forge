@@ -35,7 +35,7 @@ body {
 }
 
 hr {
-	@apply mx-2 my-4 h-[2px] rounded-full border-none bg-neutral-700;
+	@apply mx-2 my-4 h-[2px] rounded-full border-none bg-neutral-700/50;
 }
 
 /* Others */

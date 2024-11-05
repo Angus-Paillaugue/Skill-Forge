@@ -1,5 +1,6 @@
 <script>
 	import { page } from '$app/stores';
+	import * as m from '$msgs';
 </script>
 
 <svelte:head>
@@ -7,14 +8,17 @@
 	<meta property="og:title" content="{$page.status} | Skill Forge" />
 	<meta property="twitter:title" content="{$page.status} | Skill Forge" />
 
-	<meta name="description" content="A {$page.status} error occurred : {$page.error.message}" />
+	<meta
+		name="description"
+		content={m.error_page_page_description({ status: $page.status, message: $page.error.message })}
+	/>
 	<meta
 		property="og:description"
-		content="A {$page.status} error occurred : {$page.error.message}"
+		content={m.error_page_page_description({ status: $page.status, message: $page.error.message })}
 	/>
 	<meta
 		property="twitter:description"
-		content="A {$page.status} error occurred : {$page.error.message}"
+		content={m.error_page_page_description({ status: $page.status, message: $page.error.message })}
 	/>
 </svelte:head>
 
@@ -31,12 +35,12 @@
 			<div class="flex flex-col gap-2">
 				<h1 class="text-2xl font-bold text-neutral-100">{$page.error.message}</h1>
 				<p class="max-w-[300px] text-sm text-neutral-400">
-					Sorry, but we can't find the page you are looking for...
+					{m.error_404_description()}
 				</p>
 				<a
 					href="/"
 					class="w-fit rounded-xl bg-neutral-700 px-3 py-1 text-base font-medium transition-colors hover:bg-neutral-700/50"
-					>Go home</a
+					>{m.error_go_home_button()}</a
 				>
 			</div>
 		</div>
@@ -51,7 +55,7 @@
 			<a
 				href="/"
 				class="w-fit rounded-xl bg-neutral-700 px-3 py-1 text-base font-medium transition-colors hover:bg-neutral-700/50"
-				>Go home</a
+				>{m.error_go_home_button()}</a
 			>
 		</div>
 	</div>

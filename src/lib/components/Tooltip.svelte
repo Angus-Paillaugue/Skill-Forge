@@ -3,6 +3,7 @@
 	import { fly } from 'svelte/transition';
 	import { backOut } from 'svelte/easing';
 	import { cn } from '$lib/utils';
+	import * as m from '$msgs';
 
 	const {
 		children,
@@ -125,8 +126,8 @@
 </script>
 
 <div
-	name="Open tooltip"
-	aria-label="Open tooltip"
+	name={m.components_tooltip_label()}
+	aria-label={m.components_tooltip_label()}
 	class={cn(className)}
 	{...restProps}
 	bind:this={tooltip}

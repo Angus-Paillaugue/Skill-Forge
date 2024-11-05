@@ -3,6 +3,7 @@ import ivm from 'isolated-vm';
 import { exec } from 'child_process';
 import fs from 'fs/promises';
 import { randomBytes } from 'crypto';
+import * as m from '$msgs';
 
 /**
  * Compares two values for equality. If both values are objects, they are
@@ -200,7 +201,6 @@ print(test_results)
 				.replace(/False/g, 'false')
 		);
 		return {
-			message: 'Tests executed in isolated environment',
 			results: parsedOutput,
 			consoleOutput,
 			averageRamUsage: null,
@@ -212,7 +212,7 @@ print(test_results)
 				parseError?.error
 					?.split('\n')
 					?.filter((e) => e)
-					?.at(-1) ?? 'Failed to run tests',
+					?.at(-1) ?? m.run_tests_filed_to_run_tests(),
 			consoleOutput: null,
 			ok: false
 		};
@@ -237,6 +237,6 @@ export async function runTests(exercise_id, user_input) {
 		case 'Python':
 			return await runPythonTests(tests, user_input);
 		default:
-			return { message: 'Unsupported language', ok: false };
+			return { message: m.run_tests_unsupported_language(), ok: false };
 	}
 }

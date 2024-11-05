@@ -12,6 +12,7 @@
 		Save,
 		AlignJustify
 	} from 'lucide-svelte';
+	import * as m from '$msgs';
 
 	let {
 		value = $bindable(''),
@@ -245,11 +246,11 @@
 			<Dropdown.Trigger
 				variant="none"
 				class="w-fit gap-2 rounded-lg px-3 py-1 text-base text-neutral-100 hover:bg-neutral-700/50"
-				>File</Dropdown.Trigger
+				>{m.components_editor_dropdown_label()}</Dropdown.Trigger
 			>
 			{#snippet items()}
 				<!-- Save -->
-				<Dropdown.Item aria-label="Save" onclick={saveTryValue}>
+				<Dropdown.Item aria-label={m.components_editor_dropdown_save()} onclick={saveTryValue}>
 					{#if saved}
 						<span in:scale>
 							<Check class="size-5" />
@@ -259,14 +260,18 @@
 							<Save class="size-5" />
 						</span>
 					{/if}
-					Save
+					{m.components_editor_dropdown_save()}
 					<div class="ml-auto">
 						<kbd class="px-1 py-0.5 text-xs">Ctrl</kbd>
 						<kbd class="px-1 py-0.5 text-xs">S</kbd>
 					</div>
 				</Dropdown.Item>
 				<!-- Format -->
-				<Dropdown.Item onclick={formatCode} aria-label="Format code" disabled={formatted}>
+				<Dropdown.Item
+					onclick={formatCode}
+					aria-label={m.components_editor_dropdown_format()}
+					disabled={formatted}
+				>
 					{#if formatted}
 						<span in:scale>
 							<Check class="size-5" />
@@ -276,7 +281,7 @@
 							<AlignLeft class="size-5" />
 						</span>
 					{/if}
-					Format
+					{m.components_editor_dropdown_format()}
 					<div class="ml-auto">
 						<kbd class="px-1 py-0.5 text-xs">Alt</kbd>
 						<kbd class="px-1 py-0.5 text-xs">Shift</kbd>
@@ -284,13 +289,20 @@
 					</div>
 				</Dropdown.Item>
 				<!-- Word wrap -->
-				<Dropdown.Item aria-label="Toggle word wrap" onclick={() => (wordWrap = !wordWrap)}>
+				<Dropdown.Item
+					aria-label={m.components_editor_dropdown_toggle_word_wrap()}
+					onclick={() => (wordWrap = !wordWrap)}
+				>
 					{#if wordWrap}
 						<WrapText class="size-5" />
 					{:else}
 						<AlignJustify class="size-5" />
 					{/if}
-					<p>Turn {wordWrap ? 'off' : 'on'} word wrap</p>
+					<p>
+						{wordWrap
+							? m.components_editor_dropdown_turn_off_word_wrap()
+							: m.components_editor_dropdown_turn_on_word_wrap()}
+					</p>
 					<div class="ml-auto">
 						<kbd class="px-1 py-0.5 text-xs">Alt</kbd>
 						<kbd class="px-1 py-0.5 text-xs">Z</kbd>
@@ -298,9 +310,12 @@
 				</Dropdown.Item>
 				<!-- Reset -->
 				{#if defaultValue}
-					<Dropdown.Item onclick={resetEditor} aria-label="Reset to default configuration">
+					<Dropdown.Item
+						onclick={resetEditor}
+						aria-label={m.components_editor_dropdown_reset_label()}
+					>
 						<RotateCcw class="size-5" />
-						Reset
+						{m.components_editor_dropdown_reset()}
 					</Dropdown.Item>
 				{/if}
 			{/snippet}
@@ -311,7 +326,7 @@
 			<button
 				class="flex aspect-square h-full shrink-0 flex-col items-center justify-center bg-neutral-700 text-neutral-400"
 				onclick={reduceFontSize}
-				aria-label="Decrease editor font size"
+				aria-label={m.components_editor_fs_decrease_label()}
 			>
 				<Minus class="size-4" />
 			</button>
@@ -323,7 +338,7 @@
 			<button
 				class="flex aspect-square h-full shrink-0 flex-col items-center justify-center bg-neutral-700 text-neutral-400"
 				onclick={increaseFontSize}
-				aria-label="Increase editor font size"
+				aria-label={m.components_editor_fs_increase_label()}
 			>
 				<Plus class="size-4" />
 			</button>

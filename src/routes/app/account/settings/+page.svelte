@@ -2,14 +2,19 @@
 	import { enhance } from '$app/forms';
 	import { toast } from '$lib/components/Toast';
 	import { Undo2, Upload } from 'lucide-svelte';
-	import { Input, Button, Card } from '$lib/components';
+	import { Input, Button, Card, Dropdown } from '$lib/components';
 	import { fade, fly, scale } from 'svelte/transition';
 	import { backIn, quintOut } from 'svelte/easing';
+	import * as m from '$msgs';
+	import { availableLanguageTags, languageTag } from '$lib/paraglide/runtime';
+	import { page } from '$app/stores';
+	import { i18n } from '$lib/i18n.js';
 
 	const { data, form } = $props();
 	const { IMAGE_EXTENSIONS } = data;
-	let user = $state(data.user);
 
+	let user = $state(data.user);
+	let currentPathWithoutLanguage = $derived(i18n.route($page.url.pathname));
 	let isSavingInfos = $state(false);
 	let isChangingPassword = $state(false);
 	// svelte-ignore state_referenced_locally
@@ -41,16 +46,16 @@
 <!-- SEO -->
 <svelte:head>
 	<!-- Normal tags -->
-	<title>Settings | Skill-Forge</title>
-	<meta name="description" content="Your account settings page on Skill-Forge." />
+	<title>{m.app_account_settings_title()} | Skill-Forge</title>
+	<meta name="description" content={m.app_account_settings_description()} />
 
 	<!-- Open Graph tags -->
-	<meta property="og:title" content="Settings | Skill-Forge" />
-	<meta property="og:description" content="Your account settings page on Skill-Forge." />
+	<meta property="og:title" content="{m.app_account_settings_title()} | Skill-Forge" />
+	<meta property="og:description" content={m.app_account_settings_description()} />
 
 	<!-- Twitter / X tags -->
-	<meta property="twitter:title" content="Settings | Skill-Forge" />
-	<meta property="twitter:description" content="Your account settings page on Skill-Forge." />
+	<meta property="twitter:title" content="{m.app_account_settings_title()} | Skill-Forge" />
+	<meta property="twitter:description" content={m.app_account_settings_description()} />
 </svelte:head>
 
 <main class="mx-auto w-full max-w-screen-lg space-y-4 md:space-y-8">
@@ -59,11 +64,22 @@
 		<Button href="/app/account" variant="backButton" arial-label="Go back"
 			><Undo2 class="size-5" /></Button
 		>
-		<h1 class="text-3xl font-bold">Settings</h1>
+		<h1 class="text-3xl font-bold">{m.app_account_settings_title()}</h1>
 	</Card>
 
 	<!-- Personal info/Profile picture -->
 	<Card class="space-y-6">
+		<Dropdown align="start">
+			<Dropdown.Trigger>Language</Dropdown.Trigger>
+			{#snippet items()}
+				{#each availableLanguageTags.filter((e) => e !== languageTag()) as lang}
+					<Dropdown.Item href={currentPathWithoutLanguage} hreflang={lang}>
+						{lang}
+					</Dropdown.Item>
+				{/each}
+			{/snippet}
+		</Dropdown>
+		<hr />
 		<form
 			method="POST"
 			action="?/saveInfos"
@@ -76,17 +92,17 @@
 				};
 			}}
 		>
-			<h2 class="text-2xl font-semibold">Personal info</h2>
+			<h2 class="text-2xl font-semibold">{m.app_account_settings_personal_info_title()}</h2>
 			<Input
 				id="username"
-				label="Username"
+				label={m.app_account_settings_personal_info_inputs_username()}
 				bind:value={updatedUser.username}
-				placeholder="Username"
+				placeholder={m.app_account_settings_personal_info_inputs_username()}
 				class="h-12"
 			/>
 
 			<Button class="mt-4" variant="primary" disabled={!hasChangedInfos} loading={isSavingInfos}>
-				Save
+				{m.app_account_settings_personal_info_inputs_save()}
 			</Button>
 		</form>
 		<form
@@ -102,7 +118,7 @@
 				};
 			}}
 		>
-			<h2 class="text-2xl font-semibold">Profile picture</h2>
+			<h2 class="text-2xl font-semibold">{m.app_account_settings_profile_picture_title()}</h2>
 			<div class="flex flex-row items-center gap-4">
 				<label
 					for="uploadProfilePicture"
@@ -111,7 +127,7 @@
 					<!-- svelte-ignore a11y_img_redundant_alt -->
 					<img
 						src={updatedUser.profile_picture}
-						alt="Your profile picture"
+						alt={m.app_account_settings_profile_picture_title_img_alt()}
 						class="size-full object-cover"
 					/>
 					<div
@@ -136,7 +152,7 @@
 							disabled={isSavingProfilePicture}
 							loading={isSavingProfilePicture}
 						>
-							Save
+							{m.app_account_settings_profile_picture_inputs_save()}
 						</Button>
 					</div>
 				{/if}
@@ -158,39 +174,41 @@
 				};
 			}}
 		>
-			<h2 class="text-2xl font-semibold">Change password</h2>
+			<h2 class="text-2xl font-semibold">{m.app_account_settings_change_password_title()}</h2>
 			<Input
 				id="oldPassword"
-				label="Current Password"
-				placeholder="Current Password"
+				label={m.app_account_settings_change_password_inputs_current_password()}
+				placeholder={m.app_account_settings_change_password_inputs_current_password()}
 				type="password"
 				class="h-12"
 			/>
 			<div class="h-2"></div>
 			<Input
 				id="newPassword"
-				label="New Password"
-				placeholder="New Password"
+				label={m.app_account_settings_change_password_inputs_new_password()}
+				placeholder={m.app_account_settings_change_password_inputs_new_password()}
 				type="password"
 				class="h-12"
 			/>
 			<Input
 				id="confirmPassword"
-				label="Confirm password"
-				placeholder="Confirm password"
+				label={m.app_account_settings_change_password_inputs_confirm_password()}
+				placeholder={m.app_account_settings_change_password_inputs_confirm_password()}
 				type="password"
 				class="h-12"
 			/>
 
-			<Button class="mt-4" loading={isChangingPassword} variant="primary">Change</Button>
+			<Button class="mt-4" loading={isChangingPassword} variant="primary"
+				>{m.app_account_settings_change_password_inputs_change_button()}</Button
+			>
 		</form>
 	</Card>
 
 	<!-- Delete account -->
 	<Card>
-		<h2 class="text-2xl font-semibold">Delete account</h2>
+		<h2 class="text-2xl font-semibold">{m.app_account_settings_delete_account_title()}</h2>
 		<Button onclick={() => (confirmAccountDeletion = true)} class="mt-4 w-fit" variant="danger"
-			>Delete</Button
+			>{m.app_account_settings_delete_account_button()}</Button
 		>
 	</Card>
 </main>
@@ -214,8 +232,10 @@
 		}}
 	>
 		<Card class="space-y-4">
-			<h2 class="text-2xl font-semibold">Are you sure?</h2>
-			<p class="text-lg">Deleting your account is irreversible. All your data will be lost.</p>
+			<h2 class="text-2xl font-semibold">
+				{m.app_account_settings_delete_account_confirm_modal_title()}
+			</h2>
+			<p class="text-lg">{m.app_account_settings_delete_account_confirm_modal_description()}</p>
 			<div class="grid grid-cols-2 gap-4">
 				<Button
 					class="mt-4 w-full"
@@ -223,10 +243,10 @@
 					type="button"
 					onclick={() => (confirmAccountDeletion = false)}
 				>
-					Cancel
+					{m.app_account_settings_delete_account_confirm_modal_cancel()}
 				</Button>
 				<Button class="mt-4" loading={isDeletingAccount} type="submit" variant="danger"
-					>Delete</Button
+					>{m.app_account_settings_delete_account_confirm_modal_delete()}</Button
 				>
 			</div>
 		</Card>

@@ -5,6 +5,7 @@
 	import { slide } from 'svelte/transition';
 	import { tweened } from 'svelte/motion';
 	import { onMount } from 'svelte';
+	import * as m from '$msgs';
 
 	const { toast: t } = $props();
 	const baseToastClasses =
@@ -66,8 +67,8 @@
 	<!-- Close button -->
 	<button
 		class="absolute right-2 top-2 text-neutral-400"
-		name="Remove toast"
-		aria-label="Remove toast"
+		name={m.components_toast_remove()}
+		aria-label={m.components_toast_remove()}
 		onclick={() => toast.removeToast(t.id)}
 	>
 		<X class="size-4" />
