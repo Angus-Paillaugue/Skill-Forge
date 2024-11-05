@@ -108,12 +108,6 @@ export async function getLatestExercises(userId) {
 		.leftJoin(languages, eq(exercises.language_id, languages.id))
 		.orderBy(desc(exercises.created_at));
 
-	console.log(latestExercises);
-
-	// latestExercises.forEach((exercise) => {
-	// 	exercise.created_at = exercise.created_at.toISOString();
-	// });
-
 	return latestExercises;
 }
 

@@ -16,16 +16,17 @@ function urlStartsWith(url, path) {
 	// For the `/` path
 	if (path.length === 1) return url.at(-1) === path;
 
-	return url.includes(path) || url.includes(path + '/');
+	// For other paths          || For localised paths
+	return url.startsWith(path) || url.startsWith(path, 3);
 }
 
 const PROTECTED_ROUTES = ['/app', '/api'];
 
 const originalHandle = async ({ event, resolve }) => {
 	const { url, cookies, locals } = event;
-
 	const token = cookies.get('token') || false;
 
+	// Check if the user is logged in, and if so, retrieve the user data
 	if (token) {
 		const user = await auth(token);
 
@@ -37,25 +38,28 @@ const originalHandle = async ({ event, resolve }) => {
 			if (!url.pathname === '/') throw redirect(307, '/');
 		}
 	}
+
 	// User is not logged in and trying to access a protected route
 	if (
 		(urlStartsWith(url.pathname, '/app') || urlStartsWith(url.pathname, '/api')) &&
-		!locals.user
+		!locals?.user
 	) {
 		cookies.delete('token', { path: '/' });
 		throw redirect(307, '/');
 	}
+
 	// User is logged in and trying to access a public route
 	if (
 		!urlStartsWith(url.pathname, '/app') &&
 		!urlStartsWith(url.pathname, '/api') &&
 		!urlStartsWith(url.pathname, '/profile_picture/') &&
-		locals.user
+		locals?.user
 	) {
 		throw redirect(307, '/app');
 	}
+
 	// User is logged in and trying to access an admin route without admin privileges
-	if (urlStartsWith(url.pathname, '/app/account/admin') && !locals.user.admin) {
+	if (urlStartsWith(url.pathname, '/app/account/admin') && !locals?.user.admin) {
 		throw redirect(307, '/app/account');
 	}
 

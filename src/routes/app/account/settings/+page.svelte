@@ -1,8 +1,8 @@
 <script>
 	import { enhance } from '$app/forms';
 	import { toast } from '$lib/components/Toast';
-	import { Undo2, Upload } from 'lucide-svelte';
-	import { Input, Button, Card, Dropdown } from '$lib/components';
+	import { Undo2, Upload, ArrowDownUp } from 'lucide-svelte';
+	import { Input, Button, Card, Dropdown, SEO } from '$lib/components';
 	import { fade, fly, scale } from 'svelte/transition';
 	import { backIn, quintOut } from 'svelte/easing';
 	import * as m from '$msgs';
@@ -43,20 +43,7 @@
 	});
 </script>
 
-<!-- SEO -->
-<svelte:head>
-	<!-- Normal tags -->
-	<title>{m.app_account_settings_title()} | Skill-Forge</title>
-	<meta name="description" content={m.app_account_settings_description()} />
-
-	<!-- Open Graph tags -->
-	<meta property="og:title" content="{m.app_account_settings_title()} | Skill-Forge" />
-	<meta property="og:description" content={m.app_account_settings_description()} />
-
-	<!-- Twitter / X tags -->
-	<meta property="twitter:title" content="{m.app_account_settings_title()} | Skill-Forge" />
-	<meta property="twitter:description" content={m.app_account_settings_description()} />
-</svelte:head>
+<SEO title={m.app_account_settings_title()} description={m.app_account_settings_description()} />
 
 <main class="mx-auto w-full max-w-screen-lg space-y-4 md:space-y-8">
 	<!-- Heading -->
@@ -69,8 +56,12 @@
 
 	<!-- Personal info/Profile picture -->
 	<Card class="space-y-6">
+		<h2 class="text-2xl font-semibold">{m.app_account_settings_language_title()}</h2>
 		<Dropdown align="start">
-			<Dropdown.Trigger>Language</Dropdown.Trigger>
+			<Dropdown.Trigger>
+				<ArrowDownUp class="size-5" />
+				{m.app_account_settings_language_button()}
+			</Dropdown.Trigger>
 			{#snippet items()}
 				{#each availableLanguageTags.filter((e) => e !== languageTag()) as lang}
 					<Dropdown.Item href={currentPathWithoutLanguage} hreflang={lang}>
@@ -105,6 +96,7 @@
 				{m.app_account_settings_personal_info_inputs_save()}
 			</Button>
 		</form>
+		<hr />
 		<form
 			class="flex flex-col gap-2"
 			method="POST"

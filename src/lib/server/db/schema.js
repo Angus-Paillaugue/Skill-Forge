@@ -58,9 +58,6 @@ export const submissions = mysqlTable('submissions', {
 export const users = mysqlTable('users', {
 	id: int('id').autoincrement().primaryKey().notNull(),
 	username: varchar('username', { length: 50 }).notNull(),
-	profile_picture: varchar('profile_picture', { length: 255 })
-		.default('/profile_picture/default_avatar.jpg')
-		.notNull(),
 	password_hash: varchar('password_hash', { length: 255 }).notNull(),
 	admin: boolean('admin').notNull(),
 	created_at: timestamp('created_at', { mode: 'string' }).default(

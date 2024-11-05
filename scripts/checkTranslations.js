@@ -1,10 +1,17 @@
 import fs from 'node:fs/promises';
 import chalk from 'chalk';
 
+const PARAMS = {
+	checkEmptyFields: true,
+	missingTranslations: true,
+	snakeCase: true
+};
+
 const GREEN = chalk.green;
 const RED = chalk.red;
 
 async function checkTranslations() {
+	let hasErrors = [];
 	const translationFiles = await fs.readdir('messages');
 	const filePaths = translationFiles.map((file) => `messages/${file}`);
 
@@ -20,22 +27,56 @@ async function checkTranslations() {
 		Object.keys(translation).forEach((key) => allKeys.add(key));
 	});
 
-	translations.forEach((translation, index) => {
-		const missingKeys = [...allKeys].filter((key) => !(key in translation));
-		if (missingKeys.length > 0) {
-			console.log(RED(`✖ Missing keys in ${translationFiles[index]}:`));
-			missingKeys.forEach((key) => console.log(` - ${key}`));
+	allKeys.delete('$schema');
+
+	if (PARAMS.checkEmptyFields) {
+		translations.forEach((translation, index) => {
+			const emptyKeys = Object.entries(translation)
+				.filter(([, value]) => value === '')
+				.map(([key]) => key);
+			if (emptyKeys.length > 0) {
+				hasErrors.push({
+					type: 'empty field',
+					file: translationFiles[index],
+					message: emptyKeys.join('\n')
+				});
+			}
+		});
+	}
+
+	if (PARAMS.snakeCase) {
+		const snakeCaseKeys = [...allKeys].filter((key) => !/^[a-z0-9_]+$/.test(key));
+		if (snakeCaseKeys.length > 0) {
+			hasErrors.push({
+				type: 'snakeCase',
+				message:
+					RED('✖') +
+					` Keys in translation files should be in snake_case:\n${snakeCaseKeys.join('\n')}`
+			});
 		}
-	});
+	}
 
-	const areAllFilesOK = translations.every(
-		(translation) => allKeys.size === Object.keys(translation).length
-	);
+	if (PARAMS.missingTranslations) {
+		translations.forEach((translation, index) => {
+			const missingKeys = [...allKeys].filter((key) => !(key in translation));
+			if (missingKeys.length > 0) {
+				hasErrors.push({
+					type: 'missing translation',
+					file: translationFiles[index],
+					message: missingKeys.join('\n')
+				});
+			}
+		});
+	}
 
-	if (areAllFilesOK) {
-		console.log(GREEN('✓ All translations are OK!'));
+	if (hasErrors.length === 0) {
+		console.log(GREEN('✓') + ' All translations are OK!');
 	} else {
-		console.log(RED('✖ Some translations are missing!'));
+		hasErrors.forEach(({ type, file, message }) => {
+			console.log(RED('✖') + ` ${file} has errors:`);
+			console.log(type + ': ' + message);
+		});
+		process.exit(1);
 	}
 }
 

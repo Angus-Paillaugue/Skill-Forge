@@ -65,3 +65,4 @@ Skill Forge is more than just a coding platform. It’s a learning tool that ada
 - [x] Add a user dashboard
 - [ ] Fix random exercise page not reloading current exercise if already on the exercise page
 - [ ] Make a logo
+- [ ] Change avatar storing file names to be the user id instead of a UUID

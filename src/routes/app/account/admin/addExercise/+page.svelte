@@ -1,6 +1,6 @@
 <script>
 	import { cn, urlHealer } from '$lib/utils';
-	import { Spinner, Editor, Input } from '$lib/components';
+	import { Spinner, Editor, Input, SEO } from '$lib/components';
 	import { scale } from 'svelte/transition';
 	import { PaneGroup, Pane, PaneResizer } from 'paneforge';
 	import { toast } from '$lib/components/Toast';
@@ -81,20 +81,8 @@
 	}
 </script>
 
-<!-- SEO -->
-<svelte:head>
-	<!-- Normal tags -->
-	<title>Add an exercise | Skill-Forge</title>
-	<meta name="description" content="Add an exercise" />
+<SEO title="Add an exercise" description="Add an exercise" />
 
-	<!-- Open Graph tags -->
-	<meta property="og:title" content="Add an exercise | Skill-Forge" />
-	<meta property="og:description" content="Add an exercise" />
-
-	<!-- Twitter / X tags -->
-	<meta property="twitter:title" content="Add an exercise | Skill-Forge" />
-	<meta property="twitter:description" content="Add an exercise" />
-</svelte:head>
 <!-- Create button -->
 <button
 	class="absolute left-1/2 top-2 z-40 flex -translate-x-1/2 flex-row items-center gap-2 rounded-lg bg-neutral-800 px-2 py-2 text-base font-medium"

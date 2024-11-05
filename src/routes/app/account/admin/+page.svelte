@@ -1,7 +1,7 @@
 <script>
 	import { User, TestTubeDiagonal, Plus, Pencil, Undo2 } from 'lucide-svelte';
 	import { fade, fly } from 'svelte/transition';
-	import { Button } from '$lib/components';
+	import { Button, SEO } from '$lib/components';
 
 	const { data } = $props();
 	const { noUsers, noExercises, allExercises, user } = data;
@@ -9,20 +9,7 @@
 	let editExerciseModalVisible = $state(false);
 </script>
 
-<!-- SEO -->
-<svelte:head>
-	<!-- Normal tags -->
-	<title>Admin dashboard | Skill-Forge</title>
-	<meta name="description" content="Skill-Forge admin dashboard." />
-
-	<!-- Open Graph tags -->
-	<meta property="og:title" content="Admin dashboard | Skill-Forge" />
-	<meta property="og:description" content="Skill-Forge admin dashboard." />
-
-	<!-- Twitter / X tags -->
-	<meta property="twitter:title" content="Admin dashboard | Skill-Forge" />
-	<meta property="twitter:description" content="Skill-Forge admin dashboard." />
-</svelte:head>
+<SEO title="Admin dashboard" description="Skill-Forge admin dashboard." />
 
 {#if editExerciseModalVisible}
 	<div transition:fade class="fixed inset-0 z-40 bg-neutral-900/50 backdrop-blur"></div>

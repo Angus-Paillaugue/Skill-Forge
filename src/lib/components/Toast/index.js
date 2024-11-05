@@ -1,5 +1,6 @@
 import { writable } from 'svelte/store';
 import Toaster from './Toaster.svelte';
+import * as m from "$msgs";
 
 export const toasts = writable([]);
 
@@ -20,10 +21,10 @@ export class toast {
 	 * @property {string} info - The title for informational notifications.
 	 */
 	static baseToastTitles = {
-		success: 'Success',
-		error: 'Error',
-		warning: 'Warning',
-		info: 'Info'
+		success: m.components_toast_title_success(),
+		error: m.components_toast_title_error(),
+		warning: m.components_toast_title_warning(),
+		info: m.components_toast_title_info()
 	};
 
 	/**
@@ -39,14 +40,14 @@ export class toast {
 	 * @param {Object} options - The options for the new toast.
 	 * @param {string} [options.type='info'] - The type of the toast (e.g., 'info', 'success', 'error').
 	 * @param {string} [options.title=toast.baseToastTitles[type]] - The title of the toast.
-	 * @param {string} [options.message='Message'] - The message of the toast.
+	 * @param {string} [options.message=''] - The message of the toast.
 	 * @param {number} [options.timeout=5000] - The duration in milliseconds before the toast is removed.
 	 * @private
 	 */
 	static #newToast({
 		type = 'info',
 		title = toast.baseToastTitles[type],
-		message = 'Message',
+		message = '',
 		timeout = 5000
 	}) {
 		const newToast = {

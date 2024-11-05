@@ -16,6 +16,7 @@ export function formatDate(date, dateStyle = 'medium', locales = 'en') {
 	});
 	return dateFormatter.format(date);
 }
+
 /**
  * Creates an accordion effect on the specified node.
  * @param {HTMLElement} node - The HTML element to apply the accordion effect to.

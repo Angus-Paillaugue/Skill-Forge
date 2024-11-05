@@ -3,19 +3,17 @@ import {
 	findUserByUsername,
 	updatePassword,
 	updateUsername,
-	updateProfilePicture,
-	getDefaultProfilePicturePath,
 	usernameIsTaken,
 	deleteUser
 } from '$lib/server/db/users';
 import bcrypt from 'bcrypt';
 import { generateAccessToken } from '$lib/server/auth';
-import { randomBytes } from 'crypto';
 import { extname, basename } from 'path';
-import { writeFile, unlink } from 'node:fs/promises';
+import { unlink, stat } from 'node:fs/promises';
 import { env } from '$env/dynamic/private';
 import { redirect } from '@sveltejs/kit';
 import * as m from '$msgs';
+import sharp from 'sharp';
 
 const IMAGE_EXTENSIONS = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
 
@@ -33,6 +31,15 @@ export async function load() {
 function validateImageExtension(extension) {
 	extension = extension.replace('.', '');
 	return IMAGE_EXTENSIONS.indexOf(extension) !== -1;
+}
+
+async function fileExists(f) {
+	try {
+		await stat(f);
+		return true;
+	} catch {
+		return false;
+	}
 }
 
 export const actions = {
@@ -68,6 +75,9 @@ export const actions = {
 		const { username } = formData;
 		try {
 			const usernameIsTakenValue = await usernameIsTaken(username);
+			if (username.length < 3)
+				return fail(400, { error: m.error_messages_log_in_username_too_short({ length: 3 }) });
+
 			if (usernameIsTakenValue)
 				return fail(400, { error: m.app_account_settings_actions_username_is_taken() });
 
@@ -93,7 +103,6 @@ export const actions = {
 		// Check if picture is uploaded
 		if (!picture) return fail(400, { error: m.app_account_settings_actions_no_profile_picture() });
 
-		const pictureId = randomBytes(16).toString('hex');
 		const imageExtension = extname(picture.name);
 
 		// Check if image extension is valid (user, changed it in the file picker)
@@ -104,35 +113,43 @@ export const actions = {
 		if (picture.size > 1024 * 1024)
 			return fail(400, { error: m.app_account_settings_actions_image_is_too_large() });
 
-		try {
-			// Get default profile picture path
-			const defaultProfilePicturePath = await getDefaultProfilePicturePath();
-
-			// Delete old picture if it's not the default one
-			if (user.profile_picture !== defaultProfilePicturePath) {
+		const userHasChangedProfilePicture = await fileExists(
+			`${env.PWD}/uploads/profile_pictures/${user.id}.webp`
+		);
+		// Delete old picture if it's not the default one
+		if (userHasChangedProfilePicture) {
+			try {
 				const oldPicturePath = `${env.PWD}/uploads/profile_pictures/${basename(user.profile_picture)}`;
 				await unlink(oldPicturePath);
+			} catch (error) {
+				console.error('Error deleting old profile picture:', error);
+				return fail(400, { error: m.app_account_settings_actions_error_deleting_old_picture() });
 			}
+		}
+		try {
+			const buffer = await picture.arrayBuffer();
+			const resizedImage = sharp(buffer)
+				.resize({
+					width: 80,
+					height: 80,
+					fit: 'cover'
+				})
+				.webp();
+			const outputFileName = `${user.id}.webp`;
+			const publicPicturePath = `/profile_picture/${outputFileName}`;
 
-			const publicPicturePath = `/profile_picture/${pictureId}${imageExtension}`;
-			// Save picture
-			await writeFile(
-				`${env.PWD}/uploads/profile_pictures/${pictureId}${imageExtension}`,
-				Buffer.from(await picture?.arrayBuffer())
-			);
-
-			// Update user
-			await updateProfilePicture(user.id, publicPicturePath);
+			// Save resized image
+			await resizedImage.toFile(`${env.PWD}/uploads/profile_pictures/${outputFileName}`);
 
 			// Update user in locals
-			locals.user.picture = publicPicturePath;
+			locals.user.profile_picture = publicPicturePath + `?${Date.now()}`;
 			return {
 				success: m.app_account_settings_actions_profile_picture_updated_successfully(),
 				type: 'saveProfilePicture',
-				profile_picture: publicPicturePath
+				profile_picture: publicPicturePath + `?${Date.now()}`
 			};
 		} catch (error) {
-			return fail(400, { error });
+			return fail(400, { error: error.message });
 		}
 	},
 	async deleteAccount({ locals }) {

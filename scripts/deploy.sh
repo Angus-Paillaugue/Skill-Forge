@@ -11,7 +11,6 @@ ssh server << EOF
   git pull
   echo "$dotEnvFileContents" > .env
   pnpm install
-  pnpm build-containers
   pnpm build
   pm2 restart all
 EOF

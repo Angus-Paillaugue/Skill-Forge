@@ -19,6 +19,7 @@ async function auth(token) {
 				if (err) return reject({ error: err });
 				try {
 					const user = await findUserByUsername(username);
+					user.profile_picture = "/profile_picture/" + user.id;
 					resolve(user);
 				} catch (error) {
 					return reject({ error });

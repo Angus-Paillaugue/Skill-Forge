@@ -4,5 +4,5 @@ import { getAdminDashboardStats } from '$lib/server/db/users';
 export async function load() {
 	const stats = await getAdminDashboardStats();
 
-	return { stats };
+	return { ...stats };
 }

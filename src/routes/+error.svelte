@@ -1,26 +1,10 @@
 <script>
 	import { page } from '$app/stores';
 	import * as m from '$msgs';
+	import { SEO } from '$lib/components';
 </script>
 
-<svelte:head>
-	<title>{$page.status} | Skill Forge</title>
-	<meta property="og:title" content="{$page.status} | Skill Forge" />
-	<meta property="twitter:title" content="{$page.status} | Skill Forge" />
-
-	<meta
-		name="description"
-		content={m.error_page_page_description({ status: $page.status, message: $page.error.message })}
-	/>
-	<meta
-		property="og:description"
-		content={m.error_page_page_description({ status: $page.status, message: $page.error.message })}
-	/>
-	<meta
-		property="twitter:description"
-		content={m.error_page_page_description({ status: $page.status, message: $page.error.message })}
-	/>
-</svelte:head>
+<SEO title={$page.status} description={m.error_page_page_description({ status: $page.status, message: $page.error.message })} />
 
 {#if $page.status === 404}
 	<div class="mx-auto w-full grow p-4 md:max-w-[888px] md:p-6 lg:max-w-screen-xl">

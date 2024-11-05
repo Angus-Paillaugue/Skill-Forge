@@ -1,5 +1,5 @@
 <script>
-	import { Card, Spinner } from '$lib/components';
+	import { Card, Spinner, SEO } from '$lib/components';
 	import { fade, slide } from 'svelte/transition';
 	import Exercise from './Exercise.svelte';
 	import { toast } from '$lib/components/Toast';
@@ -70,20 +70,7 @@
 	}
 </script>
 
-<!-- SEO -->
-<svelte:head>
-	<!-- Normal tags -->
-	<title>{m.app_learning_paths_title()} | Skill-Forge</title>
-	<meta property="description" content={m.app_learning_paths_description()} />
-
-	<!-- Open Graph tags -->
-	<meta property="og:title" content="{m.app_learning_paths_title()} | Skill-Forge" />
-	<meta property="og:description" content={m.app_learning_paths_description()} />
-
-	<!-- Twitter / X tags -->
-	<meta property="twitter:title" content="{m.app_learning_paths_title()} | Skill-Forge" />
-	<meta property="twitter:description" content={m.app_learning_paths_description()} />
-</svelte:head>
+<SEO title={m.app_learning_paths_title()} description={m.app_learning_paths_description()} />
 
 {#snippet card(path)}
 	{@const solvedPercentage = (path.solved_exercises / path.total_exercises) * 100}

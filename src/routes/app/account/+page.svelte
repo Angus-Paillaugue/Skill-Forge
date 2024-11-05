@@ -1,7 +1,7 @@
 <script>
 	import { formatDate, cn, urlHealer } from '$lib/utils';
 	import { LogOut, Shield, Settings } from 'lucide-svelte';
-	import { Tooltip, Button, Card } from '$lib/components';
+	import { Tooltip, Button, Card, SEO } from '$lib/components';
 	import * as m from '$msgs';
 
 	const { data } = $props();
@@ -32,34 +32,7 @@
 	}
 </script>
 
-<!-- SEO -->
-<svelte:head>
-	<!-- Normal tags -->
-	<title>{m.app_account_page_title()} | Skill-Forge</title>
-	<meta name="description" content={m.app_account_page_description()} />
-
-	<!-- Open Graph tags -->
-	<meta property="og:title" content="{m.app_account_page_title()} | Skill-Forge" />
-	<meta property="og:description" content={m.app_account_page_description()} />
-
-	<!-- Twitter / X tags -->
-	<meta property="twitter:title" content="{m.app_account_page_title()} | Skill-Forge" />
-	<meta property="twitter:description" content={m.app_account_page_description()} />
-
-	<style>
-		@keyframes text {
-			0%,
-			100% {
-				background-size: 200% 200%;
-				background-position: left center;
-			}
-			50% {
-				background-size: 200% 200%;
-				background-position: right center;
-			}
-		}
-	</style>
-</svelte:head>
+<SEO title={m.app_account_page_title()} description={m.app_account_page_description()} />
 
 <main class="mx-auto w-full max-w-screen-lg space-y-4 md:space-y-8">
 	<!-- Hero -->
@@ -238,3 +211,18 @@
 		</div>
 	</Card>
 </main>
+
+
+<style>
+	@keyframes -global-text {
+		0%,
+		100% {
+			background-size: 200% 200%;
+			background-position: left center;
+		}
+		50% {
+			background-size: 200% 200%;
+			background-position: right center;
+		}
+	}
+</style>

@@ -4,12 +4,12 @@
 	"private": true,
 	"scripts": {
 		"dev": "vite dev",
-		"build": "pnpm generate-sitemap && vite build",
-		"preview": "vite preview",
-		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write .",
-		"build-containers": "sudo docker build -t python-runner ./src/lib/server/containers/python",
-		"generate-sitemap": "node ./scripts/generate-sitemap.js",
+		"lint": "prettier --check . && eslint .",
+		"build": "pnpm build:sitemap && pnpm build:containers && vite build",
+		"build:containers": "sudo docker build -t python-runner ./src/lib/server/containers/python",
+		"build:sitemap": "node ./scripts/generate-sitemap.js",
+		"preview": "vite preview",
 		"depcheck": "npx depcheck --detailed",
 		"deploy": "./scripts/deploy.sh",
 		"test:unit": "vitest",
@@ -18,7 +18,8 @@
 		"db:migrate": "drizzle-kit migrate",
 		"db:studio": "drizzle-kit studio",
 		"db:generate": "drizzle-kit generate",
-		"check-translations": "node ./scripts/checkTranslations.js"
+		"i18n:check": "node ./scripts/checkTranslations.js",
+		"i18n:translate": "npx @inlang/cli machine translate --project ./project.inlang --sourceLanguageTag en"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.45.3",
@@ -66,6 +67,7 @@
 		"monaco-editor": "^0.52.0",
 		"mysql2": "^3.11.0",
 		"paneforge": "^0.0.6",
+		"sharp": "^0.33.5",
 		"shiki": "^1.22.2",
 		"tailwind-merge": "^2.5.4",
 		"vite-plugin-compression": "^0.5.1"

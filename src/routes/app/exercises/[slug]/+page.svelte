@@ -2,7 +2,7 @@
 	import LeftPane from './LeftPane.svelte';
 	import Testcase from './Testcase.svelte';
 	import Editor from './Editor.svelte';
-	import { Spinner, Tooltip } from '$lib/components';
+	import { Spinner, Tooltip, SEO } from '$lib/components';
 	import { cn } from '$lib/utils';
 	import { onMount } from 'svelte';
 	import { toast } from '$lib/components/Toast';
@@ -223,20 +223,7 @@
 	};
 </script>
 
-<!-- SEO -->
-<svelte:head>
-	<!-- Normal tags -->
-	<title>{exercise.title} | Skill-Forge</title>
-	<meta name="description" content={exercise.description.slice(0, 160)} />
-
-	<!-- Open Graph tags -->
-	<meta property="og:title" content="{exercise.title} | Skill-Forge" />
-	<meta property="og:description" content={exercise.description.slice(0, 160)} />
-
-	<!-- Twitter / X tags -->
-	<meta property="twitter:title" content="{exercise.title} | Skill-Forge" />
-	<meta property="twitter:description" content={exercise.description.slice(0, 160)} />
-</svelte:head>
+<SEO title={exercise.title} description={exercise.description.slice(0, 160)} />
 
 <!-- Code action buttons -->
 <div class="absolute left-1/2 z-40 -ml-[6.5rem] w-52 max-lg:bottom-2 lg:top-2">

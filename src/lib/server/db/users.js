@@ -12,7 +12,6 @@ export async function findUserByUsername(username) {
 		.select({
 			id: users.id,
 			username: users.username,
-			profile_picture: users.profile_picture,
 			admin: users.admin,
 			created_at: users.created_at,
 			password_hash: users.password_hash
@@ -101,6 +100,7 @@ export async function getAdminDashboardStats() {
 	const noExercises = await db.select({ count: count() }).from(exercises);
 	// Get all exercises
 	const allExercises = await db.select().from(exercises);
+
 	return { noUsers: noUsers[0].count, noExercises: noExercises[0].count, allExercises };
 }
 
@@ -115,20 +115,4 @@ export async function updatePassword(userId, hash) {
 
 export async function updateUsername(userId, username) {
 	await db.update(users).set({ username }).where(eq(users.id, userId));
-}
-
-export async function updateProfilePicture(userId, profilePicture) {
-	await db.update(users).set({ profile_picture: profilePicture }).where(eq(users.id, userId));
-}
-
-export async function getDefaultProfilePicturePath() {
-	const result = await db.execute(
-		sql`SELECT Column_Default AS default_path FROM Information_Schema.Columns WHERE Table_Name = 'users' AND Column_Name = 'profile_picture'`
-	);
-
-	if (result.length === 0) {
-		throw new Error(m.error_messages_db_users_default_profile_picture_path_not_found());
-	}
-
-	return result[0].default_path;
 }

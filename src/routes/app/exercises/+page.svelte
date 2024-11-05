@@ -1,5 +1,5 @@
 <script>
-	import { Difficulty, Input, LanguageIcon } from '$lib/components';
+	import { Difficulty, Input, LanguageIcon, SEO } from '$lib/components';
 	import { CircleCheckBig, ChevronDown } from 'lucide-svelte';
 	import { formatDate, cn, urlHealer } from '$lib/utils';
 	import { flip } from 'svelte/animate';
@@ -100,20 +100,7 @@
 	}
 </script>
 
-<!-- SEO -->
-<svelte:head>
-	<!-- Normal tags -->
-	<title>{m.app_exercises_page_title()} | Skill-Forge</title>
-	<meta property="description" content={m.app_exercises_page_title()} />
-
-	<!-- Open Graph tags -->
-	<meta property="og:title" content="{m.app_exercises_page_title()} | Skill-Forge" />
-	<meta property="og:description" content={m.app_exercises_page_title()} />
-
-	<!-- Twitter / X tags -->
-	<meta property="twitter:title" content="{m.app_exercises_page_title()} | Skill-Forge" />
-	<meta property="twitter:description" content={m.app_exercises_page_title()} />
-</svelte:head>
+<SEO title={m.app_exercises_page_title()} description={m.app_exercises_page_description()} />
 
 <div class="mx-auto w-full max-w-screen-lg md:mt-10">
 	<Input

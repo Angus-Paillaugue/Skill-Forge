@@ -98,7 +98,7 @@
 
 	<div
 		class={cn(
-			'absolute z-30 w-[310px] rounded-xl border border-neutral-700/50 bg-neutral-800/50 text-neutral-100 backdrop-blur-md',
+			'absolute z-30 max-w-[310px] w-max rounded-xl border border-neutral-700/50 bg-neutral-800/50 text-neutral-100 backdrop-blur-md',
 			positionClasses[position].pos,
 			positionClasses[position].align[align]
 		)}

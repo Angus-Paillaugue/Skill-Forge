@@ -1,6 +1,6 @@
 <script>
 	import { enhance } from '$app/forms';
-	import { Input, Button } from '$lib/components';
+	import { Input, Button, SEO } from '$lib/components';
 	import { toast } from '$lib/components/Toast';
 	import { cn } from '$lib/utils';
 	import { spring } from 'svelte/motion';
@@ -46,7 +46,7 @@
 	let formPos = $state(0);
 
 	$effect(() => {
-		if (form?.error) toast.error({ title: 'Error', message: form.error });
+		if (form?.error) toast.error({ message: form.error });
 	});
 
 	$effect(() => {
@@ -88,15 +88,7 @@
 	};
 </script>
 
-<svelte:head>
-	<title>{m.home_page_page_title()} | Skill Forge</title>
-	<meta property="og:title" content="{m.home_page_page_title()} | Skill Forge" />
-	<meta property="twitter:title" content="{m.home_page_page_title()} | Skill Forge" />
-
-	<meta name="description" content={m.home_page_page_description()} />
-	<meta property="og:description" content={m.home_page_page_description()} />
-	<meta property="twitter:description" content={m.home_page_page_description()} />
-</svelte:head>
+<SEO title={m.home_page_page_title()} description={m.home_page_page_description()} />
 
 <!-- Navbar -->
 <!-- {#if sideBarVisible}
