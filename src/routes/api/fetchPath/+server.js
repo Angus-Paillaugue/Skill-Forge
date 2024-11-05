@@ -1,11 +1,12 @@
 import { json } from '@sveltejs/kit';
 import { getLearningPath } from '$lib/server/db/learning_paths';
+import * as m from '$msgs';
 
 export async function POST({ request, locals }) {
 	const { user } = locals;
 	const { id: learningPathId } = await request.json();
 	if (!learningPathId) {
-		return json({ error: 'Invalid path id' }, { status: 400 });
+		return json({ error: m.error_messages_api_fetch_path_invalid_path_id() }, { status: 400 });
 	}
 
 	try {

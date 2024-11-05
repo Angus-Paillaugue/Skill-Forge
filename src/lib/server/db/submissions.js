@@ -1,6 +1,7 @@
 import db from './index';
 import { eq, and } from 'drizzle-orm';
 import { submissions } from './schema';
+import * as m from '$msgs';
 
 export async function submitSolution(userId, exercise_id, user_input, results) {
 	const solutionExists = await db
@@ -17,7 +18,7 @@ export async function submitSolution(userId, exercise_id, user_input, results) {
 		);
 
 	if (solutionExists.length > 0) {
-		throw new Error('You already submitted this solution!');
+		throw new Error(m.error_messages_db_submissions_already_submitted_solution());
 	}
 
 	const insertedRow = await db

@@ -17,7 +17,8 @@
 		"db:push": "drizzle-kit push",
 		"db:migrate": "drizzle-kit migrate",
 		"db:studio": "drizzle-kit studio",
-		"db:generate": "drizzle-kit generate"
+		"db:generate": "drizzle-kit generate",
+		"check-translations": "node ./scripts/checkTranslations.js"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.45.3",
@@ -28,6 +29,7 @@
 		"@types/eslint": "^9.6.1",
 		"@vitest/ui": "2.1.4",
 		"autoprefixer": "^10.4.20",
+		"chalk": "^5.3.0",
 		"depcheck": "^1.4.7",
 		"dotenv": "^16.4.5",
 		"drizzle-kit": "^0.22.0",
@@ -47,6 +49,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@inlang/paraglide-sveltekit": "^0.11.1",
 		"@shikijs/transformers": "^1.22.2",
 		"@sveltejs/adapter-node": "^5.2.9",
 		"bcrypt": "^5.1.1",

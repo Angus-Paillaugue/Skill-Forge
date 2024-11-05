@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { AUTH_TOKEN_SECRET } from '$env/static/private';
 import { findUserByUsername } from './db/users.js';
+import * as m from '$msgs';
 
 /**
  * Authenticates a user based on the provided JWT token.
@@ -13,7 +14,7 @@ import { findUserByUsername } from './db/users.js';
 async function auth(token) {
 	try {
 		return new Promise((resolve, reject) => {
-			if (!token) reject({ error: 'jwt must be provided' });
+			if (!token) reject({ error: m.auth_no_token() });
 			jwt.verify(token, AUTH_TOKEN_SECRET, async (err, username) => {
 				if (err) return reject({ error: err });
 				try {

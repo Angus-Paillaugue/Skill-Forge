@@ -10,6 +10,7 @@
 	import JSConfetti from 'js-confetti';
 	import { Play, CloudDownload, AlarmClock, AlarmClockOff, Pause } from 'lucide-svelte';
 	import { scale, slide } from 'svelte/transition';
+	import * as m from '$msgs';
 
 	const { data } = $props();
 	const { exercise } = data;
@@ -61,7 +62,7 @@
 		if (rateLimiting) {
 			hasBeenWarnedRateLimiting = true;
 			toast.error({
-				message: 'Please wait a moment before submitting again.',
+				message: m.app_exercise_submit_timeout(),
 				timeout: RATE_LIMITING_TIMEOUT
 			});
 			return;
@@ -124,7 +125,7 @@
 		if (rateLimiting) {
 			hasBeenWarnedRateLimiting = true;
 			toast.error({
-				message: 'Please wait a moment before submitting again.',
+				message: m.app_exercise_submit_timeout(),
 				timeout: RATE_LIMITING_TIMEOUT
 			});
 			return;
@@ -157,9 +158,9 @@
 				// Check if all tests passed
 				const isSolutionAccepted = data.results.every((test) => test.passed);
 				if (isSolutionAccepted) {
-					toast.success({ message: 'All tests passed!', timeout: 2500 });
+					toast.success({ message: m.app_exercise_run_all_tests_passed(), timeout: 2500 });
 				} else {
-					toast.error({ message: 'Some tests failed!', timeout: 2500 });
+					toast.error({ message: m.app_exercise_run_some_tests_failed(), timeout: 2500 });
 				}
 			}
 		} catch (error) {
@@ -242,7 +243,9 @@
 	<div class="relative grid grid-cols-2 items-center gap-px">
 		<!-- Run button -->
 		<Tooltip
-			content={isRunning ? 'Running' : 'Run <kbd>CTRL</kbd> <kbd>Enter</kbd>'}
+			content={isRunning
+				? m.app_exercise_running_button_label()
+				: m.app_exercise_run_button_label()}
 			position="bottom"
 		>
 			<button
@@ -266,7 +269,7 @@
 						<Spinner class={cn('transition-all', isRunning ? 'size-5' : 'size-0')} />
 					</div>
 				</div>
-				Run
+				{m.app_exercise_run_button()}
 			</button>
 		</Tooltip>
 		<!-- Submit button -->
@@ -289,7 +292,7 @@
 					<Spinner class={cn('transition-all', isSubmitting ? 'size-5' : 'size-0')} />
 				</div>
 			</div>
-			Submit
+			{m.app_exercise_submit_button()}
 		</button>
 
 		<!-- Timer -->
@@ -298,12 +301,12 @@
 		>
 			<div class="flex flex-row gap-px">
 				<Tooltip
-					content={timerInterval ? 'Reset timer' : 'Start timer'}
+					content={timerInterval ? m.app_exercise_timer_reset() : m.app_exercise_timer_start()}
 					class="size-10 bg-neutral-800"
 					position="bottom"
 				>
 					<button
-						aria-label="Start timer"
+						aria-label={m.app_exercise_timer_start()}
 						class="flex size-10 flex-col items-center justify-center bg-neutral-800 text-neutral-300"
 						onclick={() => {
 							if (timer || timerInterval) clearTimer();
@@ -332,7 +335,7 @@
 						<!-- Play/Pause button -->
 						<button
 							class="flex size-10 shrink-0 flex-col items-center justify-center bg-neutral-900 text-neutral-300 lg:bg-neutral-800"
-							aria-label="Reset timer"
+							aria-label={m.app_exercise_timer_reset()}
 							onclick={() => {
 								if (timerInterval !== null) pauseTimer();
 								else playTimer();

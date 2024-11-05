@@ -1,6 +1,7 @@
 import { getExerciseDetails } from '$lib/server/db/exercises';
 import { error, redirect } from '@sveltejs/kit';
 import { urlHealer } from '$lib/utils';
+import * as m from '$msgs';
 
 export const load = async ({ params, locals }) => {
 	const urlSlug = urlHealer.sanitize(params.slug);
@@ -11,7 +12,7 @@ export const load = async ({ params, locals }) => {
 	// Isolate the identifier at the end of the URL
 	const identifiers = urlHealer.identifier.separate(urlSlug);
 	if (!identifiers) {
-		throw new error(404, 'Exercise not found');
+		throw new error(404, m.app_exercise_not_found());
 	}
 
 	try {
@@ -25,6 +26,6 @@ export const load = async ({ params, locals }) => {
 			exercise
 		};
 	} catch (_error) {
-		throw new error(404, 'Exercise not found');
+		throw new error(404, m.app_exercise_not_found());
 	}
 };

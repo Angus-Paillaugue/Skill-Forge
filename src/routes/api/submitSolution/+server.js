@@ -1,6 +1,7 @@
 import { json } from '@sveltejs/kit';
 import { runTests } from '$lib/server/tests';
 import { submitSolution } from '$lib/server/db/submissions';
+import * as m from '$msgs';
 
 export async function POST({ request, locals }) {
 	const { user } = locals;
@@ -11,10 +12,10 @@ export async function POST({ request, locals }) {
 
 		// Some tests failed
 		if (results.results.some((result) => !result.passed))
-			return json({ error: 'Some tests failed', results }, { status: 400 });
+			return json({ error: m.error_messages_api_submit_test_failed(), results }, { status: 400 });
 		const solutionId = await submitSolution(user.id, exercise_id, user_input, results);
 		return json({
-			message: 'All tests passed',
+			message: m.error_messages_api_submit_test_success(),
 			passed: true,
 			results,
 			submission: {

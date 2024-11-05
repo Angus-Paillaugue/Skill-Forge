@@ -3,6 +3,7 @@
 	import { slide } from 'svelte/transition';
 	import { TestTubeDiagonal, MemoryStick, Terminal, ChevronDown } from 'lucide-svelte';
 	import { Tooltip, Button } from '$lib/components';
+	import * as m from '$msgs';
 
 	let { exercise, latestRunnedTestsResults = $bindable() } = $props();
 
@@ -23,11 +24,14 @@
 	>
 		<div class="flex flex-row items-center gap-2">
 			<TestTubeDiagonal class="size-5" />
-			Testcase
+			{m.app_exercise_test_case_panel_title()}
 		</div>
 		{#if latestRunnedTestsResults && latestRunnedTestsResults?.averageRamUsage}
 			<div class="flex flex-row gap-2">
-				<Tooltip class="flex flex-row items-center gap-2" content="RAM Usage">
+				<Tooltip
+					class="flex flex-row items-center gap-2"
+					content={m.app_exercise_test_case_panel_ram_usage()}
+				>
 					<MemoryStick class="size-5" />
 					{formatBytes(latestRunnedTestsResults.averageRamUsage)}
 				</Tooltip>
@@ -52,7 +56,7 @@
 							)}
 						></div>
 					{/if}
-					Case {index + 1}
+					{m.app_exercise_test_case_panel_case_number({ number: index + 1 })}
 				</Button>
 			{/each}
 		</div>
@@ -66,7 +70,9 @@
 						: 'text-red-600'
 				)}
 			>
-				{latestRunnedTestsResults.results[selectedTestIndex].passed ? 'Accepted' : 'Wrong Answer'}
+				{latestRunnedTestsResults.results[selectedTestIndex].passed
+					? m.app_exercise_test_case_panel_accepted()
+					: m.app_exercise_test_case_panel_wrong_answer()}
 			</h2>
 			{#if latestRunnedTestsResults.results[selectedTestIndex]?.error}
 				<div transition:slide={{ axis: 'y' }} class="mt-2 rounded-xl bg-red-600 p-2 text-white">
@@ -109,12 +115,17 @@
 		>
 			<div class="flex flex-row items-center gap-2">
 				<Terminal class="size-5" />
-				Console
+				{m.app_exercise_console_title()}
 			</div>
-			<Tooltip content={consoleVisible ? 'Hide console' : 'Show console'} position="left">
+			<Tooltip
+				content={consoleVisible ? m.app_exercise_console_hide() : m.app_exercise_console_show()}
+				position="left"
+			>
 				<button
-					aria-label={consoleVisible ? 'Hide console' : 'Show console'}
-					title={consoleVisible ? 'Hide console' : 'Show console'}
+					aria-label={consoleVisible
+						? m.app_exercise_console_hide()
+						: m.app_exercise_console_show()}
+					title={consoleVisible ? m.app_exercise_console_hide() : m.app_exercise_console_show()}
 					class="ml-auto rounded-lg p-1 transition-colors hover:bg-neutral-900/50"
 					onclick={() => (consoleVisible = !consoleVisible)}
 				>

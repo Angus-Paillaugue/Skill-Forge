@@ -1,6 +1,7 @@
 import db from './index.js';
 import { eq, sql, count } from 'drizzle-orm';
 import { users, submissions, exercises } from './schema.js';
+import * as m from '$msgs';
 
 export async function createNewUser(username, hash) {
 	await db.insert(users).values({ username, password_hash: hash });
@@ -21,7 +22,7 @@ export async function findUserByUsername(username) {
 		.limit(1);
 
 	if (user.length === 0) {
-		throw new Error('User not found');
+		throw new Error(m.error_messages_db_users_user_not_found());
 	}
 
 	return user[0];
@@ -126,7 +127,7 @@ export async function getDefaultProfilePicturePath() {
 	);
 
 	if (result.length === 0) {
-		throw new Error('Default profile picture path not found');
+		throw new Error(m.error_messages_db_users_default_profile_picture_path_not_found());
 	}
 
 	return result[0].default_path;

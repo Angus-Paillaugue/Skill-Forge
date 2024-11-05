@@ -5,6 +5,7 @@
 	import { flip } from 'svelte/animate';
 	import { slide } from 'svelte/transition';
 	import Fuse from 'fuse.js';
+	import * as m from '$msgs';
 
 	const { data } = $props();
 	const { latestExercises } = data;
@@ -102,31 +103,22 @@
 <!-- SEO -->
 <svelte:head>
 	<!-- Normal tags -->
-	<title>All exercises | Skill-Forge</title>
-	<meta
-		property="description"
-		content="On this page, you will find all the exercises available on Skill-Forge."
-	/>
+	<title>{m.app_exercises_page_title()} | Skill-Forge</title>
+	<meta property="description" content={m.app_exercises_page_title()} />
 
 	<!-- Open Graph tags -->
-	<meta property="og:title" content="All exercises | Skill-Forge" />
-	<meta
-		property="og:description"
-		content="On this page, you will find all the exercises paths available on Skill-Forge."
-	/>
+	<meta property="og:title" content="{m.app_exercises_page_title()} | Skill-Forge" />
+	<meta property="og:description" content={m.app_exercises_page_title()} />
 
 	<!-- Twitter / X tags -->
-	<meta property="twitter:title" content="All exercises | Skill-Forge" />
-	<meta
-		property="twitter:description"
-		content="On this page, you will find all the exercises paths available on Skill-Forge."
-	/>
+	<meta property="twitter:title" content="{m.app_exercises_page_title()} | Skill-Forge" />
+	<meta property="twitter:description" content={m.app_exercises_page_title()} />
 </svelte:head>
 
 <div class="mx-auto w-full max-w-screen-lg md:mt-10">
 	<Input
 		id="search"
-		placeholder="Search for an exercise"
+		placeholder={m.app_exercises_page_table_search_label()}
 		class="mb-4 bg-neutral-800"
 		bind:value={searchValue}
 		oninput={onSearchInput}
@@ -137,7 +129,7 @@
 				<tr>
 					<th scope="col" class="h-12 px-4 text-left align-middle font-medium text-neutral-400">
 						<button class="flex flex-row items-center gap-4" onclick={() => sortBy('language')}>
-							Language
+							{m.app_exercises_page_table_col_language()}
 							{#if orderBy === 'language'}
 								<ChevronDown
 									class={cn('size-4 transition-transform', orderWay === 'DESC' && 'rotate-180')}
@@ -147,7 +139,7 @@
 					</th>
 					<th scope="col" class="h-12 px-4 text-left align-middle font-medium text-neutral-400">
 						<button class="flex flex-row items-center gap-4" onclick={() => sortBy('solved')}>
-							Solved
+							{m.app_exercises_page_table_col_solved()}
 							{#if orderBy === 'solved'}
 								<ChevronDown
 									class={cn('size-4 transition-transform', orderWay === 'DESC' && 'rotate-180')}
@@ -157,7 +149,7 @@
 					</th>
 					<th scope="col" class="h-12 px-4 text-left align-middle font-medium text-neutral-400">
 						<button class="flex flex-row items-center gap-4" onclick={() => sortBy('title')}>
-							Title
+							{m.app_exercises_page_table_col_title()}
 							{#if orderBy === 'title'}
 								<ChevronDown
 									class={cn('size-4 transition-transform', orderWay === 'DESC' && 'rotate-180')}
@@ -167,7 +159,7 @@
 					</th>
 					<th scope="col" class="h-12 px-4 text-left align-middle font-medium text-neutral-400">
 						<button class="flex flex-row items-center gap-4" onclick={() => sortBy('difficulty')}>
-							Difficulty
+							{m.app_exercises_page_table_col_difficulty()}
 							{#if orderBy === 'difficulty'}
 								<ChevronDown
 									class={cn('size-4 transition-transform', orderWay === 'DESC' && 'rotate-180')}
@@ -177,7 +169,7 @@
 					</th>
 					<th scope="col" class="h-12 px-4 text-left align-middle font-medium text-neutral-400">
 						<button class="flex flex-row items-center gap-4" onclick={() => sortBy('created_at')}>
-							Added
+							{m.app_exercises_page_table_col_added()}
 							{#if orderBy === 'created_at'}
 								<ChevronDown
 									class={cn('size-4 transition-transform', orderWay === 'DESC' && 'rotate-180')}

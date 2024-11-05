@@ -13,6 +13,8 @@
 		Route,
 		Hourglass
 	} from 'lucide-svelte';
+	import * as m from '$msgs';
+
 	// import { onMount } from 'svelte';
 	// import { fly } from 'svelte/transition';
 
@@ -87,22 +89,13 @@
 </script>
 
 <svelte:head>
-	<title>Home | Skill Forge</title>
-	<meta property="og:title" content="Home | Skill Forge" />
-	<meta property="twitter:title" content="Home | Skill Forge" />
+	<title>{m.home_page_page_title()} | Skill Forge</title>
+	<meta property="og:title" content="{m.home_page_page_title()} | Skill Forge" />
+	<meta property="twitter:title" content="{m.home_page_page_title()} | Skill Forge" />
 
-	<meta
-		name="description"
-		content="Master coding challenges designed to help you grow. From beginner to expert, Skill Forge guides you through real-world problems with instant feedback and progress tracking."
-	/>
-	<meta
-		property="og:description"
-		content="Master coding challenges designed to help you grow. From beginner to expert, Skill Forge guides you through real-world problems with instant feedback and progress tracking."
-	/>
-	<meta
-		property="twitter:description"
-		content="Master coding challenges designed to help you grow. From beginner to expert, Skill Forge guides you through real-world problems with instant feedback and progress tracking."
-	/>
+	<meta name="description" content={m.home_page_page_description()} />
+	<meta property="og:description" content={m.home_page_page_description()} />
+	<meta property="twitter:description" content={m.home_page_page_description()} />
 </svelte:head>
 
 <!-- Navbar -->
@@ -133,27 +126,26 @@
 				<div
 					class="shrink-0 rounded-lg bg-blue-600/5 px-4 py-1 text-sm font-medium capitalize text-blue-600"
 				>
-					Join Skill Forge
+					{m.home_page_hero_pills_join()}
 				</div>
 				<div
 					class="shrink-0 rounded-lg bg-green-600/5 px-4 py-1 text-sm font-medium capitalize text-green-600"
 				>
-					Start Learning
+					{m.home_page_hero_pills_start()}
 				</div>
 				<div
 					class="shrink-0 rounded-lg bg-yellow-600/5 px-4 py-1 text-sm font-medium capitalize text-yellow-600"
 				>
-					Improve Your Skills
+					{m.home_page_hero_pills_improve()}
 				</div>
 			</div>
 			<!-- Main headings -->
 			<div class="flex flex-col gap-2">
 				<h1 class="text-4xl font-extrabold text-wrap-balance md:text-5xl lg:text-6xl">
-					Forge Your Skills, Shape Your Future
+					{m.home_page_hero_title()}
 				</h1>
 				<h2 class="font-mono text-base font-medium text-neutral-400">
-					Master coding challenges designed to help you grow. From beginner to expert, Skill Forge
-					guides you through real-world problems with instant feedback and progress tracking.
+					{m.home_page_hero_subtitle()}
 				</h2>
 			</div>
 		</div>
@@ -171,16 +163,13 @@
 					>
 						<ArrowBigUpDash class="mx-auto my-6 size-20 text-neutral-300 md:my-10 md:size-32" />
 						<p class="font-base text-base italic text-neutral-400">
-							Whether you're just starting out or you're a seasoned pro, Skill Forge offers
-							exercises that fit your skill level. Choose from beginner, intermediate, and advanced
-							problems to keep pushing your boundaries
+							{m.home_page_hero_carousel_slide1()}
 						</p>
 					</div>
 					<div class="h-full w-full snap-start border border-neutral-800/50 p-4" data-index="0">
 						<Shapes class="mx-auto my-6 size-20 text-neutral-300 md:my-10 md:size-32" />
 						<p class="font-base text-base italic text-neutral-400">
-							Every step forward counts! Monitor your growth with detailed submission history and
-							rankings. See how you improve with each challenge you complete.
+							{m.home_page_hero_carousel_slide2()}
 						</p>
 					</div>
 				</div>
@@ -219,22 +208,22 @@
 			<!-- Buttons -->
 			<div class="relative grid w-full grid-cols-2" id="formSelectors">
 				<button
-					aria-label="Change form to Sign up"
+					aria-label={m.home_page_hero_forms_labels_change_to_sign_up()}
 					disabled={isSendingForm}
 					onclick={() => (formIndex = 0)}
 					class={cn(
 						'w-full rounded-full p-2 text-lg font-semibold transition-colors',
 						formIndex === 0 ? 'text-neutral-900' : 'text-neutral-400'
-					)}>Sign up</button
+					)}>{m.home_page_hero_forms_sign_up_title()}</button
 				>
 				<button
-					aria-label="Change form to Log up"
+					aria-label={m.home_page_hero_forms_labels_change_to_log_in()}
 					disabled={isSendingForm}
 					onclick={() => (formIndex = 1)}
 					class={cn(
 						'w-full rounded-full p-2 text-lg font-semibold transition-colors',
 						formIndex === 1 ? 'text-neutral-900' : 'text-neutral-400'
-					)}>Log in</button
+					)}>{m.home_page_hero_forms_log_in_title()}</button
 				>
 			</div>
 		</div>
@@ -258,18 +247,18 @@
 						};
 					}}
 				>
-					<h1 class="text-3xl font-bold text-inherit">Sign up</h1>
+					<h1 class="text-3xl font-bold text-inherit">{m.home_page_hero_forms_sign_up_title()}</h1>
 					<Input
 						id="signUpUsername"
 						class="bg-neutral-200 text-neutral-800 placeholder:text-neutral-600"
-						placeholder="Username"
+						placeholder={m.home_page_hero_forms_inputs_username()}
 						tabindex={formIndex === 0 ? 0 : -1}
 					/>
 					<Input
 						id="signUpPassword"
 						class="bg-neutral-200 text-neutral-800 placeholder:text-neutral-600"
 						type="password"
-						placeholder="Password"
+						placeholder={m.home_page_hero_forms_inputs_password()}
 						tabindex={formIndex === 0 ? 0 : -1}
 					/>
 
@@ -279,7 +268,7 @@
 						tabindex={formIndex === 0 ? 0 : -1}
 						loading={isSendingForm}
 					>
-						Sign up
+						{m.home_page_hero_forms_sign_up_title()}
 					</Button>
 				</form>
 
@@ -296,18 +285,18 @@
 						};
 					}}
 				>
-					<h1 class="text-3xl font-bold text-inherit">Log in</h1>
+					<h1 class="text-3xl font-bold text-inherit">{m.home_page_hero_forms_log_in_title()}</h1>
 					<Input
 						id="logInUsername"
 						class="bg-neutral-200 text-neutral-800 placeholder:text-neutral-600"
-						placeholder="Username"
+						placeholder={m.home_page_hero_forms_inputs_username()}
 						tabindex={formIndex === 1 ? 0 : -1}
 					/>
 					<Input
 						id="logInPassword"
 						class="bg-neutral-200 text-neutral-800 placeholder:text-neutral-600"
 						type="password"
-						placeholder="Password"
+						placeholder={m.home_page_hero_forms_inputs_password()}
 						tabindex={formIndex === 1 ? 0 : -1}
 					/>
 
@@ -317,7 +306,7 @@
 						type="submit"
 						loading={isSendingForm}
 					>
-						Log in
+						{m.home_page_hero_forms_log_in_title()}
 					</Button>
 				</form>
 			</div>
@@ -327,7 +316,7 @@
 
 <!-- About -->
 <section class="mx-auto mt-10 min-h-screen w-full max-w-screen-2xl space-y-6 p-4" id="about">
-	<h1 class="text-center text-4xl font-bold lg:text-6xl">Why Choose Skill Forge?</h1>
+	<h1 class="text-center text-4xl font-bold lg:text-6xl">{m.home_page_bento_title()}</h1>
 	<div class="grid min-h-[80vh] w-full lg:grid-cols-2">
 		<!-- Left column -->
 		<div class="flex flex-col">
@@ -336,10 +325,9 @@
 				class="flex shrink-0 flex-col items-center justify-center gap-4 border border-neutral-800/50 p-4 text-center lg:gap-8 lg:border-b-0 lg:border-r-0 lg:p-8"
 			>
 				<Hourglass class="size-16 text-[#ED5D45]" />
-				<h2 class="text-4xl font-bold text-neutral-100">Learn at Your Own Pace</h2>
+				<h2 class="text-4xl font-bold text-neutral-100">{m.home_page_bento_card1_title()}</h2>
 				<p class="font-mono text-base font-normal leading-6 text-neutral-400">
-					Whether you're a beginner or an expert, Skill Forge allows you to progress at your own
-					pace. Explore bite-sized exercises or dive into complex coding problems.
+					{m.home_page_bento_card1_description()}
 				</p>
 			</div>
 			<!-- Free/No ads section -->
@@ -347,11 +335,9 @@
 				class="group relative flex shrink-0 flex-col items-center justify-center gap-4 overflow-hidden border border-neutral-800/50 p-4 text-center max-lg:border-y-0 lg:gap-8 lg:border-b-0 lg:border-r-0 lg:p-8"
 			>
 				<ShieldBan class="size-16 text-[#3F7DDE]" />
-				<h2 class="text-4xl font-bold text-neutral-100">Completely Free, No Ads</h2>
+				<h2 class="text-4xl font-bold text-neutral-100">{m.home_page_bento_card2_title()}</h2>
 				<p class="font-mono text-base font-normal leading-6 text-neutral-400">
-					Skill Forge is a <span class="font-semibold text-neutral-100">100% free</span> platform with
-					no distractions. Focus entirely on your coding journey without any interruptions from ads.
-					Learn, practice, and grow without limits.
+					{@html m.home_page_bento_card2_description()}
 				</p>
 			</div>
 			<!-- Get started section -->
@@ -362,7 +348,7 @@
 					onclick={getStarted}
 					class="relative rounded-full px-4 py-2 text-4xl font-bold capitalize transition-all hover:ring-4 hover:ring-neutral-600/50"
 				>
-					Get Started
+					{m.home_page_bento_card3_title()}
 					<!-- Moving line -->
 					<div
 						class="absolute bottom-0 left-2 right-2 h-px [mask-image:linear-gradient(to_right,rgba(217,217,217,0)_0%,#d9d9d9_25%,#d9d9d9_75%,rgba(217,217,217,0)_100%)]"
@@ -427,20 +413,18 @@
 					class="flex flex-col gap-4 border border-neutral-800/50 p-4 lg:border-r-0 lg:border-t-0 lg:p-8"
 				>
 					<Zap class="size-16 text-[#3FBED8]" />
-					<h1 class="text-2xl font-semibold text-neutral-100">10 + Coding Exercises</h1>
+					<h1 class="text-2xl font-semibold text-neutral-100">{m.home_page_bento_card4_title()}</h1>
 					<p class="font-mono text-base font-normal leading-6 text-neutral-400">
-						Practice with a vast collection of coding challenges across various difficulty levels
-						and topics.
+						{m.home_page_bento_card4_description()}
 					</p>
 				</div>
 				<div
 					class="flex flex-col gap-4 border border-neutral-800/50 p-4 max-lg:border-t-0 lg:border-t-0 lg:p-8"
 				>
 					<Route class="size-16 text-[#F2B655]" />
-					<h1 class="text-2xl font-semibold text-neutral-100">Progress Tracking</h1>
+					<h1 class="text-2xl font-semibold text-neutral-100">{m.home_page_bento_card5_title()}</h1>
 					<p class="font-mono text-base font-normal leading-6 text-neutral-400">
-						Monitor your progress, identify areas for improvement, and track your coding skills
-						growth.
+						{m.home_page_bento_card5_description()}
 					</p>
 				</div>
 			</div>
@@ -451,7 +435,7 @@
 <!-- Footer -->
 <div class="mx-auto mb-6 w-full max-w-screen-2xl px-4">
 	<footer class="flex flex-row gap-12 rounded-2xl bg-neutral-50 px-6 py-12 text-neutral-900">
-		<p class="font-mono text-sm">© {new Date().getFullYear()} Skill Forge. All rights reserved.</p>
+		<p class="font-mono text-sm">© {new Date().getFullYear()} {m.footer()}</p>
 	</footer>
 </div>
 

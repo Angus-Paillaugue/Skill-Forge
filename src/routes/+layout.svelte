@@ -1,4 +1,6 @@
 <script>
+	import { i18n } from '$lib/i18n';
+	import { ParaglideJS } from '@inlang/paraglide-sveltekit';
 	import '../app.css';
 	import '../code.css';
 	import Toaster from '$lib/components/Toast';
@@ -17,6 +19,8 @@
 	<meta property="og:site_name" content="Skill-Forge" />
 </svelte:head>
 
-<Toaster />
+<ParaglideJS {i18n}>
+	<Toaster></Toaster>
 
-{@render children()}
+	{@render children()}
+</ParaglideJS>

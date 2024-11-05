@@ -15,6 +15,7 @@ import { extname, basename } from 'path';
 import { writeFile, unlink } from 'node:fs/promises';
 import { env } from '$env/dynamic/private';
 import { redirect } from '@sveltejs/kit';
+import * as m from '$msgs';
 
 const IMAGE_EXTENSIONS = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
 
@@ -39,21 +40,24 @@ export const actions = {
 		const { user } = locals;
 		const formData = Object.fromEntries(await request.formData());
 		const { oldPassword, newPassword, confirmPassword } = formData;
-		if (newPassword !== confirmPassword) return fail(400, { error: 'Passwords do not match!' });
+		if (newPassword !== confirmPassword)
+			return fail(400, { error: m.app_account_settings_actions_errors_passwords_dont_match() });
 		if (newPassword.length < 6)
-			return fail(400, { error: 'Password must be at least 6 characters long!' });
+			return fail(400, { error: m.app_account_settings_actions_errors_passwords_too_short() });
 		// Check if old password is correct
 		try {
 			const dbUser = await findUserByUsername(user.username);
-			if (!dbUser) return fail(400, { error: 'User not found!' });
+			if (!dbUser)
+				return fail(400, { error: m.app_account_settings_actions_errors_user_not_found() });
 
 			const compare = await bcrypt.compare(oldPassword, dbUser[0].password_hash);
-			if (!compare) return fail(400, { error: 'Incorrect password!' });
+			if (!compare)
+				return fail(400, { error: m.app_account_settings_actions_errors_incorrect_password() });
 			// Update password
 			const salt = await bcrypt.genSalt(10);
 			const hash = await bcrypt.hash(newPassword, salt);
 			await updatePassword(user.id, hash);
-			return { success: 'Password updated successfully' };
+			return { success: m.app_account_settings_actions_password_updated_successfully() };
 		} catch (error) {
 			return fail(400, { error });
 		}
@@ -64,7 +68,8 @@ export const actions = {
 		const { username } = formData;
 		try {
 			const usernameIsTakenValue = await usernameIsTaken(username);
-			if (usernameIsTakenValue) return fail(400, { error: 'Username is already taken!' });
+			if (usernameIsTakenValue)
+				return fail(400, { error: m.app_account_settings_actions_username_is_taken() });
 
 			await updateUsername(user.id, username);
 			// Update user in locals
@@ -75,7 +80,7 @@ export const actions = {
 				maxAge: 60 * 60 * 24,
 				secure: false
 			});
-			return { success: 'Username updated successfully' };
+			return { success: m.app_account_settings_actions_username_updated_successfully() };
 		} catch (error) {
 			return fail(400, { error });
 		}
@@ -86,17 +91,18 @@ export const actions = {
 		const { uploadProfilePicture: picture } = formData;
 
 		// Check if picture is uploaded
-		if (!picture) return fail(400, { error: 'No picture uploaded!' });
+		if (!picture) return fail(400, { error: m.app_account_settings_actions_no_profile_picture() });
 
 		const pictureId = randomBytes(16).toString('hex');
 		const imageExtension = extname(picture.name);
 
 		// Check if image extension is valid (user, changed it in the file picker)
 		if (!validateImageExtension(imageExtension))
-			return fail(400, { error: 'Invalid image extension!' });
+			return fail(400, { error: m.app_account_settings_actions_invalid_image_extension() });
 
 		// Check if image is too large (1MB)
-		if (picture.size > 1024 * 1024) return fail(400, { error: 'Image is too large!' });
+		if (picture.size > 1024 * 1024)
+			return fail(400, { error: m.app_account_settings_actions_image_is_too_large() });
 
 		try {
 			// Get default profile picture path
@@ -121,7 +127,7 @@ export const actions = {
 			// Update user in locals
 			locals.user.picture = publicPicturePath;
 			return {
-				success: 'Profile picture updated successfully',
+				success: m.app_account_settings_actions_profile_picture_updated_successfully(),
 				type: 'saveProfilePicture',
 				profile_picture: publicPicturePath
 			};

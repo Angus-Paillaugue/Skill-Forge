@@ -5,5 +5,5 @@ import { urlHealer } from '$lib/utils';
 /** @type {import('./$types').RequestHandler} */
 export async function load() {
 	const exercise = await getRandomExercise();
-	throw redirect(303, `/app/exercises/${urlHealer.identifier.join(exercise.slug, exercise.id)}`);
+	throw redirect(303, `../exercises/${urlHealer.identifier.join(exercise.slug, exercise.id)}`);
 }
