@@ -66,7 +66,16 @@
 			</div>
 		</div>
 		{#if t?.action}
-			<Button variant="secondary" class="w-fit px-2 py-1 text-sm" onclick={(e) => {t.action.callback(e);if(t.action.close){toast.removeToast(t.id)}}}>
+			<Button
+				variant="secondary"
+				class="w-fit px-2 py-1 text-sm"
+				onclick={(e) => {
+					t.action.callback(e);
+					if (t.action.close) {
+						toast.removeToast(t.id);
+					}
+				}}
+			>
 				{@html t.action.text}
 			</Button>
 		{/if}

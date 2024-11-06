@@ -119,8 +119,7 @@ export const actions = {
 		if (userHasChangedProfilePicture) {
 			try {
 				await unlink(profilePicturePath);
-			} catch (error) {
-				console.error('Error deleting old profile picture:', error);
+			} catch (_error) {
 				return fail(400, { error: m.app_account_settings_actions_error_deleting_old_picture() });
 			}
 		}

@@ -14,8 +14,9 @@ export const exerciseTests = mysqlTable('exercise_tests', {
 	id: int('id').autoincrement().primaryKey().notNull(),
 	exercise_id: int('exercise_id').references(() => exercises.id),
 	input: text('input').notNull(),
-	display_value: varchar('display_value', { length: 255 }),
-	expected_output: text('expected_output').notNull()
+	input_display_value: varchar('input_display_value', { length: 255 }),
+	expected_output: text('expected_output').notNull(),
+	expected_output_display_value: varchar('expected_output_display_value', { length: 255 })
 });
 
 export const exercises = mysqlTable('exercises', {
@@ -24,7 +25,7 @@ export const exercises = mysqlTable('exercises', {
 	slug: varchar('slug', { length: 255 }).notNull(),
 	description: text('description').notNull(),
 	content: text('content').notNull(),
-	created_at: timestamp('created_at').default(timestamp().defaultNow().notNull()),
+	created_at: timestamp('created_at').notNull().defaultNow(),
 	difficulty: mysqlEnum('difficulty', ['easy', 'medium', 'hard']).default('easy'),
 	learning_path_id: int('learning_path_id').references(() => learningPaths.id, {
 		onDelete: 'restrict',
@@ -37,7 +38,7 @@ export const languages = mysqlTable('languages', {
 	id: int('id').autoincrement().primaryKey().notNull(),
 	name: varchar('name', { length: 50 }).notNull(),
 	description: text('description'),
-	created_at: timestamp('created_at').default(timestamp().defaultNow().notNull())
+	created_at: timestamp('created_at').notNull().defaultNow()
 });
 
 export const learningPaths = mysqlTable('learning_paths', {
@@ -52,17 +53,15 @@ export const submissions = mysqlTable('submissions', {
 	exercise_id: int('exercise_id').references(() => exercises.id),
 	submission: text('submission'),
 	ram_usage: int('ram_usage'),
-	completed_at: timestamp('completed_at').default(timestamp().defaultNow().notNull())
+	completed_at: timestamp('completed_at').notNull().defaultNow()
 });
 
 export const users = mysqlTable('users', {
 	id: int('id').autoincrement().primaryKey().notNull(),
 	username: varchar('username', { length: 50 }).notNull(),
 	password_hash: varchar('password_hash', { length: 255 }).notNull(),
-	admin: boolean('admin').notNull(),
-	created_at: timestamp('created_at', { mode: 'string' }).default(
-		timestamp().defaultNow().notNull()
-	)
+	admin: boolean('admin').notNull().default(false),
+	created_at: timestamp('created_at').notNull().defaultNow()
 });
 export const exerciseTestsRelations = relations(exerciseTests, ({ one }) => ({
 	exercise: one(exercises, {

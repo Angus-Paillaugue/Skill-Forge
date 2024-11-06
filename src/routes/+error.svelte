@@ -4,7 +4,13 @@
 	import { SEO } from '$lib/components';
 </script>
 
-<SEO title={$page.status} description={m.error_page_page_description({ status: $page.status, message: $page.error.message })} />
+<SEO
+	title={$page.status}
+	description={m.error_page_page_description({
+		status: $page.status,
+		message: $page.error.message
+	})}
+/>
 
 {#if $page.status === 404}
 	<div class="mx-auto w-full grow p-4 md:max-w-[888px] md:p-6 lg:max-w-screen-xl">

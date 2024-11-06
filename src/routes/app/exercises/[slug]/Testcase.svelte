@@ -40,31 +40,33 @@
 	</div>
 
 	<div class="flex flex-col bg-neutral-800 p-4 max-lg:grow">
-		<div class="flex-no-wrap flex flex-row gap-2 overflow-x-auto">
-			{#each exercise.tests as _test, index}
-				<Button
-					variant={index === selectedTestIndex ? 'secondary' : 'ghost small'}
-					class={cn('w-fit ', index === selectedTestIndex && 'hover:bg-neutral-700')}
-					onclick={() => (selectedTestIndex = index)}
-				>
-					{#if latestRunnedTestsResults}
-						<div
-							transition:slide={{ axis: 'y' }}
-							class={cn(
-								'size-2 rounded-full',
-								latestRunnedTestsResults.results[index].passed ? 'bg-green-600' : 'bg-red-600'
-							)}
-						></div>
-					{/if}
-					{m.app_exercise_test_case_panel_case_number({ number: index + 1 })}
-				</Button>
-			{/each}
-		</div>
+		{#if exercise.tests.length > 1}
+			<div class="flex-no-wrap mb-4 flex flex-row gap-2 overflow-x-auto">
+				{#each exercise.tests as _test, index}
+					<Button
+						variant={index === selectedTestIndex ? 'secondary' : 'ghost small'}
+						class={cn('w-fit ', index === selectedTestIndex && 'hover:bg-neutral-700')}
+						onclick={() => (selectedTestIndex = index)}
+					>
+						{#if latestRunnedTestsResults}
+							<div
+								transition:slide={{ axis: 'y' }}
+								class={cn(
+									'size-2 rounded-full',
+									latestRunnedTestsResults.results[index].passed ? 'bg-green-600' : 'bg-red-600'
+								)}
+							></div>
+						{/if}
+						{m.app_exercise_test_case_panel_case_number({ number: index + 1 })}
+					</Button>
+				{/each}
+			</div>
+		{/if}
 		{#if latestRunnedTestsResults}
 			<h2
 				transition:slide={{ axis: 'y' }}
 				class={cn(
-					'mt-2 w-fit text-lg font-semibold',
+					'w-fit text-lg font-semibold',
 					latestRunnedTestsResults.results[selectedTestIndex].passed
 						? 'text-green-600'
 						: 'text-red-600'
@@ -80,23 +82,30 @@
 				</div>
 			{/if}
 		{/if}
-		<div class="mt-4">
-			<p class="text-base font-medium">Input</p>
-			<div class="mt-1 h-10 w-full whitespace-pre-wrap rounded-xl bg-neutral-700 p-2 font-mono">
-				{exercise.tests[selectedTestIndex]?.display_value ||
-					exercise.tests[selectedTestIndex].input.split('\n').at(-1)}
-			</div>
+		<div class="space-y-4">
+			{#if exercise.tests[selectedTestIndex]?.input}
+				<p class="text-base font-medium">Input</p>
+				<div class="mt-1 h-10 w-full whitespace-pre-wrap rounded-xl bg-neutral-700 p-2 font-mono">
+					{exercise.tests[selectedTestIndex]?.input_display_value ||
+						exercise.tests[selectedTestIndex].input.split('\n').at(-1)}
+				</div>
+			{/if}
 
-			<p class="mt-4 text-base font-medium">Expected Output</p>
-			<div class="mt-1 h-10 w-full whitespace-pre-wrap rounded-xl bg-neutral-700 p-2 font-mono">
-				{exercise.tests[selectedTestIndex].expected_output}
-			</div>
+			{#if exercise.tests[selectedTestIndex]?.expected_output}
+				<p class="text-base font-medium">Expected Output</p>
+				<div class="mt-1 h-10 w-full whitespace-pre-wrap rounded-xl bg-neutral-700 p-2 font-mono">
+					{exercise.tests[selectedTestIndex]?.expected_output_display_value ||
+						exercise.tests[selectedTestIndex].expected_output.split('\n').at(-1)}
+				</div>
+			{/if}
 
 			{#if latestRunnedTestsResults && !latestRunnedTestsResults.results[selectedTestIndex].passed && latestRunnedTestsResults.results[selectedTestIndex].actual_output}
 				<div class="block" transition:slide={{ axis: 'y' }}>
-					<p class="mt-4 text-base font-medium">Actual Output</p>
+					<p class="text-base font-medium">Actual Output</p>
 					<div class="mt-1 h-10 w-full whitespace-pre-wrap rounded-xl bg-neutral-700 p-2 font-mono">
-						{latestRunnedTestsResults.results[selectedTestIndex].actual_output}
+						{Array.isArray(latestRunnedTestsResults.results[selectedTestIndex].actual_output)
+							? JSON.stringify(latestRunnedTestsResults.results[selectedTestIndex].actual_output)
+							: latestRunnedTestsResults.results[selectedTestIndex].actual_output}
 					</div>
 				</div>
 			{/if}

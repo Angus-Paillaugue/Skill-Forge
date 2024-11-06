@@ -1,6 +1,6 @@
 import { writable } from 'svelte/store';
 import Toaster from './Toaster.svelte';
-import * as m from "$msgs";
+import * as m from '$msgs';
 
 export const toasts = writable([]);
 
@@ -65,7 +65,7 @@ export class toast {
 				newToast.action.close = true;
 			}
 			if (!newToast.action.text) {
-				newToast.action.text = "Text";
+				newToast.action.text = 'Text';
 			}
 			if (!newToast.action.callback) {
 				newToast.action.callback = () => {};

@@ -148,7 +148,8 @@ export async function getExerciseDetails(userId, exerciseId) {
 		.select({
 			input: exerciseTests.input,
 			expected_output: exerciseTests.expected_output,
-			display_value: exerciseTests.display_value
+			input_display_value: exerciseTests.input_display_value,
+			expected_output_display_value: exerciseTests.expected_output_display_value
 		})
 		.from(exerciseTests)
 		.where(eq(exerciseTests.exercise_id, exerciseId));

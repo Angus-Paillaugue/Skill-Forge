@@ -4,6 +4,7 @@ import { exec } from 'child_process';
 import fs from 'fs/promises';
 import { randomBytes } from 'crypto';
 import * as m from '$msgs';
+import path from 'path';
 
 /**
  * Compares two values for equality. If both values are objects, they are
@@ -131,7 +132,7 @@ async function runJavaScriptTests(tests, user_input) {
  *
  * @param {Array} tests - Array of test cases with input and expected output.
  * @param {string} userInput - The user-provided code to be tested.
- * @returns {Promise<Object>} - Results for each test, memory usage, and any console output.
+ * @returns {Promise<Object>} - Results for each test, and any console output.
  */
 export async function runPythonTests(tests, userInput) {
 	const scriptId = randomBytes(16).toString('hex');
@@ -222,6 +223,120 @@ print(test_results)
 }
 
 /**
+ * Runs Java tests in an isolated Docker environment.
+ *
+ * @param {Array} tests - Array of test cases with input and expected output.
+ * @param {string} userInput - The user-provided code to be tested.
+ * @returns {Promise<Object>} - Results for each test, and any console output.
+ */
+async function runJavaTests(tests, user_input) {
+	// Extract the class name from the user input
+	const classNameMatch = user_input.match(/public class (\w+)/);
+	if (!classNameMatch) {
+		throw new Error('User input does not contain a public class declaration.');
+	}
+	const className = classNameMatch[1];
+
+	// Create temporary file paths
+	const testFilePath = path.join('/tmp', `Test${Date.now()}.java`);
+	const testScriptName = path.basename(testFilePath, '.java');
+	const userInputScriptPath = path.join('/tmp', `${className}.java`);
+
+	const testScript = `
+import java.util.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+public class ${testScriptName} {
+
+    public List<Map<String, Object>> runTests() {
+        List<Map<String, Object>> testResults = new ArrayList<>();
+        ${tests
+					.map(
+						(test) => `
+        try {
+            Object result = ${test.input};
+            Map<String, Object> testResult = new HashMap<>();
+            testResult.put("expected_output", ${test.expected_output});
+            testResult.put("actual_output", result);
+            testResults.add(testResult);
+        } catch (Exception e) {
+            Map<String, Object> testResult = new HashMap<>();
+            testResult.put("expected_output", ${test.expected_output});
+            testResult.put("actual_output", e.getMessage());
+            testResults.add(testResult);
+        }
+        `
+					)
+					.join('\n')}
+        return testResults;
+    }
+
+    public static void main(String[] args) {
+        ${testScriptName} tester = new ${testScriptName}();
+        List<Map<String, Object>> results = tester.runTests();
+        Gson gson = new GsonBuilder().create();
+        String jsonResults = gson.toJson(results);
+        System.out.println(jsonResults);
+    }
+}`;
+
+	// Write the Java code to a temporary file
+	await fs.writeFile(testFilePath, testScript);
+	await fs.writeFile(userInputScriptPath, user_input);
+
+	try {
+		const output = await new Promise((resolve, reject) => {
+			exec(
+				`sudo docker run --rm --memory=50m --cpus="0.5" -v ${testFilePath}:/app/${testScriptName}.java -v ${userInputScriptPath}:/app/${className}.java java-runner /bin/sh -c "cd /app && javac -cp /usr/local/lib/gson-2.8.8.jar ${testScriptName}.java ${className}.java && java -cp .:/usr/local/lib/gson-2.8.8.jar ${testScriptName}"`,
+				(error, stdout, stderr) => {
+					if (error) {
+						reject({ error: stderr || stdout });
+					} else {
+						resolve(stdout);
+					}
+				}
+			);
+		});
+
+		const consoleOutput = output
+			.split('\n')
+			.filter((e) => e)
+			.slice(0, -1);
+		const jsonString = output
+			.split('\n')
+			.filter((e) => e)
+			.at(-1)
+			.trim();
+
+		// Ensure the JSON string is properly formatted
+		let results = JSON.parse(jsonString);
+		results = results.map((result) => {
+			return {
+				...result,
+				passed: isEquals(result.actual_output, result.expected_output)
+			};
+		});
+
+		return {
+			results,
+			consoleOutput,
+			averageRamUsage: null,
+			ok: true
+		};
+	} catch (error) {
+		return {
+			message: error?.error.split('\n')[0] ?? 'Failed to run tests',
+			consoleOutput: null,
+			ok: false
+		};
+	} finally {
+		await fs.unlink(testFilePath);
+		await fs.unlink(userInputScriptPath);
+	}
+}
+
+/**
  * Runs tests for a given exercise by evaluating user input in an isolated environment.
  *
  * @param {number} exercise_id - The ID of the exercise to run tests for.
@@ -236,6 +351,8 @@ export async function runTests(exercise_id, user_input) {
 			return runJavaScriptTests(tests, user_input);
 		case 'Python':
 			return await runPythonTests(tests, user_input);
+		case 'Java':
+			return await runJavaTests(tests, user_input);
 		default:
 			return { message: m.run_tests_unsupported_language(), ok: false };
 	}

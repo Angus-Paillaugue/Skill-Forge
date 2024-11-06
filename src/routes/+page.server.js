@@ -31,8 +31,7 @@ export const actions = {
 			const compare = await bcrypt.compare(password, user.password_hash);
 
 			// If password is incorrect, return error
-			if (!compare)
-				return fail(400, { error: m.error_messages_log_in_incorrect_password() });
+			if (!compare) return fail(400, { error: m.error_messages_log_in_incorrect_password() });
 
 			cookies.set('token', generateAccessToken(username), {
 				path: '/',
@@ -40,7 +39,7 @@ export const actions = {
 				secure: false
 			});
 		} catch (error) {
-			return fail(400, { error:error.message });
+			return fail(400, { error: error.message });
 		}
 
 		throw redirect(303, '/app');

@@ -7,7 +7,7 @@
 		"format": "prettier --write .",
 		"lint": "prettier --check . && eslint .",
 		"build": "pnpm build:sitemap && pnpm build:containers && vite build",
-		"build:containers": "sudo docker build -t python-runner ./src/lib/server/containers/python",
+		"build:containers": "sudo docker build -t python-runner ./src/lib/server/containers/python && sudo docker build -t java-runner ./src/lib/server/containers/java",
 		"build:sitemap": "node ./scripts/generate-sitemap.js",
 		"preview": "vite preview",
 		"depcheck": "npx depcheck --detailed",

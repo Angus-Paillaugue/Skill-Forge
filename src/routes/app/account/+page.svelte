@@ -212,7 +212,6 @@
 	</Card>
 </main>
 
-
 <style>
 	@keyframes -global-text {
 		0%,

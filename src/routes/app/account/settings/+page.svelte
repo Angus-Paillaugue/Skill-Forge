@@ -33,7 +33,16 @@
 		if (form?.error) {
 			toast.error({ message: form.error, timeout: 2000 });
 		} else if (form?.success) {
-			toast.success({ message: form.success, timeout: 3000, action: { text:"Refresh", callback: (e) => {location.reload()} } });
+			toast.success({
+				message: form.success,
+				timeout: 3000,
+				action: {
+					text: 'Refresh',
+					callback: () => {
+						location.reload();
+					}
+				}
+			});
 			if (form.type === 'saveProfilePicture') {
 				hasUploadedProfilePicture = false;
 				updatedUser.profile_picture = form.profile_picture;
