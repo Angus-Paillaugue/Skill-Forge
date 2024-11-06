@@ -48,15 +48,29 @@ export class toast {
 		type = 'info',
 		title = toast.baseToastTitles[type],
 		message = '',
-		timeout = 5000
+		timeout = 5000,
+		action = null
 	}) {
 		const newToast = {
 			type,
 			title,
 			message,
 			id: toast.#generateId(),
-			timeout
+			timeout,
+			action
 		};
+
+		if (newToast.action) {
+			if (newToast.action.close === undefined) {
+				newToast.action.close = true;
+			}
+			if (!newToast.action.text) {
+				newToast.action.text = "Text";
+			}
+			if (!newToast.action.callback) {
+				newToast.action.callback = () => {};
+			}
+		}
 
 		// Add the new toast to the beginning of toasts the array.
 		toasts.update((oldToast) => {
@@ -79,8 +93,8 @@ export class toast {
 	 * @param {string} options.message - The message of the toast.
 	 * @param {number} [options.timeout] - The duration before the toast disappears (in milliseconds).
 	 */
-	static success({ title, message, timeout }) {
-		toast.#newToast({ type: 'success', title, message, timeout });
+	static success({ title, message, timeout, action }) {
+		toast.#newToast({ type: 'success', title, message, timeout, action });
 	}
 
 	/**
@@ -91,8 +105,8 @@ export class toast {
 	 * @param {string} options.message - The message of the toast.
 	 * @param {number} [options.timeout] - The duration before the toast disappears (in milliseconds).
 	 */
-	static error({ title, message, timeout }) {
-		toast.#newToast({ type: 'error', title, message, timeout });
+	static error({ title, message, timeout, action }) {
+		toast.#newToast({ type: 'error', title, message, timeout, action });
 	}
 
 	/**
@@ -103,8 +117,8 @@ export class toast {
 	 * @param {string} options.message - The message of the toast.
 	 * @param {number} [options.timeout] - The duration (in milliseconds) the toast should be displayed.
 	 */
-	static warning({ title, message, timeout }) {
-		toast.#newToast({ type: 'warning', title, message, timeout });
+	static warning({ title, message, timeout, action }) {
+		toast.#newToast({ type: 'warning', title, message, timeout, action });
 	}
 
 	/**
@@ -115,8 +129,8 @@ export class toast {
 	 * @param {string} options.message - The message of the toast notification.
 	 * @param {number} options.timeout - The duration (in milliseconds) the toast should be displayed.
 	 */
-	static info({ title, message, timeout }) {
-		toast.#newToast({ type: 'info', title, message, timeout });
+	static info({ title, message, timeout, action }) {
+		toast.#newToast({ type: 'info', title, message, timeout, action });
 	}
 
 	/**

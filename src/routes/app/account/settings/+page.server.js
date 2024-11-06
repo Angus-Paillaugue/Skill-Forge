@@ -8,7 +8,7 @@ import {
 } from '$lib/server/db/users';
 import bcrypt from 'bcrypt';
 import { generateAccessToken } from '$lib/server/auth';
-import { extname, basename } from 'path';
+import { extname } from 'path';
 import { unlink, stat } from 'node:fs/promises';
 import { env } from '$env/dynamic/private';
 import { redirect } from '@sveltejs/kit';
@@ -113,14 +113,12 @@ export const actions = {
 		if (picture.size > 1024 * 1024)
 			return fail(400, { error: m.app_account_settings_actions_image_is_too_large() });
 
-		const userHasChangedProfilePicture = await fileExists(
-			`${env.PWD}/uploads/profile_pictures/${user.id}.webp`
-		);
+		const profilePicturePath = `${env.PWD}/uploads/profile_pictures/${user.id}.webp`;
+		const userHasChangedProfilePicture = await fileExists(profilePicturePath);
 		// Delete old picture if it's not the default one
 		if (userHasChangedProfilePicture) {
 			try {
-				const oldPicturePath = `${env.PWD}/uploads/profile_pictures/${basename(user.profile_picture)}`;
-				await unlink(oldPicturePath);
+				await unlink(profilePicturePath);
 			} catch (error) {
 				console.error('Error deleting old profile picture:', error);
 				return fail(400, { error: m.app_account_settings_actions_error_deleting_old_picture() });
@@ -135,18 +133,17 @@ export const actions = {
 					fit: 'cover'
 				})
 				.webp();
-			const outputFileName = `${user.id}.webp`;
-			const publicPicturePath = `/profile_picture/${outputFileName}`;
+			const publicPicturePath = `/profile_picture/${user.id}?${Date.now()}`;
 
 			// Save resized image
-			await resizedImage.toFile(`${env.PWD}/uploads/profile_pictures/${outputFileName}`);
+			await resizedImage.toFile(profilePicturePath);
 
 			// Update user in locals
-			locals.user.profile_picture = publicPicturePath + `?${Date.now()}`;
+			locals.user.profile_picture = publicPicturePath;
 			return {
 				success: m.app_account_settings_actions_profile_picture_updated_successfully(),
 				type: 'saveProfilePicture',
-				profile_picture: publicPicturePath + `?${Date.now()}`
+				profile_picture: publicPicturePath
 			};
 		} catch (error) {
 			return fail(400, { error: error.message });

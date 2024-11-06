@@ -6,6 +6,7 @@
 	import { tweened } from 'svelte/motion';
 	import { onMount } from 'svelte';
 	import * as m from '$msgs';
+	import { Button } from '$lib/components';
 
 	const { toast: t } = $props();
 	const baseToastClasses =
@@ -47,21 +48,28 @@
 	{/if}
 
 	<!-- Content -->
-	<div class="item-start flex flex-row gap-2">
-		<!-- svelte-ignore svelte_component_deprecated -->
-		<svelte:component
-			this={svgs[t.type].component}
-			class={cn('size-4 shrink-0', svgs[t.type].color)}
-		/>
+	<div class="flex flex-col gap-2">
+		<div class="item-start flex flex-row gap-2">
+			<!-- svelte-ignore svelte_component_deprecated -->
+			<svelte:component
+				this={svgs[t.type].component}
+				class={cn('size-4 shrink-0', svgs[t.type].color)}
+			/>
 
-		<div class="flex grow flex-col gap-2">
-			<!-- Title -->
-			<p class="text-white-400 block text-base font-medium leading-4">{t.title}</p>
-			<!-- Message -->
-			<p class="font-base text-sm text-neutral-400">
-				{@html t.message}
-			</p>
+			<div class="flex grow flex-col gap-2">
+				<!-- Title -->
+				<p class="text-white-400 block text-base font-medium leading-4">{t.title}</p>
+				<!-- Message -->
+				<p class="font-base text-sm text-neutral-400">
+					{@html t.message}
+				</p>
+			</div>
 		</div>
+		{#if t?.action}
+			<Button variant="secondary" class="w-fit px-2 py-1 text-sm" onclick={(e) => {t.action.callback(e);if(t.action.close){toast.removeToast(t.id)}}}>
+				{@html t.action.text}
+			</Button>
+		{/if}
 	</div>
 
 	<!-- Close button -->

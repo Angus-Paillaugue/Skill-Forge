@@ -31,9 +31,9 @@
 
 	$effect(() => {
 		if (form?.error) {
-			toast.error({ title: 'Error', message: form.error, timeout: 2000 });
+			toast.error({ message: form.error, timeout: 2000 });
 		} else if (form?.success) {
-			toast.success({ title: 'Success', message: form.success, timeout: 2000 });
+			toast.success({ message: form.success, timeout: 3000, action: { text:"Refresh", callback: (e) => {location.reload()} } });
 			if (form.type === 'saveProfilePicture') {
 				hasUploadedProfilePicture = false;
 				updatedUser.profile_picture = form.profile_picture;

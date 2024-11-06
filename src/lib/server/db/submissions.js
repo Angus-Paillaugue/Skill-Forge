@@ -27,10 +27,9 @@ export async function submitSolution(userId, exercise_id, user_input, results) {
 			user_id: userId,
 			exercise_id: exercise_id,
 			submission: user_input,
-			ram_usage: results.averageRamUsage,
-			completed_at: new Date()
+			ram_usage: results.averageRamUsage
 		})
-		.returning({ id: submissions.id });
+		.$returningId();
 
 	return insertedRow[0].id;
 }
