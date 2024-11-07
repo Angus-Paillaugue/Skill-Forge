@@ -121,7 +121,7 @@
 	</Card>
 {/snippet}
 
-<div class="mx-auto mt-10 flex w-full max-w-screen-lg flex-col gap-2">
+<div class="mx-auto flex w-full max-w-screen-lg flex-col gap-2">
 	{#if startedPaths.length > 0}
 		<h1 class="text-2xl font-bold capitalize">{m.app_learning_paths_sections_started_paths()}</h1>
 		<div
@@ -152,7 +152,7 @@
 		transition:fade={{ duration: 400 }}
 	></div>
 	<div
-		class="no-scrollbar absolute bottom-0 left-0 right-0 z-40 max-h-full w-full overflow-y-auto rounded-t-xl border border-b-0 border-neutral-700/50 bg-neutral-900"
+		class="no-scrollbar absolute bottom-0 left-0 right-0 z-40 max-h-full w-full overflow-y-auto rounded-t-xl border border-b-0 border-border bg-neutral-900"
 		transition:slide={{ axis: 'y', duration: 500, easing: backOut }}
 	>
 		<div class="mx-auto h-[90vh] w-full max-w-screen-lg md:h-[80vh]">

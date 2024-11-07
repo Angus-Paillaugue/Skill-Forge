@@ -10,18 +10,9 @@ export default {
 				heading: ['JetBrains Mono']
 			},
 			colors: {
-				'text-body': {
-					DEFAULT: 'theme(colors.neutral.500)',
-					dark: 'theme(colors.neutral.400)'
-				},
-				'text-heading': {
-					DEFAULT: 'theme(colors.neutral.900)',
-					dark: 'theme(colors.neutral.100)'
-				},
-				body: {
-					DEFAULT: 'theme(colors.white)',
-					dark: 'theme(colors.neutral.950)'
-				}
+				body: 'theme("colors.neutral.900")',
+				border: '#2f2f2f',
+				card: '#1e1e1e'
 			}
 		}
 	},

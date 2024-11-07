@@ -83,13 +83,11 @@
 	"app_exercises_page_table_col_title": "Title",
 	"app_exercises_page_table_search_label": "Search for an exercise",
 	"app_exercises_page_title": "All Exercises",
-	"app_home_layout_nav_exercises_list": "Exercises list",
+	"app_home_layout_nav_exercises_list": "Exercises",
 	"app_home_layout_nav_exercises_list_label": "Go to exercises list",
-	"app_home_layout_nav_home_label": "Go Home",
 	"app_home_layout_nav_learning_paths": "Leaning paths",
 	"app_home_layout_nav_learning_paths_label": "Go to learning paths",
 	"app_home_layout_nav_profile_label": "Go to dashboard",
-	"app_home_layout_nav_random_exercise": "Random exercise",
 	"app_home_layout_nav_random_exercise_label": "Go to random exercise",
 	"app_learning_paths_card_total_progress": "Total Progress",
 	"app_learning_paths_description": "Choose from a variety of learning paths to practice and improve your coding skills.",
@@ -176,5 +174,9 @@
 	"home_page_page_description": "Master coding challenges designed to help you grow. From beginner to expert, Skill Forge guides you through real-world problems with instant feedback and progress tracking.",
 	"home_page_page_title": "Home",
 	"run_tests_filed_to_run_tests": "Failed to run tests",
-	"run_tests_unsupported_language": "Unsupported language"
+	"run_tests_unsupported_language": "Unsupported language",
+	"app_home_layout_nav_open_menu_label": "Open menu",
+	"app_home_layout_nav_your_profile": "Your profile",
+	"app_home_layout_nav_exercises_all": "All",
+	"app_home_layout_nav_exercises_random": "Random"
 }

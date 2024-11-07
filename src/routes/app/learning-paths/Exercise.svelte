@@ -55,7 +55,7 @@
 </div>
 
 <div class="mx-auto flex w-full max-w-screen-lg flex-col gap-10 p-4 md:gap-8">
-	<div class="overflow-hidden rounded-xl border border-neutral-700">
+	<div class="overflow-hidden rounded-xl border border-border">
 		<div class="flex flex-row items-center gap-4 bg-neutral-800 p-6 px-7">
 			<TestTubeDiagonal class="size-6" />
 			<div class="flex flex-col space-y-1.5">
@@ -86,7 +86,7 @@
 			{#each path.exercises as exercise}
 				<a
 					href="/app/exercises/{urlHealer.identifier.join(exercise.slug, exercise.id)}"
-					class="flex w-full flex-row items-center border-b border-neutral-700 p-4 text-neutral-100 transition-colors last:border-none hover:bg-neutral-700/50"
+					class="flex w-full flex-row items-center border-b border-border p-4 text-neutral-100 transition-colors last:border-none hover:bg-card"
 				>
 					{#if exercise.is_completed}
 						<CircleCheckBig class="size-5 shrink-0 text-neutral-500" />

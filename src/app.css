@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-	--tw-neutral-800: theme(colors.neutral.800);
+	--tw-neutral-900: #1e1e1e;
 }
 
 ::selection,
@@ -31,18 +31,18 @@
 }
 
 body {
-	@apply bg-neutral-900 font-sans text-neutral-100 antialiased;
+	@apply bg-body font-sans text-neutral-100 antialiased;
 }
 
 hr {
-	@apply mx-2 my-4 h-[2px] rounded-full border-none bg-neutral-700/50;
+	@apply mx-2 my-4 h-[2px] rounded-full border-none bg-card;
 }
 
 /* Others */
 kbd {
-	@apply rounded border border-neutral-700 bg-neutral-800 px-2 py-1 font-mono text-sm font-normal text-neutral-200;
+	@apply rounded border border-border bg-neutral-800 px-2 py-1 font-mono text-sm font-normal text-neutral-200;
 }
 
 input {
-	@apply outline-none ring-0 ring-neutral-600 transition-all focus:outline-none focus:ring-2;
+	@apply outline-none ring-0 ring-neutral-700 transition-all focus:outline-none focus:ring-2;
 }

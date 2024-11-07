@@ -122,7 +122,7 @@
 			value = getLastTryValue();
 		}
 
-		const backgroundColor = getCSSVariableValue('--tw-neutral-800');
+		const backgroundColor = getCSSVariableValue('--tw-neutral-900');
 
 		// Create theme with custom background color
 		monaco.editor.defineTheme('customTheme', {
@@ -239,13 +239,13 @@
 
 <div class="flex h-full grow flex-col overflow-hidden">
 	<div
-		class="flex h-10 shrink-0 flex-row items-center border-b border-neutral-700 bg-neutral-800 p-2 text-neutral-400"
+		class="flex h-10 shrink-0 flex-row items-center border-b border-border bg-card p-2 text-neutral-400"
 	>
 		<!-- File dropdown -->
 		<Dropdown align="start">
 			<Dropdown.Trigger
 				variant="none"
-				class="w-fit gap-2 rounded-lg px-3 py-1 text-base text-neutral-100 hover:bg-neutral-700/50"
+				class="w-fit gap-2 rounded-lg px-3 py-1 text-base text-neutral-100 hover:bg-card"
 				>{m.components_editor_dropdown_label()}</Dropdown.Trigger
 			>
 			{#snippet items()}
@@ -324,19 +324,19 @@
 		<!-- Font size selector -->
 		<div class="ml-auto flex h-full flex-row gap-px overflow-hidden rounded">
 			<button
-				class="flex aspect-square h-full shrink-0 flex-col items-center justify-center bg-neutral-700 text-neutral-400"
+				class="flex aspect-square h-full shrink-0 flex-col items-center justify-center bg-neutral-800 text-neutral-400"
 				onclick={reduceFontSize}
 				aria-label={m.components_editor_fs_decrease_label()}
 			>
 				<Minus class="size-4" />
 			</button>
 			<div
-				class="flex h-full shrink-0 flex-col items-center justify-center bg-neutral-700 px-2 text-sm font-medium"
+				class="flex h-full shrink-0 flex-col items-center justify-center bg-neutral-800 px-2 text-sm font-medium"
 			>
 				{fontSize}
 			</div>
 			<button
-				class="flex aspect-square h-full shrink-0 flex-col items-center justify-center bg-neutral-700 text-neutral-400"
+				class="flex aspect-square h-full shrink-0 flex-col items-center justify-center bg-neutral-800 text-neutral-400"
 				onclick={increaseFontSize}
 				aria-label={m.components_editor_fs_increase_label()}
 			>
@@ -344,7 +344,7 @@
 			</button>
 		</div>
 	</div>
-	<div class="relative h-full grow overflow-hidden rounded-b-xl bg-neutral-800 pt-2">
+	<div class="relative h-full grow overflow-hidden rounded-b-xl bg-card pt-2">
 		{#if loaded}
 			<div class="h-full" bind:this={editorElement}></div>
 		{:else}

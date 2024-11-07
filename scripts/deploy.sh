@@ -12,9 +12,9 @@ ssh server << EOF
   git checkout main
   git pull
   echo "$dotEnvFileContents" > .env
-  DATABASE_URL=$admin_database_url
+  export DATABASE_URL=$admin_database_url
   pnpm db:push
-  DATABASE_URL=$database_url
+  export DATABASE_URL=$database_url
   pnpm install
   pnpm build
   pm2 restart all

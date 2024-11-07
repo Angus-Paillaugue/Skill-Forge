@@ -54,7 +54,7 @@ code {
 }
 /* Highlighted code blocks */
 .shiki {
-	@apply relative overflow-auto whitespace-pre rounded border border-neutral-700 bg-neutral-900 py-6 focus:-outline-offset-1;
+	@apply relative overflow-auto whitespace-pre rounded border border-border bg-neutral-900 py-6 focus:-outline-offset-1;
 }
 .line-numbers .line::before {
 	content: counter(codeStep);
@@ -81,7 +81,7 @@ pre > code {
 }
 /* Inline code */
 code:not(pre code) {
-	@apply rounded border border-neutral-600 bg-neutral-700/50 px-1 py-0.5 text-sm text-neutral-400;
+	@apply rounded border border-neutral-600 bg-border px-1 py-0.5 text-sm text-neutral-400;
 }
 
 /* Styling page components */

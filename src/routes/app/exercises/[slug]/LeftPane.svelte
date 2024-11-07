@@ -12,14 +12,14 @@
 	} = $props();
 </script>
 
-<div class="flex grow flex-col justify-center overflow-hidden rounded-xl bg-neutral-800">
+<div class="flex grow flex-col justify-center overflow-hidden rounded-xl bg-card">
 	<!-- Tab selection buttons -->
-	<div class="flex h-10 shrink-0 flex-row flex-nowrap overflow-x-auto bg-neutral-700 p-1">
+	<div class="flex h-10 shrink-0 flex-row flex-nowrap overflow-x-auto bg-neutral-800 p-1">
 		<Button
 			variant="secondaryInverted"
 			class={cn(
 				'shrink-0',
-				leftPaneActiveIndex === 0 ? 'hover:bg-neutral-700' : 'text-neutral-400'
+				leftPaneActiveIndex === 0 ? 'hover:bg-neutral-800' : 'text-neutral-400'
 			)}
 			onclick={() => (leftPaneActiveIndex = 0)}
 		>
@@ -30,7 +30,7 @@
 			variant="secondaryInverted"
 			class={cn(
 				'shrink-0',
-				leftPaneActiveIndex === 1 ? 'hover:bg-neutral-700' : 'text-neutral-400'
+				leftPaneActiveIndex === 1 ? 'hover:bg-neutral-800' : 'text-neutral-400'
 			)}
 			onclick={() => (leftPaneActiveIndex = 1)}
 		>
@@ -44,7 +44,7 @@
 		{#if leftPaneActiveIndex === 0}
 			{#if exercise?.submissions?.length > 0}
 				<div
-					class="mb-4 flex w-fit flex-row items-center gap-2 rounded-full bg-neutral-700 px-3 py-1 text-base font-medium"
+					class="mb-4 flex w-fit flex-row items-center gap-2 rounded-full bg-neutral-700/50 px-3 py-1 text-base font-medium"
 				>
 					{m.app_exercise_left_pane_has_been_solved()}
 					<CircleCheckBig class="size-5 text-green-600" />
@@ -61,7 +61,7 @@
 			<!-- User submitted solutions -->
 			<div class="relative w-full overflow-x-auto">
 				{#if submissions.length === 0}
-					<div class="mx-4 mt-10 grow rounded-lg bg-neutral-700 p-4">
+					<div class="mx-4 mt-10 grow rounded-lg bg-neutral-800 p-4">
 						<h2 class="text-base font-medium">
 							{m.app_exercise_left_pane_solutions_tab_no_solutions()}
 						</h2>
@@ -87,7 +87,7 @@
 							{#key submissions}
 								{#each submissions as submission}
 									<tr
-										class="border-b border-neutral-700 odd:bg-neutral-700/50 even:bg-neutral-800"
+										class="border-b border-border odd:bg-card even:bg-neutral-900"
 										onclick={() => {
 											loadSubmission(submission);
 										}}

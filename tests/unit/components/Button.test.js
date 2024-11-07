@@ -12,7 +12,7 @@ test('renders with default props', () => {
 test('renders with different variants', () => {
 	const { getByRole } = render(Button, { variant: 'secondary' });
 	const button = getByRole('button');
-	expect(button).toHaveClass('bg-neutral-700');
+	expect(button).toHaveClass('bg-neutral-800');
 });
 
 test('shows warning for invalid variant', () => {

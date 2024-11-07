@@ -226,7 +226,9 @@
 <SEO title={exercise.title} description={exercise.description.slice(0, 160)} />
 
 <!-- Code action buttons -->
-<div class="absolute left-1/2 z-40 -ml-[6.5rem] w-52 max-lg:bottom-2 lg:top-2">
+<div
+	class="z-30 mb-2 w-52 max-lg:fixed max-lg:left-1/2 max-lg:top-3 max-lg:-translate-x-1/2 lg:mx-auto"
+>
 	<div class="relative grid grid-cols-2 items-center gap-px">
 		<!-- Run button -->
 		<Tooltip
@@ -283,9 +285,7 @@
 		</button>
 
 		<!-- Timer -->
-		<div
-			class="absolute -top-full overflow-hidden rounded-lg max-lg:left-1/2 max-lg:-mt-2 max-lg:-translate-x-1/2 lg:left-full lg:top-0 lg:ml-2"
-		>
+		<div class="absolute left-full top-0 ml-2 hidden overflow-hidden rounded-lg lg:block">
 			<div class="flex flex-row gap-px">
 				<Tooltip
 					content={timerInterval ? m.app_exercise_timer_reset() : m.app_exercise_timer_start()}
@@ -346,7 +346,7 @@
 </div>
 
 <!-- Main content on < lg screen size -->
-<div class="hidden !h-[calc(100vh-4rem-6rem)] grow flex-col overflow-hidden max-lg:flex">
+<div class="hidden !h-[calc(100vh-4rem)] grow flex-col overflow-hidden max-lg:flex">
 	<div
 		class="mb-2 grid shrink-0 grid-cols-3 flex-nowrap overflow-x-auto rounded-full bg-neutral-800"
 	>
@@ -360,21 +360,21 @@
 		<button
 			class={cn(
 				'flex flex-row items-center justify-center gap-2 rounded-full px-3 py-1 text-lg font-semibold transition-colors',
-				mobileActiveTabIndex != 1 ? 'text-neutral-400 hover:bg-neutral-900/50' : 'bg-neutral-700'
+				mobileActiveTabIndex != 1 ? 'text-neutral-400' : 'bg-neutral-800'
 			)}
 			onclick={() => (mobileActiveTabIndex = 1)}>Code</button
 		>
 		<button
 			class={cn(
 				'flex flex-row items-center justify-center gap-2 rounded-full px-3 py-1 text-lg font-semibold transition-colors',
-				mobileActiveTabIndex != 2 ? 'text-neutral-400 hover:bg-neutral-900/50' : 'bg-neutral-700'
+				mobileActiveTabIndex != 2 ? 'text-neutral-400' : 'bg-neutral-800'
 			)}
 			onclick={() => (mobileActiveTabIndex = 2)}>Tests</button
 		>
 	</div>
 	<div
-		class="no-scrollbar grid w-[calc(300%+2rem)] grow grid-cols-3 gap-4 overflow-hidden transition-transform"
-		style="transform: translateX(-{(mobileActiveTabIndex * 100) / 2.974}%);"
+		class="no-scrollbar grid w-[calc(300%)] grow grid-cols-3 overflow-hidden transition-transform duration-300"
+		style="transform: translateX(-{(mobileActiveTabIndex * 100) / 3}%);"
 	>
 		<div class="flex flex-col overflow-y-auto">
 			<LeftPane {exercise} {loadSubmission} bind:leftPaneActiveIndex bind:submissions />

@@ -145,7 +145,7 @@
 		onmouseleave={hideTooltip}
 	>
 		<div
-			class="pointer-events-none relative gap-2 rounded-lg border border-neutral-700 bg-neutral-800 p-2 text-sm text-neutral-400"
+			class="pointer-events-none relative gap-2 rounded-lg border border-border bg-[#1e1e1e] p-2 text-sm text-neutral-400"
 		>
 			{@html content}
 		</div>

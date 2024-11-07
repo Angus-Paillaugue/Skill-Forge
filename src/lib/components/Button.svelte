@@ -16,12 +16,12 @@
 		'w-full flex flex-row items-center relative justify-center gap-2 overflow-hidden rounded-xl px-4 py-2 text-lg font-medium transition-all disabled:cursor-not-allowed';
 	const variantClasses = new Map([
 		['primary', 'bg-neutral-800 text-neutral-100'],
-		['secondary', 'rounded-xl bg-neutral-700 w-fit px-3 py-1 text-base hover:bg-neutral-700/50'],
+		['secondary', 'rounded-xl bg-neutral-800 w-fit px-3 py-1 text-base hover:bg-neutral-700/80'],
 		['square', 'p-2 aspect-square'],
 		['backButton', 'size-9 p-0 rounded-full bg-neutral-700/50'],
 		['ghost', 'bg-transparent'],
 		['small', 'px-3 py-1 text-base'],
-		['secondaryInverted', 'w-fit gap-2 rounded-lg px-3 py-1 text-base hover:bg-neutral-900/50'],
+		['secondaryInverted', 'w-fit gap-2 rounded-lg px-3 py-1 text-base hover:bg-neutral-950/50'],
 		['none', ''],
 		['danger', 'bg-red-600 text-neutral-100']
 	]);

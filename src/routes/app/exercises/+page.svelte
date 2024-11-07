@@ -102,17 +102,17 @@
 
 <SEO title={m.app_exercises_page_title()} description={m.app_exercises_page_description()} />
 
-<div class="mx-auto w-full max-w-screen-lg md:mt-10">
+<div class="mx-auto w-full max-w-screen-lg">
 	<Input
 		id="search"
 		placeholder={m.app_exercises_page_table_search_label()}
-		class="mb-4 bg-neutral-800"
+		class="mb-4 bg-card"
 		bind:value={searchValue}
 		oninput={onSearchInput}
 	/>
-	<div class="relative w-full overflow-x-auto overflow-y-hidden rounded-lg shadow-md">
+	<div class="relative w-full overflow-hidden rounded-lg shadow-md">
 		<table class="w-full min-w-[700px] table-auto overflow-y-auto text-sm">
-			<thead class="border-b border-neutral-700 bg-neutral-800">
+			<thead class="border-b border-border bg-card">
 				<tr>
 					<th scope="col" class="h-12 px-4 text-left align-middle font-medium text-neutral-400">
 						<button class="flex flex-row items-center gap-4" onclick={() => sortBy('language')}>
@@ -169,7 +169,7 @@
 			<tbody class="[&amp;_tr:last-child]:border-0">
 				{#each sortedExercises as exercise (exercise.exercise_id)}
 					<tr
-						class="border-b border-neutral-700 transition-colors even:bg-neutral-800/50"
+						class="border-b border-border transition-colors even:bg-card"
 						transition:slide={{ axis: 'y' }}
 						animate:flip={{ duration: 300 }}
 					>

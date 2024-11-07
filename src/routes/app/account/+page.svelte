@@ -8,7 +8,7 @@
 	const { user, rank, recentActivity, contributions } = data;
 
 	const activityThresholds = {
-		0: 'bg-neutral-900',
+		0: 'bg-neutral-800/60',
 		1: 'bg-[#0e4429]',
 		3: 'bg-[#006d32]',
 		5: 'bg-[#26a641]',
@@ -36,7 +36,7 @@
 
 <main class="mx-auto w-full max-w-screen-lg space-y-4 md:space-y-8">
 	<!-- Hero -->
-	<div class="grid w-full grid-cols-1 gap-4 md:grid-cols-3">
+	<div class="grid w-full grid-cols-1 gap-4 md:grid-cols-3 md:gap-8">
 		<Card class="user-info-card md:col-span-2">
 			<div class="flex flex-row gap-4">
 				<img
@@ -169,14 +169,14 @@
 			<p class="text-sm text-neutral-400">{m.app_account_page_activity_subtitle()}</p>
 		</div>
 
-		<div class="no-scrollbar relative max-h-[300px] w-full overflow-auto rounded-xl">
+		<div class="no-scrollbar relative max-h-[400px] w-full overflow-auto rounded-xl">
 			{#if recentActivity.length === 0}
 				<div class="grow rounded-lg bg-neutral-700 p-4">
 					<h2 class="text-base font-medium">{m.app_account_page_activity_no_activity()}</h2>
 				</div>
 			{:else}
 				<table class="w-full table-auto text-sm">
-					<thead class="sticky top-0 bg-neutral-800"
+					<thead class="border-b border-border bg-card"
 						><tr
 							><th class="h-12 px-4 text-left align-middle font-medium text-neutral-400"
 								>{m.app_account_page_activity_table_col_name()}</th
@@ -188,7 +188,7 @@
 					>
 					<tbody class="[&amp;_tr:last-child]:border-0">
 						{#each recentActivity as activity}
-							<tr class="border-b border-neutral-700 transition-colors even:bg-neutral-800/50"
+							<tr class="border-b border-border even:bg-card"
 								><td class="p-4 align-middle">
 									<a
 										href="/app/exercises/{urlHealer.identifier.join(

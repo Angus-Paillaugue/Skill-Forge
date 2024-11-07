@@ -92,7 +92,7 @@
 
 <!-- Navbar -->
 <!-- {#if sideBarVisible}
-  <div transition:fly={{ y:'100%' }} class="fixed left-1/2 bottom-4 -translate-x-1/2 bg-neutral-800/50 backdrop-blur border border-neutral-600/50 px-6 lg:px-5 py-4 rounded-full flex flex-row gap-8 max-lg:pb-8 z-10">
+  <div transition:fly={{ y:'100%' }} class="fixed left-1/2 bottom-4 -translate-x-1/2 bg-card backdrop-blur border border-neutral-600/50 px-6 lg:px-5 py-4 rounded-full flex flex-row gap-8 max-lg:pb-8 z-10">
     {#each SECTIONS as section, index (section.id)}
       <button onclick={() => document.getElementById(section.id).scrollIntoView({ behavior: 'smooth' })} class="items-center justify-center capitalize flex flex-col gap-2 size-7 lg:size-9 transition-colors group relative">
         <span class="text-neutral-400 font-semibold text-sm absolute top-full lg:top-1/2 -translate-x-1/2 left-1/2 lg:-translate-y-1/2 lg:opacity-0 group-hover:opacity-100 transition-opacity duration-300">

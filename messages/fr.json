@@ -83,13 +83,11 @@
 	"app_exercises_page_table_col_title": "Titre",
 	"app_exercises_page_table_search_label": "Rechercher un exercice",
 	"app_exercises_page_title": "Tous les exercices",
-	"app_home_layout_nav_exercises_list": "Liste des exercices",
+	"app_home_layout_nav_exercises_list": "Exercices",
 	"app_home_layout_nav_exercises_list_label": "Aller à la liste des exercices",
-	"app_home_layout_nav_home_label": "Aller à l'accueil",
 	"app_home_layout_nav_learning_paths": "Parcours d'apprentissage",
 	"app_home_layout_nav_learning_paths_label": "Aller aux parcours d'apprentissage",
 	"app_home_layout_nav_profile_label": "Aller au tableau de bord",
-	"app_home_layout_nav_random_exercise": "Exercice aléatoire",
 	"app_home_layout_nav_random_exercise_label": "Aller à un exercice aléatoire",
 	"app_learning_paths_card_total_progress": "Progression totale",
 	"app_learning_paths_description": "Choisissez parmi une variété de parcours d'apprentissage pour pratiquer et améliorer vos compétences en programmation.",
@@ -176,5 +174,9 @@
 	"home_page_page_description": "Maîtrisez les défis de codage conçus pour vous aider à grandir. Du débutant à l'expert, Skill Forge vous guide à travers des problèmes réels avec un retour instantané et un suivi de progression.",
 	"home_page_page_title": "Accueil",
 	"run_tests_filed_to_run_tests": "échec de l'exécution des tests",
-	"run_tests_unsupported_language": "Langue non supportée"
+	"run_tests_unsupported_language": "Langue non supportée",
+	"app_home_layout_nav_open_menu_label": "Ouvrir le menu",
+	"app_home_layout_nav_your_profile": "Votre profil",
+	"app_home_layout_nav_exercises_all": "Tous",
+	"app_home_layout_nav_exercises_random": "Aléatoire"
 }
