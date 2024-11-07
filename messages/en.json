@@ -179,5 +179,7 @@
 	"app_home_layout_nav_your_profile": "Your profile",
 	"app_home_layout_nav_exercises_all": "All",
 	"app_home_layout_nav_go_back": "Go back",
-	"app_home_layout_nav_exercises_random": "Random"
+	"app_home_layout_nav_exercises_random": "Random",
+	"app_home_layout_nav_sidebar_collapse": "Collapse sidebar",
+	"app_home_layout_nav_sidebar_expand": "Expand sidebar"
 }

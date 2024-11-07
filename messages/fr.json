@@ -178,5 +178,8 @@
 	"app_home_layout_nav_open_menu_label": "Ouvrir le menu",
 	"app_home_layout_nav_your_profile": "Votre profil",
 	"app_home_layout_nav_exercises_all": "Tous",
-	"app_home_layout_nav_exercises_random": "Aléatoire"
+	"app_home_layout_nav_go_back": "Retourner",
+	"app_home_layout_nav_exercises_random": "Aléatoire",
+	"app_home_layout_nav_sidebar_collapse": "Réduire la barre latérale",
+	"app_home_layout_nav_sidebar_expand": "Développer la barre latérale"
 }
