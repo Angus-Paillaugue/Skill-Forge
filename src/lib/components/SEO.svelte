@@ -3,6 +3,10 @@
 
 	const { children, title, description } = $props();
 	const SITE_NAME = 'Skill Forge';
+
+	export function getTitle() {
+		return title;
+	}
 </script>
 
 <svelte:head>

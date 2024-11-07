@@ -10,7 +10,7 @@
 
 	const { toast: t } = $props();
 	const baseToastClasses =
-		'border border-neutral-800/50 bg-neutral-900 text-neutral-100 relative p-4 rounded-xl overflow-hidden flex flex-col gap-2';
+		'border border-border bg-card text-neutral-100 relative p-4 rounded-xl overflow-hidden flex flex-col gap-2';
 	const progress = tweened(0, {
 		duration: t.timeout
 	});
@@ -43,7 +43,7 @@
 	<!-- Progress -->
 	{#if progress}
 		<div class="absolute left-0 right-2 top-0 h-[3px]">
-			<div class="h-full bg-neutral-700" style="width: {$progress}%;"></div>
+			<div class="h-full bg-border" style="width: {$progress}%;"></div>
 		</div>
 	{/if}
 

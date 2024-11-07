@@ -56,12 +56,12 @@
 
 <main class="mx-auto w-full max-w-screen-lg space-y-4 md:space-y-8">
 	<!-- Heading -->
-	<Card class="flex flex-row gap-4 space-y-0">
+	<!-- <Card class="flex flex-row gap-4 space-y-0">
 		<Button href="/app/account" variant="backButton" arial-label="Go back"
 			><Undo2 class="size-5" /></Button
 		>
 		<h1 class="text-3xl font-bold">{m.app_account_settings_title()}</h1>
-	</Card>
+	</Card> -->
 
 	<!-- Personal info/Profile picture -->
 	<Card class="space-y-6">

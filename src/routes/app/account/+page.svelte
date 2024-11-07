@@ -176,7 +176,7 @@
 				</div>
 			{:else}
 				<table class="w-full table-auto text-sm">
-					<thead class="border-b border-border bg-card"
+					<thead class="border-b border-border bg-neutral-800/80"
 						><tr
 							><th class="h-12 px-4 text-left align-middle font-medium text-neutral-400"
 								>{m.app_account_page_activity_table_col_name()}</th
@@ -188,7 +188,7 @@
 					>
 					<tbody class="[&amp;_tr:last-child]:border-0">
 						{#each recentActivity as activity}
-							<tr class="border-b border-border even:bg-card"
+							<tr class="border-b border-border even:bg-neutral-800/80"
 								><td class="p-4 align-middle">
 									<a
 										href="/app/exercises/{urlHealer.identifier.join(

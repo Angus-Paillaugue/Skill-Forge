@@ -1,7 +1,7 @@
 <script>
-	import { User, TestTubeDiagonal, Plus, Pencil, Undo2 } from 'lucide-svelte';
+	import { User, TestTubeDiagonal, Plus, Pencil } from 'lucide-svelte';
 	import { fade, fly } from 'svelte/transition';
-	import { Button, SEO } from '$lib/components';
+	import { Button, SEO, Card } from '$lib/components';
 
 	const { data } = $props();
 	const { noUsers, noExercises, allExercises, user } = data;
@@ -41,19 +41,11 @@
 {/if}
 
 <main class="mx-auto w-full max-w-screen-lg space-y-4 md:space-y-8">
-	<div class="rounded-xl border border-border bg-card p-4">
-		<div class="flex flex-row gap-4">
-			<Button variant="backButton" href="/app/account" arial-label="Go back"
-				><Undo2 class="size-5" /></Button
-			>
-			<h1 class="text-3xl font-bold">Admin dashboard</h1>
-		</div>
-	</div>
 	<div class="grid items-start gap-4 md:gap-8 lg:grid-cols-2">
 		<div class="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
 			<!-- Hero -->
 			<div class="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
-				<div class="flex flex-col gap-4 rounded-xl border border-border bg-card p-6 sm:col-span-2">
+				<Card class="flex flex-col gap-4 sm:col-span-2">
 					<h1 class="text-3xl font-semibold">Welcome, {user.username}</h1>
 					<div class="flex flex-row flex-wrap gap-4">
 						<Button variant="secondary" href="/app/account/admin/addExercise">
@@ -65,10 +57,10 @@
 							Edit exercise
 						</Button>
 					</div>
-				</div>
+				</Card>
 
 				<!-- User count -->
-				<div class="flex flex-row items-center gap-4 rounded-xl border border-border bg-card p-6">
+				<Card class="flex flex-row items-center gap-4 p-6">
 					<User class="size-20" />
 					<div class="flex flex-col space-y-1.5">
 						<p class="text-sm text-neutral-400">Users</p>
@@ -77,10 +69,10 @@
 							{noUsers}
 						</h3>
 					</div>
-				</div>
+				</Card>
 
 				<!-- Exercises count -->
-				<div class="flex flex-row items-center gap-4 rounded-xl border border-border bg-card p-6">
+				<Card class="flex flex-row items-center gap-4 p-6">
 					<TestTubeDiagonal class="size-20" />
 					<div class="flex flex-col space-y-1.5">
 						<p class="text-sm text-neutral-400">Exercises</p>
@@ -89,7 +81,7 @@
 							{noExercises}
 						</h3>
 					</div>
-				</div>
+				</Card>
 			</div>
 		</div>
 	</div>
