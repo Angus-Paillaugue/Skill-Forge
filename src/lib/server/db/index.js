@@ -5,7 +5,10 @@ import * as schema from './schema';
 
 if (!DATABASE_URL) throw new Error('DATABASE_URL is not set');
 
-const client = await mysql.createConnection(DATABASE_URL);
+const client = await mysql.createPool({
+  uri: DATABASE_URL,
+  connectionLimit: 10,
+});
 const db = drizzle(client, { schema, mode: 'default' });
 
 export default db;

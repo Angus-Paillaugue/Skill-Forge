@@ -11,7 +11,9 @@
 		ShieldBan,
 		Zap,
 		Route,
-		Hourglass
+		Hourglass,
+		// House,
+		// SmilePlus
 	} from 'lucide-svelte';
 	import * as m from '$msgs';
 
@@ -38,7 +40,7 @@
 	let formContainer = $state();
 	let carousel = $state();
 	let carouselIndex = $state(0);
-	// let sideBarVisible = $state(false);
+	// let sideBarVisible = $state(true);
 	let formIndicatorPos = spring(0, {
 		stiffness: 0.05,
 		damping: 0.25
@@ -92,7 +94,7 @@
 
 <!-- Navbar -->
 <!-- {#if sideBarVisible}
-  <div transition:fly={{ y:'100%' }} class="fixed left-1/2 bottom-4 -translate-x-1/2 bg-card backdrop-blur border border-neutral-600/50 px-6 lg:px-5 py-4 rounded-full flex flex-row gap-8 max-lg:pb-8 z-10">
+  <div transition:fly={{ y:'100%' }} class="fixed left-1/2 bottom-4 -translate-x-1/2 bg-card/80 backdrop-blur border border-neutral-600/50 px-6 lg:px-5 py-4 rounded-full flex flex-row gap-8 max-lg:pb-8 z-10">
     {#each SECTIONS as section, index (section.id)}
       <button onclick={() => document.getElementById(section.id).scrollIntoView({ behavior: 'smooth' })} class="items-center justify-center capitalize flex flex-col gap-2 size-7 lg:size-9 transition-colors group relative">
         <span class="text-neutral-400 font-semibold text-sm absolute top-full lg:top-1/2 -translate-x-1/2 left-1/2 lg:-translate-y-1/2 lg:opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -150,15 +152,14 @@
 			>
 				<div class="grid grid-cols-2 max-md:w-[200%]">
 					<div
-						class="h-full w-full snap-start border border-neutral-800/50 p-4 md:border-r-0"
-						data-index="0"
+						class="h-full w-full snap-start border border-border p-4 md:border-r-0"
 					>
 						<ArrowBigUpDash class="mx-auto my-6 size-20 text-neutral-300 md:my-10 md:size-32" />
 						<p class="font-base text-base italic text-neutral-400">
 							{m.home_page_hero_carousel_slide1()}
 						</p>
 					</div>
-					<div class="h-full w-full snap-start border border-neutral-800/50 p-4" data-index="0">
+					<div class="h-full w-full snap-start border border-border p-4">
 						<Shapes class="mx-auto my-6 size-20 text-neutral-300 md:my-10 md:size-32" />
 						<p class="font-base text-base italic text-neutral-400">
 							{m.home_page_hero_carousel_slide2()}
@@ -314,7 +315,7 @@
 		<div class="flex flex-col">
 			<!-- Learn at your own pace section -->
 			<div
-				class="flex shrink-0 flex-col items-center justify-center gap-4 border border-neutral-800/50 p-4 text-center lg:gap-8 lg:border-b-0 lg:border-r-0 lg:p-8"
+				class="flex shrink-0 flex-col items-center justify-center gap-4 border border-border p-4 text-center lg:gap-8 lg:border-b-0 lg:border-r-0 lg:p-8"
 			>
 				<Hourglass class="size-16 text-[#ED5D45]" />
 				<h2 class="text-4xl font-bold text-neutral-100">{m.home_page_bento_card1_title()}</h2>
@@ -324,7 +325,7 @@
 			</div>
 			<!-- Free/No ads section -->
 			<div
-				class="group relative flex shrink-0 flex-col items-center justify-center gap-4 overflow-hidden border border-neutral-800/50 p-4 text-center max-lg:border-y-0 lg:gap-8 lg:border-b-0 lg:border-r-0 lg:p-8"
+				class="group relative flex shrink-0 flex-col items-center justify-center gap-4 overflow-hidden border border-border p-4 text-center max-lg:border-y-0 lg:gap-8 lg:border-b-0 lg:border-r-0 lg:p-8"
 			>
 				<ShieldBan class="size-16 text-[#3F7DDE]" />
 				<h2 class="text-4xl font-bold text-neutral-100">{m.home_page_bento_card2_title()}</h2>
@@ -334,7 +335,7 @@
 			</div>
 			<!-- Get started section -->
 			<div
-				class="group relative flex grow flex-col items-center justify-center gap-4 overflow-hidden border border-neutral-800/50 p-6 lg:border-r-0"
+				class="group relative flex grow flex-col items-center justify-center gap-4 overflow-hidden border border-border p-6 lg:border-r-0"
 			>
 				<button
 					onclick={getStarted}
@@ -353,7 +354,7 @@
 				</button>
 				<!-- Background grid -->
 				<svg
-					class="absolute inset-0 -z-10 h-full w-full stroke-neutral-800/50 [mask-image:radial-gradient(50%_50%_at_center_center,transparent,white)]"
+					class="absolute inset-0 -z-10 h-full w-full stroke-border [mask-image:radial-gradient(50%_50%_at_center_center,transparent,white)]"
 					aria-hidden="true"
 					><defs
 						><pattern
@@ -372,7 +373,7 @@
 		<div class="flex flex-col">
 			<!-- Star -->
 			<div
-				class="relative min-h-[500px] grow border border-neutral-800/50 p-4 max-lg:border-y-0 lg:p-8"
+				class="relative min-h-[500px] grow border border-border p-4 max-lg:border-y-0 lg:p-8"
 			>
 				<div
 					class="absolute inset-8 flex flex-col items-center justify-evenly overflow-hidden blur"
@@ -402,7 +403,7 @@
 			<!-- Two cards side to side -->
 			<div class="grid w-full shrink-0 lg:grid-cols-2">
 				<div
-					class="flex flex-col gap-4 border border-neutral-800/50 p-4 lg:border-r-0 lg:border-t-0 lg:p-8"
+					class="flex flex-col gap-4 border border-border p-4 lg:border-r-0 lg:border-t-0 lg:p-8"
 				>
 					<Zap class="size-16 text-[#3FBED8]" />
 					<h1 class="text-2xl font-semibold text-neutral-100">{m.home_page_bento_card4_title()}</h1>
@@ -411,7 +412,7 @@
 					</p>
 				</div>
 				<div
-					class="flex flex-col gap-4 border border-neutral-800/50 p-4 max-lg:border-t-0 lg:border-t-0 lg:p-8"
+					class="flex flex-col gap-4 border border-border p-4 max-lg:border-t-0 lg:border-t-0 lg:p-8"
 				>
 					<Route class="size-16 text-[#F2B655]" />
 					<h1 class="text-2xl font-semibold text-neutral-100">{m.home_page_bento_card5_title()}</h1>
@@ -425,10 +426,15 @@
 </section>
 
 <!-- Footer -->
-<div class="mx-auto mb-6 w-full max-w-screen-2xl px-4">
-	<footer class="flex flex-row gap-12 rounded-2xl bg-neutral-50 px-6 py-12 text-neutral-900">
-		<p class="font-mono text-sm">© {new Date().getFullYear()} {m.footer()}</p>
-	</footer>
+<div class="flex flex-col relative">
+	<div class="absolute top-0 left-0 right-0 pt-[200px] bg-neutral-50">
+		<footer class="px-6 py-12 max-w-screen-2xl mx-auto text-neutral-900 flex flex-row gap-12">
+			<p class="font-mono text-sm">© {new Date().getFullYear()} {m.footer()}</p>
+		</footer>
+	</div>
+	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none" class="relative w-full h-[200px] fill-body">
+		<path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+	</svg>
 </div>
 
 <style>
