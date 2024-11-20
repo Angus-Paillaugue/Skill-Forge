@@ -11,7 +11,7 @@
 		ShieldBan,
 		Zap,
 		Route,
-		Hourglass,
+		Hourglass
 		// House,
 		// SmilePlus
 	} from 'lucide-svelte';
@@ -151,9 +151,7 @@
 				bind:this={carousel}
 			>
 				<div class="grid grid-cols-2 max-md:w-[200%]">
-					<div
-						class="h-full w-full snap-start border border-border p-4 md:border-r-0"
-					>
+					<div class="h-full w-full snap-start border border-border p-4 md:border-r-0">
 						<ArrowBigUpDash class="mx-auto my-6 size-20 text-neutral-300 md:my-10 md:size-32" />
 						<p class="font-base text-base italic text-neutral-400">
 							{m.home_page_hero_carousel_slide1()}
@@ -372,9 +370,7 @@
 		<!-- Right column -->
 		<div class="flex flex-col">
 			<!-- Star -->
-			<div
-				class="relative min-h-[500px] grow border border-border p-4 max-lg:border-y-0 lg:p-8"
-			>
+			<div class="relative min-h-[500px] grow border border-border p-4 max-lg:border-y-0 lg:p-8">
 				<div
 					class="absolute inset-8 flex flex-col items-center justify-evenly overflow-hidden blur"
 				>
@@ -426,14 +422,22 @@
 </section>
 
 <!-- Footer -->
-<div class="flex flex-col relative">
-	<div class="absolute top-0 left-0 right-0 pt-[200px] bg-neutral-50">
-		<footer class="px-6 py-12 max-w-screen-2xl mx-auto text-neutral-900 flex flex-row gap-12">
+<div class="relative flex flex-col">
+	<div class="absolute left-0 right-0 top-0 bg-neutral-50 pt-[200px]">
+		<footer class="mx-auto flex max-w-screen-2xl flex-row gap-12 px-6 py-12 text-neutral-900">
 			<p class="font-mono text-sm">© {new Date().getFullYear()} {m.footer()}</p>
 		</footer>
 	</div>
-	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none" class="relative w-full h-[200px] fill-body">
-		<path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+	<svg
+		xmlns="http://www.w3.org/2000/svg"
+		viewBox="0 0 1200 120"
+		preserveAspectRatio="none"
+		class="relative h-[200px] w-full fill-body"
+	>
+		<path
+			d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
+			class="shape-fill"
+		></path>
 	</svg>
 </div>
 

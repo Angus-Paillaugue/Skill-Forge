@@ -147,7 +147,7 @@
 		</div>
 		{#if consoleVisible}
 			<div
-				class="flex max-h-[140px] grow flex-col overflow-y-auto bg-neutral-900 p-4"
+				class="flex max-h-[140px] grow flex-col overflow-y-auto bg-card p-4"
 				transition:slide={{ axis: 'y' }}
 			>
 				{#each latestRunnedTestsResults.consoleOutput as line}

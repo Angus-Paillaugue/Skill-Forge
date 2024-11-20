@@ -14,8 +14,8 @@
 
 <header
 	class={cn(
-		'sticky top-0 z-30 flex h-12 shrink-0 flex-row items-center gap-4 lg:hidden',
-		isExercisePage ? 'bg-neutral-950' : 'bg-body'
+		'sticky top-0 z-30 flex h-12 shrink-0 flex-row items-center gap-4 px-2 lg:hidden',
+		isExercisePage ? 'bg-neutral-900' : 'bg-body'
 	)}
 >
 	<!-- Go back button (shown if the page is nested i.e: /app/account/settings) -->

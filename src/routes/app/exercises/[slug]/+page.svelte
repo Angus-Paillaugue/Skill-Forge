@@ -227,7 +227,7 @@
 
 <!-- Code action buttons -->
 <div
-	class="z-30 mb-2 w-52 max-lg:fixed max-lg:left-1/2 max-lg:top-3 max-lg:-translate-x-1/2 lg:mx-auto"
+	class="z-30 mb-2 w-52 max-lg:fixed max-lg:left-1/2 max-lg:top-1 max-lg:-translate-x-1/2 lg:mx-auto"
 >
 	<div class="relative grid grid-cols-2 items-center gap-px">
 		<!-- Run button -->
