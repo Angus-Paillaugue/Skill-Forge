@@ -360,14 +360,14 @@
 		<button
 			class={cn(
 				'flex flex-row items-center justify-center gap-2 rounded-full px-3 py-1 text-lg font-semibold transition-colors',
-				mobileActiveTabIndex != 1 ? 'text-neutral-400' : 'bg-neutral-800'
+				mobileActiveTabIndex != 1 ? 'text-neutral-400 hover:bg-neutral-900/50' : 'bg-neutral-700'
 			)}
 			onclick={() => (mobileActiveTabIndex = 1)}>Code</button
 		>
 		<button
 			class={cn(
 				'flex flex-row items-center justify-center gap-2 rounded-full px-3 py-1 text-lg font-semibold transition-colors',
-				mobileActiveTabIndex != 2 ? 'text-neutral-400' : 'bg-neutral-800'
+				mobileActiveTabIndex != 2 ? 'text-neutral-400 hover:bg-neutral-900/50' : 'bg-neutral-700'
 			)}
 			onclick={() => (mobileActiveTabIndex = 2)}>Tests</button
 		>
